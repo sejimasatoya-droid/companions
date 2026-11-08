@@ -4,6 +4,7 @@
 > 形式：`[ファイル名](ファイル名) — 著者 (年) タイトル ／ 一言要約 ／ キーワード`
 
 ## イベント分節
+- [2013_Sargent_分節能力と出来事の記憶.md](2013_Sargent_分節能力と出来事の記憶.md) — Sargent, Zacks et al. (2013) Event Segmentation Ability Uniquely Predicts Event Memory ／ 分節能力とスクリプト知識は一般的な認知能力を超えて出来事の記憶を予測。再生は行為リストで採点 ／ 再生の採点, 加齢
 - [2020_Swallow_文化とイベント分節.md](2020_Swallow_文化とイベント分節.md) — Swallow & Wang (2020) Culture influences how people divide continuous sensory experience into events ／ 米国の人はインドの人より細かく区切り、米国は視覚変化・インドはゴール変化と境界が結びつく ／ 文化差, unitizing
 - [2022_Sasmita_分節一致度の安定性.md](2022_Sasmita_分節一致度の安定性.md) — Sasmita & Swallow (2022) Measuring event segmentation ／ 分節の一致度を安定して測るには6〜18人必要。オンラインでも実験室並み ／ サンプルサイズ, 信頼性
 - [2025_Nguyen_予測誤差と不確実性による分節.md](2025_Nguyen_予測誤差と不確実性による分節.md) — Nguyen, Etzel, Bezdek & Zacks (2025) Multiple event segmentation mechanisms in the human brain ／ 予測誤差と予測の不確実性が、部分的に別の脳ネットワークで境界を作る ／ fMRI, EST, 計算モデル
@@ -34,6 +35,18 @@
 - [2000_Parasuraman_ファジィ信号検出理論の基礎.md](2000_Parasuraman_ファジィ信号検出理論の基礎.md) — Parasuraman, Masalonis & Hancock (2000) Fuzzy Signal Detection Theory: Basic Postulates and Formulas ／ 信号と反応を0〜1の所属度にしたファジィ SDT の計算手順 ／ ファジィ SDT
 - [2003_Masalonis_航空管制でのファジィSDT.md](2003_Masalonis_航空管制でのファジィSDT.md) — Masalonis & Parasuraman (2003) Fuzzy SDT in air traffic control ／ 衝突予測の評価でファジィ SDT を使うと誤警報率が下がる ／ 航空管制, 自動化
 - [2013_Szalma_ファジィSDTのROC.md](2013_Szalma_ファジィSDTのROC.md) — Szalma & Hancock (2013) Fuzzy SDT on the ROCs ／ ファジィ SDT も正規・等分散の仮定を満たし、従来の式を使ってよい ／ ROC 分析
+
+## 全訳＋アキラの解説（papers/全訳/）
+> オープンライセンスの論文だけ。冒頭に出典とライセンスを明記。
+- [全訳/2018_Shibata_全訳と解説.md](全訳/2018_Shibata_全訳と解説.md) — Shibata et al. (2018) ／ CC BY 4.0 ／ 日本語と英訳の量の比（1.85〜2.46）の出どころ
+- [全訳/2020_Clancy_全訳と解説.md](全訳/2020_Clancy_全訳と解説.md) — Clancy (2020) ／ CC BY ／ 日本語の節の切り方と、動画の記憶からの語り直し
+- [全訳/2019_Coupe_全訳と解説.md](全訳/2019_Coupe_全訳と解説.md) — Coupé et al. (2019) ／ CC BY-NC 4.0（非営利のみ） ／ 換算比とは「単位あたりの情報量の比」
+
+## 物語・言語の比較
+- [2018_Shibata_日本語の命題密度と英訳トークン比.md](2018_Shibata_日本語の命題密度と英訳トークン比.md) — Shibata et al. (2018) Idea density in Japanese ／ 日本語の単位数と英訳トークン数は r=.995 で比例するが、比は訳し方で1.85〜2.46と変わる ／ 日英の長さの比, 命題密度
+- [2020_Clancy_日本語の語りの節連鎖.md](2020_Clancy_日本語の語りの節連鎖.md) — Clancy (2020) Clause Chaining in Japanese Narratives ／ サザエさんの再生などで日本語の節の切り方を具体的に定義。大人は約7分の動画で平均76節 ／ 節, 「〜て」, 物語
+- [2019_Coupe_言語間の情報伝達率.md](2019_Coupe_言語間の情報伝達率.md) — Coupé, Oh, Dediu & Pellegrino (2019) Comparable information rates across languages ／ 単位あたりの情報量と量の掛け算で言語差がそろう（約39 bits/s） ／ 情報密度, 言語間比較
+- [1994_Berman_Frog_Storyの言語間比較.md](1994_Berman_Frog_Storyの言語間比較.md) — Berman & Slobin (1994) Relating Events in Narrative（プレビュー版） ／ 5言語の Frog Story を「節」単位で比較。長さはコード化された節の数で測る ／ 言語間比較, 節, 物語
 
 ## 認知科学のその他
 - [2017_Ueda_幾何図形の視覚探索の文化差.md](2017_Ueda_幾何図形の視覚探索の文化差.md) — Ueda et al. (2017) Cultural Differences in Visual Search for Geometric Figures ／ 線の長さの探索非対称性は北米にあり日本にない。分析／包括では説明できない ／ 文化差, 視覚探索

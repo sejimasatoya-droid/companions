@@ -32,6 +32,7 @@
 - [2025_Davalos_WebEyeTrack.md](2025_Davalos_WebEyeTrack.md) — Davalos, Zhang et al. (2025) WebEyeTrack ／ ブラウザ内で動く軽量な視線推定と9点以下の少数ショット適応 ／ ブラウザ, 少数ショット学習
 
 ## 信号検出理論
+- [../notes/講義資料_信号検出基礎2_ROCとメタ認知.md](../notes/講義資料_信号検出基礎2_ROCとメタ認知.md) — 齋木 (2026) 信号検出基礎(2) 講義資料 ／ ROC、z-ROC で等分散性を確認、非等分散モデル、確信度評定 ROC、Type 2 SDT と meta-d' ／ 授業資料
 - [2000_Parasuraman_ファジィ信号検出理論の基礎.md](2000_Parasuraman_ファジィ信号検出理論の基礎.md) — Parasuraman, Masalonis & Hancock (2000) Fuzzy Signal Detection Theory: Basic Postulates and Formulas ／ 信号と反応を0〜1の所属度にしたファジィ SDT の計算手順 ／ ファジィ SDT
 - [2003_Masalonis_航空管制でのファジィSDT.md](2003_Masalonis_航空管制でのファジィSDT.md) — Masalonis & Parasuraman (2003) Fuzzy SDT in air traffic control ／ 衝突予測の評価でファジィ SDT を使うと誤警報率が下がる ／ 航空管制, 自動化
 - [2013_Szalma_ファジィSDTのROC.md](2013_Szalma_ファジィSDTのROC.md) — Szalma & Hancock (2013) Fuzzy SDT on the ROCs ／ ファジィ SDT も正規・等分散の仮定を満たし、従来の式を使ってよい ／ ROC 分析

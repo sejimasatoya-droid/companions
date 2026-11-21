@@ -569,6 +569,14 @@
     "clocks.ザルムの手": 1
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 96",
+   "text": "春が来た。村の共同倉の管理を改める話を、もう一度父に持ちかけるときだ",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

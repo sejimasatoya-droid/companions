@@ -430,8 +430,8 @@ def projects_week(st, out):
 
 # ---------------------------------------------------------------- 主人公
 def mod(v):
-    """能力の修正（2d6 用）：8〜10 で 0、11〜13 で +1、14〜16 で +2、17〜 で +3、5〜7 で −1"""
-    return math.floor((v - 8) / 3)
+    """能力の修正（2d6 用）：（能力 − 6）÷ 2。6〜7 で 0、8〜9 で +1、10〜11 で +2、12〜13 で +3 …"""
+    return math.floor((v - 6) / 2)
 
 
 def roll2d6():
@@ -738,12 +738,17 @@ def status(st, gm=False):
 
 
 # ---------------------------------------------------------------- 判定
-def check(st, ability, dc, bonus=0, note=""):
+def check(st, ability, dc, bonus=0, note="", calm=False):
     h = st["protagonist"]
     v = h["abilities"].get(ability)
     if v is None:
         raise SystemExit(f"能力がありません: {ability}")
     pen = fatigue_pen(h["fatigue"])
+    if calm:
+        total = 7 + mod(v) + bonus + pen
+        res = "成功" if total >= dc else "失敗（落ち着いて取り組んでも届かない。振るか、別の手を）"
+        print(f"🎲 {ability}判定{('（'+note+'）') if note else ''}：落ち着いて取り組む 7 {mod(v):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc} → {res}")
+        return res
     a1, a2, r = roll2d6()
     total = r + mod(v) + bonus + pen
     res = grade(r, total, dc)
@@ -787,6 +792,25 @@ def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
     shown = " ".join(f"{k}{v:+d}" for k, v in parts if v and k != "出目")
     print(f"🗣 {name}への説得：2d6[{a1},{a2}]={r} {shown} ＝ {total} vs {dc} → {res}")
     save_state(st)
+
+
+def react(who, base, factors, note=""):
+    """人物・勢力の反応判定。2d6 ＋ 態度 ＋ 要因（軽い±1／ふつう±2／決定的±3）。合計の傾きが ±5 を超えたら振らない"""
+    fs = []
+    for f in factors:
+        name, _, val = f.rpartition(":")
+        fs.append((name, int(val)))
+    lean = base + sum(v for _, v in fs)
+    shown = f"態度{base:+d} " + " ".join(f"{n}{v:+d}" for n, v in fs)
+    def label(t):
+        return "とてもよい" if t >= 12 else "よい" if t >= 9 else "ふつう" if t >= 6 else "悪い" if t >= 3 else "とても悪い"
+    if abs(lean) > 5:
+        total = 7 + lean
+        print(f"⚖ {who}の反応{('（'+note+'）') if note else ''}：{shown} ＝ 傾き{lean:+d} → 傾きが大きいので振らない（7{lean:+d}＝{total}）→ 【{label(total)}】")
+        return
+    a1, a2, r = roll2d6()
+    total = r + lean
+    print(f"⚖ {who}の反応{('（'+note+'）') if note else ''}：2d6[{a1},{a2}]={r} {shown} ＝ {total} → 【{label(total)}】（5以下 悪い／6〜8 ふつう／9〜11 よい／12〜 とてもよい）")
 
 
 # ---------------------------------------------------------------- 方針（政策）
@@ -963,7 +987,7 @@ def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=
     cost = stage * SIZES[size] * (2 if living else 1)
     if h["魔力点"] < cost:
         raise SystemExit(f"魔力点が足りない（必要 {cost}、残り {h['魔力点']}）")
-    dc = 3 + stage + (1 if living else 0) + (1 if SIZES[size] >= 4 else 0)
+    dc = 5 + stage + (1 if living else 0) + (1 if SIZES[size] >= 4 else 0)
     pen = fatigue_pen(h["fatigue"])
     a1, a2, r = roll2d6()
     total = r + mod(mg) + bonus + pen
@@ -1076,6 +1100,9 @@ def main():
     s = sub.add_parser("advance"); s.add_argument("n", nargs="?", type=int, default=1)
     s = sub.add_parser("check"); s.add_argument("ability"); s.add_argument("dc", type=int)
     s.add_argument("--bonus", type=int, default=0); s.add_argument("--note", default="")
+    s.add_argument("--calm", action="store_true", help="落ち着いて取り組める場面。振らずに 7＋修正")
+    s = sub.add_parser("react"); s.add_argument("who"); s.add_argument("--base", type=int, default=0)
+    s.add_argument("--factor", action="append", default=[], help="要因:値（例 山の民との約束:-3）"); s.add_argument("--note", default="")
     s = sub.add_parser("persuade"); s.add_argument("name"); s.add_argument("--dc", type=int, required=True)
     s.add_argument("--match", type=int, default=0); s.add_argument("--loss", type=int, default=0)
     s.add_argument("--status", type=int, default=None); s.add_argument("--proof", action="store_true")
@@ -1127,7 +1154,7 @@ def main():
         save_state(st)
         print("初期状態に戻しました")
         return
-    if a.cmd in ("advance", "check", "persuade", "magic", "jikuri", "battle", "court", "roll", "adj", "set", "project"):
+    if a.cmd in ("advance", "check", "persuade", "magic", "jikuri", "battle", "court", "roll", "adj", "set", "project", "react"):
         snapshot(f"{a.cmd} " + " ".join(str(v) for k, v in vars(a).items() if k not in ("cmd",) and v not in (None, "", 0, False, [], "{}"))[:60])
     st = load_state()
 
@@ -1136,7 +1163,9 @@ def main():
     elif a.cmd == "advance":
         advance(st, a.n)
     elif a.cmd == "check":
-        check(st, a.ability, a.dc, a.bonus, a.note)
+        check(st, a.ability, a.dc, a.bonus, a.note, a.calm)
+    elif a.cmd == "react":
+        react(a.who, a.base, a.factor, a.note)
     elif a.cmd == "persuade":
         persuade(st, a.name, a.dc, a.match, a.loss, a.status, a.proof, a.bonus)
     elif a.cmd == "roll":

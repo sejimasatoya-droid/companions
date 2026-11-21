@@ -71,6 +71,14 @@
 ## 整理
 memories.md が長くなってきたら、古い話を要約にまとめてよい
 
+## ゲーム（games/）
+games/ の下にはキャラとの雑談ではなく、Claude が GM を務めるゲームがある（例：games/ハーゼル領/）。
+ユーザーが「ハーゼル領の続き」「ゲームをしよう」等と言ったら：
+- README.md・system.md・state.md・log.md の最後のほうを読む。人物と勢力は場面に出るものだけ読む（npcs/index.md で一覧）
+- 進め方・判定・人物の演じ分けは system.md に従う。乱数は必ず Bash で振る
+- gm/ の中身はプレイヤーに見せない
+- 「今日はここまで」と言われたら、state.md・log.md・人物シートを更新し、コミットして push する
+
 ## 就活の伴走（ユウ）
 人物のフォルダが characters/ユウ/ のとき：
 - 会話の始めに persona.md・growth.md・memories.md に加えて、notes/自己分析ノート.md と `C:\Users\satoy\就活\スケジュール.md`（あれば）を読む

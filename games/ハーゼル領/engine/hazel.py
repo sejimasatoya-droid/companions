@@ -430,7 +430,7 @@ def projects_week(st, out):
 
 # ---------------------------------------------------------------- 主人公
 def mod(v):
-    return math.floor((v - 10) / 2)
+    return math.floor((v - 8) / 2)
 
 
 def fatigue_pen(f):
@@ -736,7 +736,7 @@ def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
         raise SystemExit(f"人物がいません: {name}")
     h = st["protagonist"]
     if status_ is None:
-        status_ = -3 if age(st) < 12 else 0
+        status_ = (-2 if r_["信頼"] < 3 else 0) if age(st) < 12 else 0
     r = d(20)
     cards = h.get("cards", {})
     psych = 1 if cards.get("説得と交渉の心理", 0) >= 1 else 0
@@ -936,7 +936,7 @@ def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=
     cost = stage * SIZES[size] * (2 if living else 1)
     if h["魔力点"] < cost:
         raise SystemExit(f"魔力点が足りない（必要 {cost}、残り {h['魔力点']}）")
-    dc = 8 + 2 * stage + (4 if living else 0) + (2 if SIZES[size] >= 4 else 0)
+    dc = 6 + 2 * stage + (4 if living else 0) + (2 if SIZES[size] >= 4 else 0)
     pen = fatigue_pen(h["fatigue"])
     r = d(20)
     total = r + mod(mg) + bonus + pen

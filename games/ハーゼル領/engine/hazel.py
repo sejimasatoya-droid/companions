@@ -468,7 +468,12 @@ def hero_week(st, out):
         ab = ad.get("ability")
         if ab:
             learn = 1.25 if h.get("cards", {}).get("発達と学習の心理", 0) >= 1 and ab in ("知識", "礼法") else 1.0
-            h["xp"][ab] = h["xp"].get(ab, 0) + days * ad.get("rate", 1) * learn
+            rate = ad.get("rate", 1)
+            for ri in ad.get("rate_if", []):
+                if cond(st, ri["if"]):
+                    rate = ri["rate"]
+                    break
+            h["xp"][ab] = h["xp"].get(ab, 0) + days * rate * learn
             v = h["abilities"][ab]
             need = max(8, v * v // 2)
             cap = cap_body if ab in ("体力", "武芸") else cap_mind

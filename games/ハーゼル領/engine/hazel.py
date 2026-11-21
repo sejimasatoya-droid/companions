@@ -1056,8 +1056,8 @@ def battle(st, a, b, terrain="平地", a_lead=0, b_lead=0, named=None):
     if terrain == "防御":
         sa *= 2.0
     ratio = sa / max(sb, 0.01)
-    table = [(2.0, "大勝", 0.05, 0.5, 1), (1.25, "勝ち", 0.1, 0.3, 2), (0.8, "拮抗", 0.2, 0.2, 4),
-             (0.5, "負け", 0.3, 0.1, 6), (0, "大敗", 0.5, 0.05, 10)]
+    table = [(2.0, "大勝", 0.05, 0.5, 0), (1.25, "勝ち", 0.1, 0.3, 1), (0.8, "拮抗", 0.2, 0.2, 2),
+             (0.5, "負け", 0.3, 0.1, 4), (0, "大敗", 0.5, 0.05, 7)]
     for th, res, la, lb, risk in table:
         if ratio >= th:
             break
@@ -1071,7 +1071,8 @@ def battle(st, a, b, terrain="平地", a_lead=0, b_lead=0, named=None):
         r = d(20)
         if r <= risk:
             r2 = d(20)
-            fate = "戦死" if r2 <= 4 else "重傷" if r2 <= 12 else "軽傷"
+            can_die = res in ("負け", "大敗")
+            fate = "戦死" if (can_die and r2 <= 2) else "重傷" if r2 <= 9 else "軽傷"
             print(f"  ✚ {nm}：🎲{r} ≦ {risk} → {fate}（🎲{r2}）")
         else:
             print(f"  ✚ {nm}：無事（🎲{r} > {risk}）")

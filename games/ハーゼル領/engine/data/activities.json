@@ -17,6 +17,10 @@
   "requires_text": "ボルドか父の許しが要る",
   "rate_if": [
    {
+    "if": "flag_ボルドオーベル駐留 and flag_父が稽古を見る",
+    "rate": 0.9
+   },
+   {
     "if": "flag_ボルドオーベル駐留 and flag_兵と稽古",
     "rate": 0.8
    },

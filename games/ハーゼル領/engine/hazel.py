@@ -61,6 +61,26 @@ def load_json(path):
         return json.load(f)
 
 
+SNAP_DIR = os.path.join(BASE, "save", "snapshots")
+SNAP_KEEP = 40
+SNAP_LABEL = ""
+
+
+def snapshot(label):
+    """いまの状態を保存する（刻戻り用）。古いものから消す"""
+    if not os.path.exists(SAVE):
+        return
+    os.makedirs(SNAP_DIR, exist_ok=True)
+    files = sorted(f for f in os.listdir(SNAP_DIR) if f.endswith(".json"))
+    n = int(files[-1].split("_")[0]) + 1 if files else 1
+    st = load_json(SAVE)
+    st["_snap"] = {"n": n, "label": label, "when": cal_str(st["week"])}
+    with open(os.path.join(SNAP_DIR, f"{n:05d}_.json"), "w", encoding="utf-8") as f:
+        json.dump(st, f, ensure_ascii=False)
+    for old in files[:-SNAP_KEEP + 1] if len(files) >= SNAP_KEEP else []:
+        os.remove(os.path.join(SNAP_DIR, old))
+
+
 def save_state(st):
     os.makedirs(os.path.dirname(SAVE), exist_ok=True)
     tmp = SAVE + ".tmp"
@@ -1066,6 +1086,8 @@ def main():
     s = sub.add_parser("treaty"); s.add_argument("action"); s.add_argument("partner", nargs="?"); s.add_argument("kind", nargs="?")
     s.add_argument("terms", nargs="?", default="")
     s = sub.add_parser("marriage"); s.add_argument("action"); s.add_argument("name", nargs="?"); s.add_argument("terms", nargs="?", default="")
+    s = sub.add_parser("rewind"); s.add_argument("action", choices=["list", "to", "status"]); s.add_argument("n", nargs="?", type=int)
+    s.add_argument("reason", nargs="?", default="")
     s = sub.add_parser("impression"); s.add_argument("name"); s.add_argument("text")
     s = sub.add_parser("log"); s.add_argument("text")
     sub.add_parser("init")
@@ -1078,6 +1100,8 @@ def main():
         save_state(st)
         print("初期状態に戻しました")
         return
+    if a.cmd in ("advance", "check", "persuade", "magic", "jikuri", "battle", "court", "roll", "adj", "set", "project"):
+        snapshot(f"{a.cmd} " + " ".join(str(v) for k, v in vars(a).items() if k not in ("cmd",) and v not in (None, "", 0, False, [], "{}"))[:60])
     st = load_state()
 
     if a.cmd == "status":
@@ -1238,6 +1262,29 @@ def main():
             append_md(LOG_MD, f"- {cal_str(st['week'])}：{old['相手'] if old else '?'}との婚約を解いた（{a.terms or a.name}）")
             save_state(st)
             print("婚約を解いた：名誉 −15。相手の家の態度 −4 を GM が反映すること")
+    elif a.cmd == "rewind":
+        y = cal(st["week"])[0]
+        used = st["protagonist"].setdefault("刻戻り", {}).get(str(y))
+        if a.action == "status":
+            print(f"刻戻り（{y}年）：{'使った（' + used + '）' if used else 'まだ使える'}")
+        elif a.action == "list":
+            files = sorted(f for f in os.listdir(SNAP_DIR) if f.endswith(".json")) if os.path.exists(SNAP_DIR) else []
+            for f in files[-15:]:
+                sn = load_json(os.path.join(SNAP_DIR, f)).get("_snap", {})
+                print(f"  [{sn.get('n')}] {sn.get('when')}　{sn.get('label')} の直前")
+            print(f"刻戻り（{y}年）：{'使った' if used else 'まだ使える'}")
+        else:
+            if used:
+                raise SystemExit(f"{y}年の刻戻りは、もう使った（{used}）")
+            path = os.path.join(SNAP_DIR, f"{a.n:05d}_.json")
+            if not os.path.exists(path):
+                raise SystemExit("その番号の記録がない（rewind list で確かめる）")
+            old = load_json(path)
+            old.pop("_snap", None)
+            old["protagonist"].setdefault("刻戻り", {})[str(y)] = f"{cal_str(st['week'])}：{a.reason}"
+            save_state(old)
+            append_md(LOG_MD, f"- {cal_str(st['week'])}：（刻戻り）世界が少しだけ巻き戻った。{a.reason}")
+            print(f"刻戻り：記録 [{a.n}] まで世界を戻した。{y}年の刻戻りを使った")
     elif a.cmd == "impression":
         r_ = st["npcs"].setdefault(a.name, {"信頼": 0, "好意": 0, "警戒": 0, "借り": 0, "next": None})
         old = r_.get("印象", "")

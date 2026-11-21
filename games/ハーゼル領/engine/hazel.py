@@ -512,7 +512,7 @@ def hero_week(st, out):
         h["魔力点上限"] = h["abilities"]["魔力"] * 2
         h["魔力点"] = min(h["魔力点上限"], h["魔力点"] + h["魔力点上限"] // 2 + rest)
         prac = rt.get("時繰りの練習", 0)
-        if prac and d(20) <= prac // 2 + (1 if st["flags"].get("夜の見張り") else 0):
+        if prac and d(20) <= prac // 2 + (1 if st["flags"].get("夜の見張り") else 0) and not (st["flags"].get("練習の隠れ場所") and d(2) == 1):
             out.report("時繰りの練習をしているところを、誰かに見られたかもしれない", stop=True)
     h["fatigue"] = round(max(0.0, h["fatigue"] + 0.1 * active - 0.5 - 0.4 * rest), 2)
     if h["fatigue"] >= 3 and not st["flags"].get("病"):

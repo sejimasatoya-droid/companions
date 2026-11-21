@@ -19,6 +19,13 @@
   python3 engine/hazel.py rumor add "内容" 段階 | rumor list
   python3 engine/hazel.py battle --a JSON --b JSON [--terrain 平地|森|丘|防御] [--a-lead N] [--b-lead N] [--named 名前,名前]
   python3 engine/hazel.py jikuri 戻す|進める --stage 1 --size 小物|人|道具|動物|荷車|小屋|家|畑 [--living] [--witness 人数]
+  python3 engine/hazel.py magic 呪文名 [--witness N]          系統魔法（見識など）
+  python3 engine/hazel.py policy show | policy set 年貢 軽い "理由"
+  python3 engine/hazel.py appoint 家令 ヴィクトル [--discretion 大|小] [--policy "方針"]
+  python3 engine/hazel.py page start 小姓|従士 | page resolve 成功|失敗 | page end
+  python3 engine/hazel.py court --ours 証拠 --theirs 証拠 [--our-voice N] [--their-voice N] [--their-mod N]
+  python3 engine/hazel.py treaty add|break|list 相手 種類 "条件"
+  python3 engine/hazel.py marriage list | marriage engage 名前 "条件" | marriage break "理由"
   python3 engine/hazel.py impression 人物 "印象"   人物の主人公への印象を書き換える
   python3 engine/hazel.py log "内容"
   python3 engine/hazel.py init               初期状態を作り直す（今の状態は消える）
@@ -269,6 +276,7 @@ def tick_clocks(st, out):
                 p += m["p_season"]
         if c.get("only_if") and not cond(st, c["only_if"]):
             continue
+        p += policy_effects(st)["clock"].get(cid, 0)
         if random.random() < p_week(p):
             apply_effects(st, {f"clocks.{cid}": 1}, out)
             if not c.get("visible", True):
@@ -314,13 +322,14 @@ def econ_week(st, out):
         k = {"凶作": 0.6, "平年": 1.0, "豊作": 1.2}[h]
         k *= 1 + (dm["開発"] - 28) / 100
         k *= 0.75 if dm["民心"] < 25 else (0.9 if dm["民心"] < 40 else 1.0)
-        money(260 * k * pop_k, f"秋の年貢と直営地の収穫（{h}）")
+        pol = policy_effects(st)
+        money((190 * pol["tax"] + 70 * pol["demesne"]) * k * pop_k, f"秋の年貢と直営地の収穫（{h}）")
         money(-10, "教会への寄進")
         money(-round(dm["負債"] * dm["利率"], 1), "借金の利子")
         st["harvest"] = None
     if (m, wk) == (1, 1):
         money(-20, "辺境伯への年始の献上")
-        money(20 * (dm["森の健全度"] / 70), "薪・炭・放牧料")
+        money(20 * (dm["森の健全度"] / 70) * policy_effects(st)["winter"], "薪・炭・放牧料")
         money(round(15 * random.uniform(0.3, 1.7), 1), "魔石の税")
     if (m, wk) == (3, 2):
         if d(20) <= 2:
@@ -345,6 +354,8 @@ def econ_week(st, out):
             fl["赤字中"] = False
         if fl.get("給金遅配"):
             apply_effects(st, {"domain.民心": -1}, out)
+        for eff in policy_effects(st)["monthly"]:
+            apply_effects(st, eff, out)
         # 何もなければ、民心と治安はゆっくり平常（民心55・治安50）へ戻る
         for k, base in (("民心", 55), ("治安", 50)):
             if dm[k] < base and not fl.get("給金遅配") and not fl.get("飢え"):
@@ -369,7 +380,7 @@ def econ_week(st, out):
 # ---------------------------------------------------------------- 計画
 def labor_available(st):
     y, m, wk = cal(st["week"])
-    return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP - st["military"].get("徴募兵", 0))
+    return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP * policy_effects(st)["labor"] - st["military"].get("徴募兵", 0))
 
 
 def projects_week(st, out):
@@ -577,6 +588,8 @@ def advance(st, n):
         econ_week(st, out)
         tick_clocks(st, out)
         factions_month(st, out)
+        offices_month(st, out)
+        page_month(st, out)
         npcs_week(st, out)
         watches_week(st, out)
         events_week(st, out)
@@ -616,10 +629,21 @@ def status(st, gm=False):
     print("  週の過ごし方 " + " / ".join(f"{k}{v}日" for k, v in h["routine"].items()))
     if h.get("special"):
         print(f"  特殊能力 {h['special']}　魔力点 {h.get('魔力点')}/{h.get('魔力点上限')}　扱える時間 {TIME_STAGES[max(1, h['abilities']['魔力'] // 3)]}まで")
+    print(f"  系統魔法 {h.get('系統')}（{'洗礼済み' if h.get('洗礼済み') else '洗礼前：人前で使うと野良の疑い'}）")
+    if st.get("engagement"):
+        print(f"  婚約 {st['engagement']['相手']}（{st['engagement']['条件']}）")
+    if st["flags"].get("出仕中"):
+        pg = st["page"]
+        print(f"■ 出仕 {pg['段階']}　城での評判 {pg['評判']}　派閥の近さ " + " / ".join(f"{k}{v:+d}" for k, v in pg["派閥"].items()))
     dm = st["domain"]
     print("■ 領")
     print("  " + " / ".join(f"{k} {v}" for k, v in dm.items()))
     print(f"  兵 " + " / ".join(f"{k} {v}" for k, v in st["military"].items()) + f"　今週の人手の余力 {labor_available(st)} 人")
+    print("■ 方針 " + " / ".join(f"{k}:{v}" for k, v in st.get("policies", {}).items()))
+    offs = [f"{k}:{v.get('人') or '空き'}（裁量{v.get('裁量','小')}）" for k, v in st.get("offices", {}).items()]
+    print("■ 役職 " + " / ".join(offs) + ("" if st["flags"].get("当主") else "　※当主になるまで委任の判定は動かない"))
+    if st.get("treaties"):
+        print("■ 取り決め " + " / ".join(f"{t['相手']}と{t['種類']}（{t['条件']}）" for t in st["treaties"]))
     print("■ 情勢クロック")
     for cid, c in CLOCKS.items():
         if c.get("visible", True) or gm:
@@ -645,6 +669,8 @@ def status(st, gm=False):
     fdefs = defs("factions")
     for fid, f in st["factions"].items():
         print(f"  {fdefs[fid]['name']}：態度 {f['態度']:+d}　" + " ".join(f"{k}{v}" for k, v in f.items() if k not in ('態度',)))
+    if gm and st.get("rel"):
+        print("■ 勢力どうしの関係（GM）　" + " / ".join(f"{k} {v:+d}" for k, v in st["rel"].items()))
     if st["rumors"]:
         print("■ 噂")
         for ru in st["rumors"]:
@@ -698,6 +724,161 @@ def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
         r_["警戒"] = min(5, r_["警戒"] + 1)
     print(f"🗣 {name}への説得：" + " ".join(f"{k}{v:+d}" if k != "出目" else f"🎲{v}" for k, v in parts if v or k == "出目")
           + f" ＝ {total} vs {dc} → {res}")
+    save_state(st)
+
+
+# ---------------------------------------------------------------- 方針（政策）
+def policy_effects(st):
+    pdefs = defs("policies")
+    res = {"tax": 1.0, "demesne": 1.0, "labor": 1.0, "winter": 1.0, "monthly": [], "clock": {}}
+    for k, v in st.get("policies", {}).items():
+        o = pdefs.get(k, {}).get(v, {})
+        for f in ("tax", "demesne", "labor", "winter"):
+            res[f] *= o.get(f, 1.0)
+        if o.get("monthly"):
+            res["monthly"].append(o["monthly"])
+        for c, p in o.get("clock", {}).items():
+            res["clock"][c] = res["clock"].get(c, 0) + p
+    return res
+
+
+# ---------------------------------------------------------------- 家臣への委任
+OFFICES = {
+    "家令": {"stat": "実務", "good": {"domain.財貨": 2}, "bad": {"domain.財貨": -2}, "text": "財政と年貢の取り立て"},
+    "騎士隊長": {"stat": "武勇", "good": {"domain.治安": 2}, "bad": {"domain.治安": -1}, "text": "兵と治安"},
+    "教えと衛生": {"stat": "実務", "good": {"domain.衛生": 1}, "bad": {}, "text": "教会・読み書き・衛生"},
+    "外交": {"stat": "交渉", "good": {}, "bad": {}, "text": "使者・交渉（交渉の判定に 交渉÷3 を足す）"},
+    "代官": {"stat": "実務", "good": {"domain.民心": 1, "domain.財貨": 1}, "bad": {"domain.民心": -1}, "text": "主人公が留守のあいだ領を預かる"},
+}
+
+
+def loyalty(st, name):
+    r = st["npcs"].get(name)
+    if r:
+        return r.get("信頼", 0)
+    return st["vassals"].get(name, {}).get("忠誠", 0)
+
+
+def offices_month(st, out):
+    y, m, wk = cal(st["week"])
+    if wk != 1 or not (st["flags"].get("当主") or st["flags"].get("代官を置く")):
+        return
+    for office, o in st.get("offices", {}).items():
+        who = o.get("人")
+        if not who:
+            continue
+        od = OFFICES[office]
+        v = st["vassals"].get(who, {})
+        r = d(10) + v.get(od["stat"], 5)
+        grade = "好成績" if r >= 14 else ("不手際" if r <= 8 else "並")
+        eff = od["good"] if grade == "好成績" else (od["bad"] if grade == "不手際" else {})
+        if grade != "並" and eff:
+            out.report(f"〈{office}・{who}〉{od['text']}：{grade}（🎲{r}）。{v.get('癖', '')}")
+            apply_effects(st, eff, out)
+        lo, amb = loyalty(st, who), v.get("野心", 3)
+        if lo <= 0 and amb >= 6 and d(6) == 1:
+            out.report(f"〈{office}・{who}〉が預かった金の一部を懐に入れた", visible=False)
+            apply_effects(st, {"domain.財貨": -3}, out)
+        if o.get("裁量") == "大" and amb >= 5 and d(10) == 1:
+            out.report(f"〈{office}・{who}〉が主人公に諮らず、自分の判断で事を進めた（方針：{o.get('方針', 'なし')}）。GM が性格に沿って中身を決める", stop=True)
+
+
+# ---------------------------------------------------------------- 出仕（少年期）
+def page_month(st, out):
+    y, m, wk = cal(st["week"])
+    if not st["flags"].get("出仕中"):
+        return
+    pg = st["page"]
+    need = 3 if pg.get("段階") == "小姓" else 2
+    if st["protagonist"]["routine"].get("務め", 0) < need:
+        apply_effects(st, {"page.評判": -1}, out)
+        out.report(f"務めの日数が足りない（{pg.get('段階')}は週 {need} 日）。城での評判 −1")
+    if wk != 2:
+        return
+    tasks = [t for t in defs("page_tasks") if cond(st, t.get("if"))]
+    t = random.choices(tasks, weights=[x.get("w", 1) for x in tasks])[0]
+    pg["今の務め"] = t["id"]
+    ch = f"　※{t['choice']}" if t.get("choice") else ""
+    out.report(f"〔務め〕{t['text']}（{t['ability']}判定 目標 {t['dc']}。結果は page resolve 成功|失敗）{ch}", stop=True)
+
+
+def page_resolve(st, result):
+    pg = st["page"]
+    t = next((x for x in defs("page_tasks") if x["id"] == pg.get("今の務め")), None)
+    if not t:
+        raise SystemExit("いま解決待ちの務めはない")
+    eff = t["success"] if result in ("成功", "大成功") else t["fail"]
+    out = Out(st)
+    apply_effects(st, eff, out)
+    pg["今の務め"] = None
+    save_state(st)
+    print(f"務め「{t['id']}」：{result} → {eff}　城での評判 {pg['評判']}　派閥 {pg['派閥']}")
+
+
+# ---------------------------------------------------------------- 外交：裁き・取り決め・縁談
+def court(st, ours, theirs, our_mod=None, their_mod=0, our_voice=0, their_voice=0, their_favor=0):
+    h = st["protagonist"]
+    if our_mod is None:
+        our_mod = mod(h["abilities"]["弁舌"])
+    favor = (st["domain"]["主家の覚え"] - 50) // 10
+    r1, r2 = d(20), d(20)
+    a = r1 + ours * 2 + our_mod + favor + our_voice * 2
+    b = r2 + theirs * 2 + their_mod + their_favor + their_voice * 2
+    diff = a - b
+    if diff >= 5:
+        res = "勝訴：こちらの言い分が通る"
+    elif diff >= 1:
+        res = "有利な痛み分け：こちらに有利な形で分け合う"
+    elif diff >= -4:
+        res = "不利な痛み分け：相手に有利な形で分け合う"
+    else:
+        res = "敗訴：相手の言い分が通る"
+    print(f"⚖ 裁き：こちら 🎲{r1} 証拠{ours}×2 弁論{our_mod:+d} 主家の覚え{favor:+d} 口添え{our_voice}×2 ＝ {a}"
+          f" ／ 相手 🎲{r2} 証拠{theirs}×2 弁論{their_mod:+d} 覚え{their_favor:+d} 口添え{their_voice}×2 ＝ {b}")
+    print(f"  差 {diff:+d} → 【{res}】")
+    print("  ※負けた側の勢力の態度 −2。決闘裁判を申し出ることもできる（騎士どうし・武芸の戦い）")
+
+
+# ---------------------------------------------------------------- 系統魔法
+TIER_REQ = {1: 0, 2: 9, 3: 13, 4: 16}
+
+
+def magic(st, spell, witnesses=0, bonus=0, note=""):
+    h = st["protagonist"]
+    school = h.get("系統")
+    sp = defs("spells").get(school, {}).get(spell)
+    if not sp:
+        raise SystemExit(f"{school}の呪文：{'、'.join(defs('spells').get(school, {}))}")
+    mg = h["abilities"]["魔力"]
+    if mg < TIER_REQ[sp["tier"]]:
+        raise SystemExit(f"「{spell}」には魔力 {TIER_REQ[sp['tier']]} が要る（今 {mg}）")
+    if h["魔力点"] < sp["cost"]:
+        raise SystemExit(f"魔力点が足りない（必要 {sp['cost']}、残り {h['魔力点']}）")
+    dc = sp["dc"]
+    pen = -2 if h["fatigue"] >= 2 else 0
+    r = d(20)
+    total = r + mod(mg) + bonus + pen
+    h["魔力点"] -= sp["cost"]
+    h["xp"]["魔力"] = h["xp"].get("魔力", 0) + sp["tier"] * 2
+    res = "大成功" if r == 20 else "大失敗" if r == 1 else ("成功" if total >= dc else ("代償つき" if total >= dc - 3 else "失敗"))
+    print(f"✦ {school}「{spell}」{('（'+note+'）') if note else ''}：🎲{r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc} → {res}　魔力点 −{sp['cost']}（残り {h['魔力点']}/{h['魔力点上限']}）")
+    if res in ("成功", "大成功", "代償つき"):
+        print(f"  効果：{sp['effect']}" + ("（ぼんやりとしか見えない／疲労 +0.5）" if res == "代償つき" else ""))
+        if res == "代償つき":
+            h["fatigue"] += 0.5
+    elif res == "大失敗":
+        h["fatigue"] += 1
+        print("  反動：見えたものは偽りか、見えすぎて頭が割れるように痛む（疲労 +1。GM が誤った情報を一つ与えてもよい）")
+    else:
+        print("  何も見えなかった")
+    if witnesses and res != "失敗":
+        if not h.get("洗礼済み"):
+            st["clocks"]["異端の目"] = min(8, st["clocks"]["異端の目"] + 1)
+            st["domain"]["注目度"] = min(100, st["domain"]["注目度"] + witnesses)
+            print(f"  ！ 洗礼前の力を {witnesses} 人に見られた（野良の疑い）：異端の目 +1、注目度 +{witnesses}")
+        else:
+            st["domain"]["注目度"] = min(100, st["domain"]["注目度"] + witnesses)
+            print(f"  ・ {witnesses} 人が見ていた：注目度 +{witnesses}（見識持ちは教会が囲い込みたがる）")
     save_state(st)
 
 
@@ -851,6 +1032,20 @@ def main():
     s = sub.add_parser("jikuri"); s.add_argument("direction", choices=["戻す", "進める"]); s.add_argument("--stage", type=int, default=1)
     s.add_argument("--size", default="小物"); s.add_argument("--living", action="store_true"); s.add_argument("--witness", type=int, default=0)
     s.add_argument("--bonus", type=int, default=0); s.add_argument("--note", default="")
+    s = sub.add_parser("magic"); s.add_argument("spell"); s.add_argument("--witness", type=int, default=0)
+    s.add_argument("--bonus", type=int, default=0); s.add_argument("--note", default="")
+    s = sub.add_parser("policy"); s.add_argument("action"); s.add_argument("key", nargs="?"); s.add_argument("value", nargs="?")
+    s.add_argument("reason", nargs="?", default="")
+    s = sub.add_parser("appoint"); s.add_argument("office"); s.add_argument("who"); s.add_argument("--discretion", default="小")
+    s.add_argument("--policy", default="")
+    s = sub.add_parser("page"); s.add_argument("action"); s.add_argument("arg", nargs="?")
+    s = sub.add_parser("court"); s.add_argument("--ours", type=int, required=True); s.add_argument("--theirs", type=int, required=True)
+    s.add_argument("--our-mod", type=int, default=None); s.add_argument("--their-mod", type=int, default=0)
+    s.add_argument("--our-voice", type=int, default=0); s.add_argument("--their-voice", type=int, default=0)
+    s.add_argument("--their-favor", type=int, default=0)
+    s = sub.add_parser("treaty"); s.add_argument("action"); s.add_argument("partner", nargs="?"); s.add_argument("kind", nargs="?")
+    s.add_argument("terms", nargs="?", default="")
+    s = sub.add_parser("marriage"); s.add_argument("action"); s.add_argument("name", nargs="?"); s.add_argument("terms", nargs="?", default="")
     s = sub.add_parser("impression"); s.add_argument("name"); s.add_argument("text")
     s = sub.add_parser("log"); s.add_argument("text")
     sub.add_parser("init")
@@ -935,6 +1130,94 @@ def main():
                [x for x in a.named.split(",") if x])
     elif a.cmd == "jikuri":
         jikuri(st, a.direction, a.stage, a.size, a.living, a.witness, a.bonus, a.note)
+    elif a.cmd == "magic":
+        magic(st, a.spell, a.witness, a.bonus, a.note)
+    elif a.cmd == "policy":
+        pdefs = defs("policies")
+        if a.action == "show":
+            for k, opts in pdefs.items():
+                if k.startswith("_"):
+                    continue
+                cur = st["policies"].get(k)
+                print(f"■ {k}（今：{cur}）")
+                for o, v in opts.items():
+                    print(f"   {'▶' if o == cur else ' '} {o}：{v.get('text', '')}")
+        elif a.action == "set":
+            if a.value not in pdefs.get(a.key, {}):
+                raise SystemExit(f"{a.key} の選択肢：{'、'.join(pdefs.get(a.key, {}))}")
+            old = st["policies"].get(a.key)
+            st["policies"][a.key] = a.value
+            out = Out(st)
+            for f, dv in pdefs[a.key][a.value].get("faction", {}).items():
+                apply_effects(st, {f"factions.{f}.態度": dv}, out)
+            append_md(LOG_MD, f"- {cal_str(st['week'])}：方針「{a.key}」を {old} → {a.value} に（{a.reason}）")
+            save_state(st)
+            print(f"方針「{a.key}」：{old} → {a.value}")
+    elif a.cmd == "appoint":
+        if a.office not in OFFICES:
+            raise SystemExit(f"役職：{'、'.join(OFFICES)}")
+        st["offices"][a.office] = {"人": None if a.who in ("なし", "空き") else a.who, "裁量": a.discretion, "方針": a.policy}
+        if a.who not in st["vassals"] and a.who not in ("なし", "空き"):
+            st["vassals"][a.who] = {"実務": 5, "武勇": 5, "交渉": 5, "野心": 3, "忠誠": 0, "癖": ""}
+            print(f"（{a.who} の家臣としての能力は仮に 5。set vassals.{a.who}.実務 7 などで決める）")
+        save_state(st)
+        append_md(LOG_MD, f"- {cal_str(st['week'])}：{a.office}に {a.who} を任じた（裁量 {a.discretion}、方針：{a.policy or 'なし'}）")
+        print(f"{a.office}：{a.who}（裁量 {a.discretion}）方針：{a.policy or 'なし'}")
+    elif a.cmd == "page":
+        if a.action == "start":
+            st["flags"]["出仕中"] = True
+            st["page"]["段階"] = a.arg or "小姓"
+            save_state(st)
+            print(f"出仕を始めた：{st['page']['段階']}。routine に「務め」を週 {3 if st['page']['段階']=='小姓' else 2} 日以上入れること")
+        elif a.action == "resolve":
+            page_resolve(st, a.arg)
+        elif a.action == "end":
+            st["flags"]["出仕中"] = False
+            save_state(st)
+            print("出仕を終えた")
+    elif a.cmd == "court":
+        court(st, a.ours, a.theirs, a.our_mod, a.their_mod, a.our_voice, a.their_voice, a.their_favor)
+    elif a.cmd == "treaty":
+        if a.action == "add":
+            st["treaties"].append({"相手": a.partner, "種類": a.kind, "条件": a.terms, "週": st["week"]})
+            append_md(LOG_MD, f"- {cal_str(st['week'])}：{a.partner}と{a.kind}を結んだ（{a.terms}）")
+            save_state(st)
+            print(f"取り決め：{a.partner}と{a.kind}（{a.terms}）")
+        elif a.action == "break":
+            st["treaties"] = [t for t in st["treaties"] if not (t["相手"] == a.partner and t["種類"] == a.kind)]
+            out = Out(st)
+            apply_effects(st, {"domain.名誉": -10}, out)
+            if a.partner in st["factions"]:
+                apply_effects(st, {f"factions.{a.partner}.態度": -3}, out)
+            for f in st["factions"]:
+                if f != a.partner:
+                    apply_effects(st, {f"factions.{f}.態度": -1 if d(6) <= 2 else 0}, out)
+            append_md(LOG_MD, f"- {cal_str(st['week'])}：{a.partner}との{a.kind}を破った（{a.terms}）")
+            save_state(st)
+            print(f"{a.partner}との{a.kind}を破った：名誉 −10、{a.partner}の態度 −3、ほかの勢力も信用を落とすことがある")
+        else:
+            for t in st["treaties"]:
+                print(f"{t['相手']}：{t['種類']}（{t['条件']}）")
+    elif a.cmd == "marriage":
+        if a.action == "list":
+            for n, c in defs("marriage").items():
+                if n.startswith("_"):
+                    continue
+                print(f"■ {n}（{cal(st['week'])[0]-c['born']}歳・{c['house']}・{c['rank']}）持参金 {c['dowry']}")
+                print(f"   効果：{c['effect']}\n   求められそうなこと：{c['ask']}\n   人柄の噂：{c['人柄']}")
+        elif a.action == "engage":
+            st["engagement"] = {"相手": a.name, "条件": a.terms, "週": st["week"]}
+            append_md(LOG_MD, f"- {cal_str(st['week'])}：{a.name}と婚約した（{a.terms}）")
+            save_state(st)
+            print(f"婚約：{a.name}（{a.terms}）")
+        elif a.action == "break":
+            old = st.get("engagement")
+            st["engagement"] = None
+            out = Out(st)
+            apply_effects(st, {"domain.名誉": -15}, out)
+            append_md(LOG_MD, f"- {cal_str(st['week'])}：{old['相手'] if old else '?'}との婚約を解いた（{a.terms or a.name}）")
+            save_state(st)
+            print("婚約を解いた：名誉 −15。相手の家の態度 −4 を GM が反映すること")
     elif a.cmd == "impression":
         r_ = st["npcs"].setdefault(a.name, {"信頼": 0, "好意": 0, "警戒": 0, "借り": 0, "next": None})
         old = r_.get("印象", "")

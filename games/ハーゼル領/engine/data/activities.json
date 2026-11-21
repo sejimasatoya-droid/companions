@@ -74,5 +74,26 @@
   "ability": "魔力",
   "rate": 1.0,
   "text": "人目を避けて時繰りを練習する。見られる危険がある"
+ },
+ "務め": {
+  "ability": "礼法",
+  "rate": 0.6,
+  "requires": "flag_出仕中",
+  "requires_text": "出仕しているとき",
+  "text": "小姓・従士としての務め（給仕・伝令・武具の手入れ）"
+ },
+ "執務": {
+  "ability": "知識",
+  "rate": 0.5,
+  "requires": "flag_当主",
+  "requires_text": "当主になってから",
+  "text": "書類・帳簿・謁見"
+ },
+ "視察": {
+  "ability": "弁舌",
+  "rate": 0.5,
+  "requires": "flag_当主 or flag_外出の許し",
+  "requires_text": "外出の許しか当主",
+  "text": "村々を見て回る"
  }
 }

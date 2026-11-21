@@ -186,7 +186,8 @@
   "森の主の呼び声": true,
   "主との約束": true,
   "城への顔見せ": false,
-  "山の民の約束の決着": true
+  "山の民の約束の決着": true,
+  "夏の森の検分": true
  },
  "harvest": null,
  "projects_active": [
@@ -592,6 +593,16 @@
    "effects": {
     "domain.人口": -80,
     "domain.民心": -5
+   },
+   "repeat": false
+  },
+  {
+   "if": "flag_夏の森の検分 and 通算週 >= 108",
+   "text": "辺境伯の家臣が、黒の森の検分のためにハーゼルへやってきた",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.夏の森の検分": false
    },
    "repeat": false
   }

@@ -430,7 +430,26 @@ def projects_week(st, out):
 
 # ---------------------------------------------------------------- 主人公
 def mod(v):
-    return math.floor((v - 8) / 2)
+    """能力の修正（2d6 用）：8〜10 で 0、11〜13 で +1、14〜16 で +2、17〜 で +3、5〜7 で −1"""
+    return math.floor((v - 8) / 3)
+
+
+def roll2d6():
+    a, b = d(6), d(6)
+    return a, b, a + b
+
+
+def grade(r, total, dc, partial=1):
+    """2d6 の結果：12 大成功／2 大失敗／目標値以上 成功／partial 以内の不足 代償つき／それ以外 失敗"""
+    if r == 12:
+        return "大成功"
+    if r == 2:
+        return "大失敗"
+    if total >= dc:
+        return "成功"
+    if total >= dc - partial:
+        return "代償つき"
+    return "失敗"
 
 
 def fatigue_pen(f):
@@ -497,10 +516,10 @@ def hero_week(st, out):
             out.report("時繰りの練習をしているところを、誰かに見られたかもしれない", stop=True)
     h["fatigue"] = round(max(0.0, h["fatigue"] + 0.1 * active - 0.5 - 0.4 * rest), 2)
     if h["fatigue"] >= 3 and not st["flags"].get("病"):
-        r = d(20) + mod(h["abilities"]["体力"])
-        if r < 12:
+        r = d(6) + d(6) + mod(h["abilities"]["体力"])
+        if r < 7:
             st["flags"]["病"] = True
-            out.report(f"主人公は無理がたたって寝込んだ（体力判定 🎲{r} < 12）", stop=True)
+            out.report(f"主人公は無理がたたって寝込んだ（体力判定 2d6={r} < 7）", stop=True)
         else:
             out.report("主人公はひどく疲れている（疲労 3 以上。判定 −2）")
 
@@ -725,46 +744,48 @@ def check(st, ability, dc, bonus=0, note=""):
     if v is None:
         raise SystemExit(f"能力がありません: {ability}")
     pen = fatigue_pen(h["fatigue"])
-    r = d(20)
+    a1, a2, r = roll2d6()
     total = r + mod(v) + bonus + pen
-    margin = total - dc
-    res = "大成功" if r == 20 else "大失敗" if r == 1 else ("成功" if margin >= 0 else ("惜しい失敗（代償つき成功も可）" if margin >= -3 else "失敗"))
+    res = grade(r, total, dc)
+    res = {"代償つき": "惜しい失敗（代償つき成功も可）"}.get(res, res)
     extra = f" {bonus:+d}" if bonus else ""
     extra += f" 疲労{pen}" if pen else ""
-    print(f"🎲 {ability}判定{('（'+note+'）') if note else ''}：{r} {mod(v):+d}{extra} ＝ {total} vs {dc} → {res}")
+    print(f"🎲 {ability}判定{('（'+note+'）') if note else ''}：2d6[{a1},{a2}]={r} {mod(v):+d}{extra} ＝ {total} vs {dc} → {res}")
     return res
 
 
 def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
+    """説得（2d6）。match: 利益の合致 +1/+2/+3、loss: 相手の損 1/3、dc: 小6/普8/大10/人生12"""
     r_ = st["npcs"].get(name)
     if r_ is None:
         raise SystemExit(f"人物がいません: {name}")
     h = st["protagonist"]
     if status_ is None:
-        status_ = (-2 if r_["信頼"] < 3 else 0) if age(st) < 12 else 0
-    r = d(20)
+        status_ = (-1 if r_["信頼"] < 3 else 0) if age(st) < 12 else 0
     cards = h.get("cards", {})
     psych = 1 if cards.get("説得と交渉の心理", 0) >= 1 else 0
-    proof_v = (6 if cards.get("統計と実験計画", 0) >= 1 else 4) if proof else 0
-    parts = [("出目", r), ("弁舌", mod(h["abilities"]["弁舌"])), ("信頼", r_["信頼"]), ("好意/2", r_["好意"] // 2),
-             ("警戒", -r_["警戒"]), ("利益の合致", match), ("相手の損", -loss), ("立場", status_),
+    proof_v = (3 if cards.get("統計と実験計画", 0) >= 1 else 2) if proof else 0
+    half = lambda x: int(x / 2)
+    a1, a2, r = roll2d6()
+    parts = [("出目", r), ("弁舌", mod(h["abilities"]["弁舌"])), ("信頼", half(r_["信頼"])), ("好意", int(r_["好意"] / 3)),
+             ("警戒", -half(r_["警戒"] + 1) if r_["警戒"] else 0), ("利益の合致", match), ("相手の損", -loss), ("立場", status_),
              ("実証", proof_v), ("心理学", psych), ("その他", bonus)]
     if fatigue_pen(h["fatigue"]):
         parts.append(("疲労", fatigue_pen(h["fatigue"])))
     total = sum(v for _, v in parts)
     margin = total - dc
-    if r == 1:
+    if r == 2:
         res = "反発：相手は自分のやり方で対抗する（告げ口・妨害など）。警戒 +1"
         r_["警戒"] = min(5, r_["警戒"] + 1)
-    elif margin >= 0 or r == 20:
-        res = "成功：承諾。ただし相手は自分の条件をつけてよい"
-    elif margin >= -3:
+    elif margin >= 0 or r == 12:
+        res = "成功：承諾。ただし相手は自分の条件をつけてよい" + ("（大成功）" if r == 12 else "")
+    elif margin >= -2:
         res = "保留・条件付き：相手が対価や条件を示す"
     else:
         res = "拒否：警戒 +1"
         r_["警戒"] = min(5, r_["警戒"] + 1)
-    print(f"🗣 {name}への説得：" + " ".join(f"{k}{v:+d}" if k != "出目" else f"🎲{v}" for k, v in parts if v or k == "出目")
-          + f" ＝ {total} vs {dc} → {res}")
+    shown = " ".join(f"{k}{v:+d}" for k, v in parts if v and k != "出目")
+    print(f"🗣 {name}への説得：2d6[{a1},{a2}]={r} {shown} ＝ {total} vs {dc} → {res}")
     save_state(st)
 
 
@@ -862,20 +883,21 @@ def court(st, ours, theirs, our_mod=None, their_mod=0, our_voice=0, their_voice=
     if our_mod is None:
         our_mod = mod(h["abilities"]["弁舌"])
     favor = (st["domain"]["主家の覚え"] - 50) // 10
-    r1, r2 = d(20), d(20)
-    a = r1 + ours * 2 + our_mod + favor + our_voice * 2
-    b = r2 + theirs * 2 + their_mod + their_favor + their_voice * 2
+    r1, r2 = d(6) + d(6), d(6) + d(6)
+    favor = (st["domain"]["主家の覚え"] - 50) // 20
+    a = r1 + ours + our_mod + favor + our_voice
+    b = r2 + theirs + their_mod + their_favor + their_voice
     diff = a - b
-    if diff >= 5:
+    if diff >= 3:
         res = "勝訴：こちらの言い分が通る"
     elif diff >= 1:
         res = "有利な痛み分け：こちらに有利な形で分け合う"
-    elif diff >= -4:
+    elif diff >= -2:
         res = "不利な痛み分け：相手に有利な形で分け合う"
     else:
         res = "敗訴：相手の言い分が通る"
-    print(f"⚖ 裁き：こちら 🎲{r1} 証拠{ours}×2 弁論{our_mod:+d} 主家の覚え{favor:+d} 口添え{our_voice}×2 ＝ {a}"
-          f" ／ 相手 🎲{r2} 証拠{theirs}×2 弁論{their_mod:+d} 覚え{their_favor:+d} 口添え{their_voice}×2 ＝ {b}")
+    print(f"⚖ 裁き：こちら 2d6={r1} 証拠{ours} 弁論{our_mod:+d} 主家の覚え{favor:+d} 口添え{our_voice} ＝ {a}"
+          f" ／ 相手 2d6={r2} 証拠{theirs} 弁論{their_mod:+d} 覚え{their_favor:+d} 口添え{their_voice} ＝ {b}")
     print(f"  差 {diff:+d} → 【{res}】")
     print("  ※負けた側の勢力の態度 −2。決闘裁判を申し出ることもできる（騎士どうし・武芸の戦い）")
 
@@ -897,19 +919,19 @@ def magic(st, spell, witnesses=0, bonus=0, note=""):
         raise SystemExit(f"魔力点が足りない（必要 {sp['cost']}、残り {h['魔力点']}）")
     dc = sp["dc"]
     pen = fatigue_pen(h["fatigue"])
-    r = d(20)
+    a1, a2, r = roll2d6()
     total = r + mod(mg) + bonus + pen
     h["魔力点"] -= sp["cost"]
     h["xp"]["魔力"] = h["xp"].get("魔力", 0) + sp["tier"] * 2
-    res = "大成功" if r == 20 else "大失敗" if r == 1 else ("成功" if total >= dc else ("代償つき" if total >= dc - 3 else "失敗"))
-    print(f"✦ {school}「{spell}」{('（'+note+'）') if note else ''}：🎲{r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc} → {res}　魔力点 −{sp['cost']}（残り {h['魔力点']}/{h['魔力点上限']}）")
+    res = grade(r, total, dc)
+    print(f"✦ {school}「{spell}」{('（'+note+'）') if note else ''}：2d6[{a1},{a2}]={r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc} → {res}　魔力点 −{sp['cost']}（残り {h['魔力点']}/{h['魔力点上限']}）")
     if res in ("成功", "大成功", "代償つき"):
         print(f"  効果：{sp['effect']}" + ("（ぼんやりとしか見えない）" if res == "代償つき" else ""))
     elif res == "大失敗":
         h["fatigue"] += 1
         print("  反動：見えたものは偽りか、見えすぎて頭が割れるように痛む（疲労 +1。GM が誤った情報を一つ与えてもよい）")
     else:
-        if dc - total >= 5:
+        if dc - total >= 3:
             h["fatigue"] += 0.5
             print("  何も見えなかった。大きく外した反動で疲労 +0.5")
         else:
@@ -941,14 +963,14 @@ def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=
     cost = stage * SIZES[size] * (2 if living else 1)
     if h["魔力点"] < cost:
         raise SystemExit(f"魔力点が足りない（必要 {cost}、残り {h['魔力点']}）")
-    dc = 6 + 2 * stage + (4 if living else 0) + (2 if SIZES[size] >= 4 else 0)
+    dc = 3 + stage + (1 if living else 0) + (1 if SIZES[size] >= 4 else 0)
     pen = fatigue_pen(h["fatigue"])
-    r = d(20)
+    a1, a2, r = roll2d6()
     total = r + mod(mg) + bonus + pen
     h["魔力点"] -= cost
     lines = [f"⏳ 時繰り（{direction}・{TIME_STAGES[stage]}・{size}{'・生き物' if living else ''}{('・'+note) if note else ''}）："
-             f"🎲{r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc}　魔力点 −{cost}（残り {h['魔力点']}/{h['魔力点上限']}）"]
-    if r == 1:
+             f"2d6[{a1},{a2}]={r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc}　魔力点 −{cost}（残り {h['魔力点']}/{h['魔力点上限']}）"]
+    if r == 2:
         res = "大失敗"
         r2 = d(6)
         recoil = {1: "自分の数時間分の記憶が抜け落ちた", 2: "髪がひと筋、白くなった", 3: "鼻血が止まらず、二日寝込んだ（疲労 +2）",
@@ -963,17 +985,17 @@ def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=
         if r2 == 6:
             st["clocks"]["黒の森の異変"] = min(8, st["clocks"]["黒の森の異変"] + 1)
             append_md(GM_LOG, f"- {cal_str(st['week'])}：時繰りの大失敗。森の主（と遺跡）が主人公に気づいた")
-    elif total >= dc:
-        res = "大成功" if r == 20 else "成功"
-        lines.append(f"  → {res}。時は思いどおりに動いた" + ("（魔力点を半分取り戻した）" if r == 20 else ""))
-        if r == 20:
+    elif total >= dc or r == 12:
+        res = "大成功" if r == 12 else "成功"
+        lines.append(f"  → {res}。時は思いどおりに動いた" + ("（魔力点を半分取り戻した）" if r == 12 else ""))
+        if r == 12:
             h["魔力点"] = min(h["魔力点上限"], h["魔力点"] + cost // 2)
-    elif total >= dc - 3:
+    elif total >= dc - 1:
         res = "代償つき"
         lines.append("  → 半ばの成功。望んだ半分だけ時が動いた（反動なし）")
     else:
         res = "失敗"
-        if dc - total >= 5:
+        if dc - total >= 3:
             h["fatigue"] += 0.5
             lines.append("  → 失敗。時は動かず、大きく外した反動で疲労 +0.5")
         else:

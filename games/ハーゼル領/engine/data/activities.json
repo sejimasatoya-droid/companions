@@ -1,15 +1,78 @@
 {
- "遊ぶ": {"ability": "体力", "rate": 1.0, "text": "館の庭や村で子どもらしく遊ぶ"},
- "体を鍛える": {"ability": "体力", "rate": 1.5, "requires": "年齢 >= 6", "requires_text": "6歳から"},
- "剣の稽古": {"ability": "武芸", "rate": 1.0, "requires": "flag_稽古の許し", "requires_text": "ボルドか父の許しが要る"},
- "乗馬": {"ability": "武芸", "rate": 0.7, "requires": "flag_乗馬の許し", "requires_text": "父の許しと子馬が要る"},
- "読み書き": {"ability": "知識", "rate": 1.0, "requires": "flag_読み書きの師", "requires_text": "教える人が要る（司祭か母）"},
- "書斎で読む": {"ability": "知識", "rate": 0.7, "requires": "flag_書斎に入れる and 主人公_知識 >= 7", "requires_text": "書斎に入る許しと、知識 7 以上"},
- "母の帳簿を手伝う": {"ability": "知識", "rate": 0.8, "requires": "flag_帳簿の手伝い", "requires_text": "母の許し"},
- "人と話す": {"ability": "弁舌", "rate": 1.0, "text": "館の人々や村人と話す"},
- "村を歩く": {"ability": "弁舌", "rate": 0.6, "requires": "flag_外出の許し", "requires_text": "外出の許しが要る（病み上がり）"},
- "作法を習う": {"ability": "礼法", "rate": 1.0, "requires": "flag_作法の師", "requires_text": "教える人が要る（母か司祭）"},
- "祈る": {"ability": "礼法", "rate": 0.5, "text": "礼拝室や教会で祈る。信心深い子に見える"},
- "計画": {"ability": null, "text": "進行中の計画に手をかける"},
- "休む": {"ability": null, "text": "疲れを取る"}
+ "遊ぶ": {
+  "ability": "体力",
+  "rate": 1.0,
+  "text": "館の庭や村で子どもらしく遊ぶ"
+ },
+ "体を鍛える": {
+  "ability": "体力",
+  "rate": 1.5,
+  "requires": "年齢 >= 6",
+  "requires_text": "6歳から"
+ },
+ "剣の稽古": {
+  "ability": "武芸",
+  "rate": 1.0,
+  "requires": "flag_稽古の許し",
+  "requires_text": "ボルドか父の許しが要る"
+ },
+ "乗馬": {
+  "ability": "武芸",
+  "rate": 0.7,
+  "requires": "flag_乗馬の許し",
+  "requires_text": "父の許しと子馬が要る"
+ },
+ "読み書き": {
+  "ability": "知識",
+  "rate": 1.0,
+  "requires": "flag_読み書きの師",
+  "requires_text": "教える人が要る（司祭か母）"
+ },
+ "書斎で読む": {
+  "ability": "知識",
+  "rate": 0.7,
+  "requires": "flag_書斎に入れる and 主人公_知識 >= 7",
+  "requires_text": "書斎に入る許しと、知識 7 以上"
+ },
+ "母の帳簿を手伝う": {
+  "ability": "知識",
+  "rate": 0.8,
+  "requires": "flag_帳簿の手伝い",
+  "requires_text": "母の許し"
+ },
+ "人と話す": {
+  "ability": "弁舌",
+  "rate": 1.0,
+  "text": "館の人々や村人と話す"
+ },
+ "村を歩く": {
+  "ability": "弁舌",
+  "rate": 0.6,
+  "requires": "flag_外出の許し",
+  "requires_text": "外出の許しが要る（病み上がり）"
+ },
+ "作法を習う": {
+  "ability": "礼法",
+  "rate": 1.0,
+  "requires": "flag_作法の師",
+  "requires_text": "教える人が要る（母か司祭）"
+ },
+ "祈る": {
+  "ability": "礼法",
+  "rate": 0.5,
+  "text": "礼拝室や教会で祈る。信心深い子に見える"
+ },
+ "計画": {
+  "ability": null,
+  "text": "進行中の計画に手をかける"
+ },
+ "休む": {
+  "ability": null,
+  "text": "疲れを取る"
+ },
+ "時繰りの練習": {
+  "ability": "魔力",
+  "rate": 1.0,
+  "text": "人目を避けて時繰りを練習する。見られる危険がある"
+ }
 }

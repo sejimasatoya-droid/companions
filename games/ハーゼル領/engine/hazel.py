@@ -18,6 +18,7 @@
   python3 engine/hazel.py watch add "条件式" "内容" [--stop] [--hidden] [--effects JSON]
   python3 engine/hazel.py rumor add "内容" 段階 | rumor list
   python3 engine/hazel.py battle --a JSON --b JSON [--terrain 平地|森|丘|防御] [--a-lead N] [--b-lead N] [--named 名前,名前]
+  python3 engine/hazel.py jikuri 戻す|進める --stage 1 --size 小物|人|道具|動物|荷車|小屋|家|畑 [--living] [--witness 人数]
   python3 engine/hazel.py impression 人物 "印象"   人物の主人公への印象を書き換える
   python3 engine/hazel.py log "内容"
   python3 engine/hazel.py init               初期状態を作り直す（今の状態は消える）
@@ -435,6 +436,12 @@ def hero_week(st, out):
                 else:
                     h["xp"][ab] -= need // 2
     rest = rt.get("休む", 0)
+    if "魔力点上限" in h:
+        h["魔力点上限"] = h["abilities"]["魔力"] * 2
+        h["魔力点"] = min(h["魔力点上限"], h["魔力点"] + h["魔力点上限"] // 2 + rest)
+        prac = rt.get("時繰りの練習", 0)
+        if prac and d(20) <= prac // 2:
+            out.report("時繰りの練習をしているところを、誰かに見られたかもしれない", stop=True)
     h["fatigue"] = round(max(0.0, h["fatigue"] + 0.1 * active - 0.5 - 0.4 * rest), 2)
     if h["fatigue"] >= 3 and not st["flags"].get("病"):
         r = d(20) + mod(h["abilities"]["体力"])
@@ -607,7 +614,7 @@ def status(st, gm=False):
     print("  能力 " + " / ".join(f"{k} {v}({mod(v):+d})" for k, v in h["abilities"].items()))
     print("  週の過ごし方 " + " / ".join(f"{k}{v}日" for k, v in h["routine"].items()))
     if h.get("special"):
-        print(f"  特殊能力 {h['special']}")
+        print(f"  特殊能力 {h['special']}　魔力点 {h.get('魔力点')}/{h.get('魔力点上限')}　扱える時間 {TIME_STAGES[max(1, h['abilities']['魔力'] // 3)]}まで")
     dm = st["domain"]
     print("■ 領")
     print("  " + " / ".join(f"{k} {v}" for k, v in dm.items()))
@@ -687,6 +694,69 @@ def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
         r_["警戒"] = min(5, r_["警戒"] + 1)
     print(f"🗣 {name}への説得：" + " ".join(f"{k}{v:+d}" if k != "出目" else f"🎲{v}" for k, v in parts if v or k == "出目")
           + f" ＝ {total} vs {dc} → {res}")
+    save_state(st)
+
+
+# ---------------------------------------------------------------- 時繰り（主人公の固有魔法）
+TIME_STAGES = {1: "数分", 2: "数時間", 3: "数日", 4: "数か月", 5: "数年", 6: "数十年"}
+SIZES = {"小物": 1, "人": 2, "道具": 2, "動物": 2, "荷車": 4, "小屋": 4, "家": 8, "畑": 8}
+
+
+def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=""):
+    h = st["protagonist"]
+    mg = h["abilities"]["魔力"]
+    max_stage = max(1, mg // 3)
+    if stage > max_stage:
+        raise SystemExit(f"今の魔力 {mg} で扱えるのは {TIME_STAGES[max_stage]}（段階 {max_stage}）まで")
+    if size not in SIZES:
+        raise SystemExit(f"大きさは {'・'.join(SIZES)} のどれか")
+    cost = stage * SIZES[size] * (2 if living else 1)
+    if h["魔力点"] < cost:
+        raise SystemExit(f"魔力点が足りない（必要 {cost}、残り {h['魔力点']}）")
+    dc = 8 + 2 * stage + (4 if living else 0) + (2 if SIZES[size] >= 4 else 0)
+    pen = -2 if h["fatigue"] >= 2 else 0
+    r = d(20)
+    total = r + mod(mg) + bonus + pen
+    h["魔力点"] -= cost
+    lines = [f"⏳ 時繰り（{direction}・{TIME_STAGES[stage]}・{size}{'・生き物' if living else ''}{('・'+note) if note else ''}）："
+             f"🎲{r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc}　魔力点 −{cost}（残り {h['魔力点']}/{h['魔力点上限']}）"]
+    if r == 1:
+        res = "大失敗"
+        r2 = d(6)
+        recoil = {1: "自分の数時間分の記憶が抜け落ちた", 2: "髪がひと筋、白くなった", 3: "鼻血が止まらず、二日寝込んだ（疲労 +2）",
+                  4: "体の時間がずれ、数日ぶん痩せた（体力の経験を失う）", 5: "周りの物まで時間がゆがんだ。誰かに見られたかもしれない",
+                  6: "黒の森の方角で、何かがこちらを向いた気がした"}[r2]
+        lines.append(f"  → 大失敗。反動：{recoil}")
+        h["fatigue"] += 2 if r2 == 3 else 1
+        if r2 == 4:
+            h["xp"]["体力"] = 0
+        if r2 == 5:
+            witnesses = max(witnesses, 1)
+        if r2 == 6:
+            st["clocks"]["黒の森の異変"] = min(8, st["clocks"]["黒の森の異変"] + 1)
+            append_md(GM_LOG, f"- {cal_str(st['week'])}：時繰りの大失敗。森の主（と遺跡）が主人公に気づいた")
+    elif total >= dc:
+        res = "大成功" if r == 20 else "成功"
+        lines.append(f"  → {res}。時は思いどおりに動いた" + ("（魔力点を半分取り戻した）" if r == 20 else ""))
+        if r == 20:
+            h["魔力点"] = min(h["魔力点上限"], h["魔力点"] + cost // 2)
+    elif total >= dc - 3:
+        res = "代償つき"
+        lines.append("  → 半ばの成功。望んだ半分しか動かないか、反動で疲労 +1（GM が選ぶ）")
+        h["fatigue"] += 0.5
+    else:
+        res = "失敗"
+        lines.append("  → 失敗。時は動かず、反動で疲労 +1")
+        h["fatigue"] += 1
+    # 経験
+    h["xp"]["魔力"] = h["xp"].get("魔力", 0) + stage * 2
+    # 目撃
+    if witnesses > 0 and res != "失敗":
+        att = 2 * witnesses + 2 * stage
+        st["domain"]["注目度"] = min(100, st["domain"]["注目度"] + att)
+        st["clocks"]["異端の目"] = min(8, st["clocks"]["異端の目"] + 1)
+        lines.append(f"  ！ {witnesses} 人に見られた：注目度 +{att}、異端の目 +1（GM は見た人物の印象と警戒を更新し、噂を足すこと）")
+    print("\n".join(lines))
     save_state(st)
 
 
@@ -774,6 +844,9 @@ def main():
     s = sub.add_parser("battle"); s.add_argument("--a", required=True); s.add_argument("--b", required=True)
     s.add_argument("--terrain", default="平地"); s.add_argument("--a-lead", type=int, default=0)
     s.add_argument("--b-lead", type=int, default=0); s.add_argument("--named", default="")
+    s = sub.add_parser("jikuri"); s.add_argument("direction", choices=["戻す", "進める"]); s.add_argument("--stage", type=int, default=1)
+    s.add_argument("--size", default="小物"); s.add_argument("--living", action="store_true"); s.add_argument("--witness", type=int, default=0)
+    s.add_argument("--bonus", type=int, default=0); s.add_argument("--note", default="")
     s = sub.add_parser("impression"); s.add_argument("name"); s.add_argument("text")
     s = sub.add_parser("log"); s.add_argument("text")
     sub.add_parser("init")
@@ -856,6 +929,8 @@ def main():
     elif a.cmd == "battle":
         battle(st, json.loads(a.a), json.loads(a.b), a.terrain, a.a_lead, a.b_lead,
                [x for x in a.named.split(",") if x])
+    elif a.cmd == "jikuri":
+        jikuri(st, a.direction, a.stage, a.size, a.living, a.witness, a.bonus, a.note)
     elif a.cmd == "impression":
         r_ = st["npcs"].setdefault(a.name, {"信頼": 0, "好意": 0, "警戒": 0, "借り": 0, "next": None})
         old = r_.get("印象", "")

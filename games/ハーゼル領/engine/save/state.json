@@ -704,6 +704,16 @@
     "domain_extra.月の固定費": 1.5
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 119 and not flag_狩りの伺いの返事",
+   "text": "城から、狩りについての辺境伯の返事が届いた。『森の木は切るなと言った。獣を狩るなとは言っておらぬ。ただし、森に入る者には、ハーゼルの者を案内に付けよ』",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.狩りの伺いの返事": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

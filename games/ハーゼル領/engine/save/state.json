@@ -401,6 +401,14 @@
     "domain.食糧": -0.2
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 59",
+   "text": "アイヒベルク男爵の館で、嫡男ヴァルターの七歳の祝宴が開かれる日が来た",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

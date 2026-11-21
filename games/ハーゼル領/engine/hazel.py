@@ -201,6 +201,7 @@ def namespace(st):
     for k, v in st["protagonist"].get("cards", {}).items():
         ns[f"カード_{k}"] = v
     ns["軍_常備兵"] = st["military"].get("常備兵", 0)
+    ns["疲労"] = st["protagonist"].get("fatigue", 0)
     return ns
 
 
@@ -412,7 +413,17 @@ def mod(v):
     return math.floor((v - 10) / 2)
 
 
+def auto_routine(st, out):
+    """疲労などの条件で、週の過ごし方を自動で切り替える（st["auto_routine"]）"""
+    for rule in st.get("auto_routine", []):
+        if cond(st, rule["if"]) and st["protagonist"]["routine"] != rule["routine"]:
+            st["protagonist"]["routine"] = dict(rule["routine"])
+            out.report(f"過ごし方を自動で切り替えた（{rule.get('why', rule['if'])}）：" + " / ".join(f"{k}{v}日" for k, v in rule["routine"].items()))
+            break
+
+
 def hero_week(st, out):
+    auto_routine(st, out)
     h = st["protagonist"]
     acts = defs("activities")
     rt = h["routine"]

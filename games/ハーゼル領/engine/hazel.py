@@ -413,11 +413,6 @@ def mod(v):
     return math.floor((v - 10) / 2)
 
 
-def fatigue_pen(f):
-    """疲労による判定の罰：2 以上で −1、3 以上で −2"""
-    return -2 if f >= 3 else (-1 if f >= 2 else 0)
-
-
 def auto_routine(st, out):
     """疲労などの条件で、週の過ごし方を自動で切り替える（st["auto_routine"]）"""
     for rule in st.get("auto_routine", []):
@@ -699,7 +694,7 @@ def check(st, ability, dc, bonus=0, note=""):
     v = h["abilities"].get(ability)
     if v is None:
         raise SystemExit(f"能力がありません: {ability}")
-    pen = fatigue_pen(h["fatigue"])
+    pen = -2 if h["fatigue"] >= 2 else 0
     r = d(20)
     total = r + mod(v) + bonus + pen
     margin = total - dc
@@ -724,8 +719,8 @@ def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
     parts = [("出目", r), ("弁舌", mod(h["abilities"]["弁舌"])), ("信頼", r_["信頼"]), ("好意/2", r_["好意"] // 2),
              ("警戒", -r_["警戒"]), ("利益の合致", match), ("相手の損", -loss), ("立場", status_),
              ("実証", proof_v), ("心理学", psych), ("その他", bonus)]
-    if fatigue_pen(h["fatigue"]):
-        parts.append(("疲労", fatigue_pen(h["fatigue"])))
+    if h["fatigue"] >= 2:
+        parts.append(("疲労", -2))
     total = sum(v for _, v in parts)
     margin = total - dc
     if r == 1:
@@ -871,7 +866,7 @@ def magic(st, spell, witnesses=0, bonus=0, note=""):
     if h["魔力点"] < sp["cost"]:
         raise SystemExit(f"魔力点が足りない（必要 {sp['cost']}、残り {h['魔力点']}）")
     dc = sp["dc"]
-    pen = fatigue_pen(h["fatigue"])
+    pen = -2 if h["fatigue"] >= 2 else 0
     r = d(20)
     total = r + mod(mg) + bonus + pen
     h["魔力点"] -= sp["cost"]
@@ -879,16 +874,14 @@ def magic(st, spell, witnesses=0, bonus=0, note=""):
     res = "大成功" if r == 20 else "大失敗" if r == 1 else ("成功" if total >= dc else ("代償つき" if total >= dc - 3 else "失敗"))
     print(f"✦ {school}「{spell}」{('（'+note+'）') if note else ''}：🎲{r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc} → {res}　魔力点 −{sp['cost']}（残り {h['魔力点']}/{h['魔力点上限']}）")
     if res in ("成功", "大成功", "代償つき"):
-        print(f"  効果：{sp['effect']}" + ("（ぼんやりとしか見えない）" if res == "代償つき" else ""))
+        print(f"  効果：{sp['effect']}" + ("（ぼんやりとしか見えない／疲労 +0.5）" if res == "代償つき" else ""))
+        if res == "代償つき":
+            h["fatigue"] += 0.5
     elif res == "大失敗":
         h["fatigue"] += 1
         print("  反動：見えたものは偽りか、見えすぎて頭が割れるように痛む（疲労 +1。GM が誤った情報を一つ与えてもよい）")
     else:
-        if dc - total >= 5:
-            h["fatigue"] += 0.5
-            print("  何も見えなかった。大きく外した反動で疲労 +0.5")
-        else:
-            print("  何も見えなかった（反動なし）")
+        print("  何も見えなかった")
     if witnesses and res != "失敗":
         if not h.get("洗礼済み"):
             st["clocks"]["異端の目"] = min(8, st["clocks"]["異端の目"] + 1)
@@ -917,7 +910,7 @@ def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=
     if h["魔力点"] < cost:
         raise SystemExit(f"魔力点が足りない（必要 {cost}、残り {h['魔力点']}）")
     dc = 8 + 2 * stage + (4 if living else 0) + (2 if SIZES[size] >= 4 else 0)
-    pen = fatigue_pen(h["fatigue"])
+    pen = -2 if h["fatigue"] >= 2 else 0
     r = d(20)
     total = r + mod(mg) + bonus + pen
     h["魔力点"] -= cost
@@ -945,14 +938,12 @@ def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=
             h["魔力点"] = min(h["魔力点上限"], h["魔力点"] + cost // 2)
     elif total >= dc - 3:
         res = "代償つき"
-        lines.append("  → 半ばの成功。望んだ半分だけ時が動いた")
+        lines.append("  → 半ばの成功。望んだ半分しか動かないか、反動で疲労 +1（GM が選ぶ）")
+        h["fatigue"] += 0.5
     else:
         res = "失敗"
-        if dc - total >= 5:
-            lines.append("  → 失敗。時は動かず、大きく外した反動で疲労 +0.5")
-            h["fatigue"] += 0.5
-        else:
-            lines.append("  → 失敗。時は動かなかった（反動なし）")
+        lines.append("  → 失敗。時は動かず、反動で疲労 +1")
+        h["fatigue"] += 1
     # 経験
     h["xp"]["魔力"] = h["xp"].get("魔力", 0) + stage * 2
     # 目撃

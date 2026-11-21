@@ -420,7 +420,8 @@ def hero_week(st, out):
             active += days
         ab = ad.get("ability")
         if ab:
-            h["xp"][ab] = h["xp"].get(ab, 0) + days * ad.get("rate", 1)
+            learn = 1.25 if h.get("cards", {}).get("発達と学習の心理", 0) >= 1 and ab in ("知識", "礼法") else 1.0
+            h["xp"][ab] = h["xp"].get(ab, 0) + days * ad.get("rate", 1) * learn
             v = h["abilities"][ab]
             need = max(8, v * v // 2)
             cap = cap_body if ab in ("体力", "武芸") else cap_mind
@@ -675,9 +676,12 @@ def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
     if status_ is None:
         status_ = -3 if age(st) < 12 else 0
     r = d(20)
+    cards = h.get("cards", {})
+    psych = 1 if cards.get("説得と交渉の心理", 0) >= 1 else 0
+    proof_v = (6 if cards.get("統計と実験計画", 0) >= 1 else 4) if proof else 0
     parts = [("出目", r), ("弁舌", mod(h["abilities"]["弁舌"])), ("信頼", r_["信頼"]), ("好意/2", r_["好意"] // 2),
              ("警戒", -r_["警戒"]), ("利益の合致", match), ("相手の損", -loss), ("立場", status_),
-             ("実証", 4 if proof else 0), ("その他", bonus)]
+             ("実証", proof_v), ("心理学", psych), ("その他", bonus)]
     if h["fatigue"] >= 2:
         parts.append(("疲労", -2))
     total = sum(v for _, v in parts)

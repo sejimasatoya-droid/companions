@@ -1,0 +1,410 @@
+{
+ "王の病": {
+  "name": "王の病",
+  "max": 8,
+  "p_season": 0.25,
+  "mods": [
+   {
+    "if": "季節 == '冬'",
+    "p_season": 0.1
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "王都から、国王オトマール三世の病が重いという噂が届いた",
+    "stop": false
+   },
+   "5": {
+    "text": "国王が公の場に姿を見せなくなった。王太子派と宰相派の動きが激しくなる",
+    "stop": true
+   },
+   "8": {
+    "text": "国王オトマール三世崩御。王国は次の権力をめぐって揺れる",
+    "stop": true,
+    "effects": {
+     "flags.王崩御": true,
+     "clocks.宮廷の対立": 2,
+     "clocks.カルディア国境の緊張": 1
+    }
+   }
+  }
+ },
+ "宮廷の対立": {
+  "name": "宮廷の対立（王太子派 vs 宰相派）",
+  "max": 8,
+  "p_season": 0.15,
+  "mods": [
+   {
+    "if": "王の病 >= 5",
+    "p_season": 0.3
+   }
+  ],
+  "thresholds": {
+   "4": {
+    "text": "王都の対立が地方に及び始めた。諸侯は色分けを迫られている",
+    "stop": false
+   },
+   "6": {
+    "text": "辺境伯のもとに、両派から態度表明を迫る使者が来たという",
+    "stop": true,
+    "effects": {
+     "clocks.辺境伯家の継嗣問題": 1
+    }
+   },
+   "8": {
+    "text": "王太子派と宰相派が兵を集め始めた。内乱の危機だ",
+    "stop": true,
+    "effects": {
+     "flags.内乱の危機": true
+    }
+   }
+  }
+ },
+ "カルディア国境の緊張": {
+  "name": "カルディア国境の緊張",
+  "max": 10,
+  "p_season": 0.15,
+  "mods": [
+   {
+    "if": "宮廷の対立 >= 6",
+    "p_season": 0.2
+   }
+  ],
+  "thresholds": {
+   "4": {
+    "text": "東の国境で小競り合いが起きた。来春から軍役代納金が倍になるらしい",
+    "stop": true
+   },
+   "7": {
+    "text": "辺境伯から動員令が届いた。騎士1名と兵12名を、40日間差し出せ",
+    "stop": true,
+    "effects": {
+     "flags.動員令": true
+    }
+   },
+   "10": {
+    "text": "カルディア公国との戦が始まった",
+    "stop": true,
+    "effects": {
+     "flags.開戦": true
+    }
+   }
+  }
+ },
+ "ヴァルク族の飢え": {
+  "name": "ヴァルク族の飢え",
+  "max": 6,
+  "p_season": 0.167,
+  "mods": [
+   {
+    "if": "作柄 == '凶作'",
+    "p_season": 0.5
+   },
+   {
+    "if": "作柄 == '豊作'",
+    "p_season": -0.167
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "北の山の民が、例年より強引な値で麦を求めているという",
+    "stop": false
+   },
+   "5": {
+    "text": "辺境伯領の北の村が山の民に襲われた",
+    "stop": true,
+    "effects": {
+     "domain.治安": -3
+    }
+   },
+   "6": {
+    "text": "山の民の大きな略奪隊が山を下りた。ハーゼル領も無関係ではいられない",
+    "stop": true,
+    "effects": {
+     "flags.ヴァルク襲来": true
+    }
+   }
+  }
+ },
+ "黒の森の異変": {
+  "name": "黒の森の異変",
+  "max": 8,
+  "p_season": 0.25,
+  "mods": [
+   {
+    "if": "森の健全度 < 50",
+    "p_season": 0.25
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "森の獣が里へ下りてくるようになった。オーベル村で家畜が襲われる",
+    "stop": true,
+    "effects": {
+     "domain.治安": -5
+    }
+   },
+   "5": {
+    "text": "灰狼の大きな群れが森の縁に現れた",
+    "stop": true,
+    "effects": {
+     "domain.治安": -8,
+     "flags.狼の大群": true
+    }
+   },
+   "8": {
+    "text": "黒の森の奥で何かが目を覚ました。森全体がざわめいている",
+    "stop": true,
+    "effects": {
+     "flags.森の主": true
+    }
+   }
+  }
+ },
+ "水車の寿命": {
+  "name": "水車の寿命",
+  "max": 6,
+  "p_season": 0.4,
+  "only_if": "'水車の修理' not in 完成",
+  "thresholds": {
+   "5": {
+    "text": "水車小屋の軸がきしみ、粉屋オットーが修理をせがんでいる",
+    "stop": false
+   },
+   "6": {
+    "text": "水車が壊れた。粉を挽けない",
+    "stop": true,
+    "effects": {
+     "flags.水車故障": true,
+     "domain.民心": -5
+    }
+   }
+  }
+ },
+ "ブレッケン家の破産": {
+  "name": "ブレッケン家の破産",
+  "max": 6,
+  "p_season": 0.3,
+  "thresholds": {
+   "4": {
+    "text": "ブレッケン騎士が土地を手放そうとしているという噂が流れている",
+    "stop": false
+   },
+   "6": {
+    "text": "ブレッケン家が破産した。下流の土地が売りに出される",
+    "stop": true,
+    "effects": {
+     "flags.ブレッケン破産": true
+    }
+   }
+  }
+ },
+ "アイヒベルクの引き抜き": {
+  "name": "アイヒベルクの引き抜き",
+  "max": 6,
+  "p_season": 0.2,
+  "mods": [
+   {
+    "if": "民心 < 50",
+    "p_season": 0.25
+   },
+   {
+    "if": "治安 < 40",
+    "p_season": 0.15
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "オーベル村に、隣のアイヒベルク領から使いが出入りしているらしい",
+    "stop": false,
+    "visible": true
+   },
+   "5": {
+    "text": "オーベル村の三家族が、夜のうちにアイヒベルク領へ移った",
+    "stop": true,
+    "effects": {
+     "domain.人口": -30,
+     "domain.民心": -3
+    }
+   },
+   "6": {
+    "text": "マグダがオーベル村ごとアイヒベルク領へ移ると言い出した",
+    "stop": true,
+    "effects": {
+     "flags.オーベル逃散の危機": true
+    }
+   }
+  }
+ },
+ "ザルムの手": {
+  "name": "ザルムの手",
+  "max": 6,
+  "p_season": 0.0,
+  "visible": false,
+  "mods": [
+   {
+    "if": "財貨 < 20",
+    "p_season": 0.5
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "ザルム子爵がフッガー＝ラング商会に、ハーゼル家の債権の買い取りを持ちかけた",
+    "stop": false,
+    "visible": false
+   },
+   "6": {
+    "text": "ハーゼル家の債権はザルム子爵の手に渡った",
+    "stop": true,
+    "visible": true,
+    "effects": {
+     "flags.債権者ザルム": true
+    }
+   }
+  }
+ },
+ "辺境伯家の継嗣問題": {
+  "name": "辺境伯家の継嗣問題",
+  "max": 6,
+  "p_season": 0.1,
+  "mods": [
+   {
+    "if": "宮廷の対立 >= 6",
+    "p_season": 0.333
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "辺境伯の家臣団が、嫡男ルドルフ派と次男ヘルムート派に割れつつあるという",
+    "stop": false
+   },
+   "6": {
+    "text": "辺境伯家で家督争いが表に出た。家臣たちはどちらにつくか迫られる",
+    "stop": true,
+    "effects": {
+     "flags.辺境伯家督争い": true
+    }
+   }
+  }
+ },
+ "灰咳の再来": {
+  "name": "灰咳の再来",
+  "max": 10,
+  "p_season": 0.1,
+  "visible": false,
+  "mods": [
+   {
+    "if": "衛生 < 30",
+    "p_season": 0.1
+   },
+   {
+    "if": "衛生 >= 50",
+    "p_season": -1
+   }
+  ],
+  "thresholds": {
+   "5": {
+    "text": "ザルムブルクで咳の病が流行っているという噂が届いた",
+    "stop": true,
+    "visible": true
+   },
+   "8": {
+    "text": "灰咳がハーゼル領に入った",
+    "stop": true,
+    "visible": true,
+    "effects": {
+     "domain.人口": -90,
+     "domain.民心": -8,
+     "flags.灰咳": true
+    }
+   },
+   "10": {
+    "text": "灰咳の大流行",
+    "stop": true,
+    "visible": true,
+    "effects": {
+     "domain.人口": -120,
+     "domain.民心": -10
+    }
+   }
+  }
+ },
+ "異端の目": {
+  "name": "異端の目",
+  "max": 8,
+  "p_season": 0.0,
+  "visible": false,
+  "thresholds": {
+   "3": {
+    "text": "アンセルムは司教への手紙を書くか迷っている",
+    "stop": true,
+    "visible": false
+   },
+   "5": {
+    "text": "司教の使いが館村の教会を訪れた",
+    "stop": true,
+    "visible": true
+   },
+   "8": {
+    "text": "主人公に審問の呼び出しが来た",
+    "stop": true,
+    "visible": true,
+    "effects": {
+     "flags.審問": true
+    }
+   }
+  }
+ },
+ "父の膝": {
+  "name": "父の膝",
+  "max": 6,
+  "p_season": 0.0,
+  "visible": false,
+  "thresholds": {
+   "4": {
+    "text": "父が馬に乗らない日が増えた",
+    "stop": false,
+    "visible": true
+   },
+   "6": {
+    "text": "父が落馬し、寝たきりになった",
+    "stop": true,
+    "visible": true,
+    "effects": {
+     "flags.父寝たきり": true
+    }
+   }
+  },
+  "mods": [
+   {
+    "if": "季節 == '冬'",
+    "p_season": 0.5
+   },
+   {
+    "if": "flag_出陣中",
+    "p_season": 0.5
+   }
+  ]
+ },
+ "コンラートの借金": {
+  "name": "コンラートの借金",
+  "max": 6,
+  "p_season": 0.25,
+  "visible": false,
+  "thresholds": {
+   "4": {
+    "text": "コンラートが兄に金の無心をする手紙を送った",
+    "stop": false,
+    "visible": true
+   },
+   "6": {
+    "text": "コンラートはアイヒベルク側に、ハーゼル家の森の境界の古文書を渡した",
+    "stop": true,
+    "visible": false,
+    "effects": {
+     "flags.境界文書流出": true
+    }
+   }
+  }
+ }
+}

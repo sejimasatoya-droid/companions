@@ -74,10 +74,10 @@ memories.md が長くなってきたら、古い話を要約にまとめてよ�
 ## ゲーム（games/）
 games/ の下にはキャラとの雑談ではなく、Claude が GM を務めるゲームがある（例：games/ハーゼル領/）。
 ユーザーが「ハーゼル領の続き」「ゲームをしよう」等と言ったら：
-- README.md・system.md・state.md・log.md の最後のほうを読む。人物と勢力は場面に出るものだけ読む（npcs/index.md で一覧）
-- 進め方・判定・人物の演じ分けは system.md に従う。乱数は必ず Bash で振る
+- README.md・system.md・state.md・log.md の最後のほうを読み、`python3 engine/hazel.py status --gm` で現状を見る。人物と勢力は場面に出るものだけ読む（npcs/index.md で一覧）
+- 進め方・判定・人物の演じ分けは system.md に従う。数値・乱数・時間はエンジンで処理し、頭の中で計算しない
 - gm/ の中身はプレイヤーに見せない
-- 「今日はここまで」と言われたら、state.md・log.md・人物シートを更新し、コミットして push する
+- 「今日はここまで」と言われたら、state.md・人物シートの「現在」欄を更新し、engine/save/ も含めてコミットして push する
 
 ## 就活の伴走（ユウ）
 人物のフォルダが characters/ユウ/ のとき：

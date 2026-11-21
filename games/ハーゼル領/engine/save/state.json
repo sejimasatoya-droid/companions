@@ -67,7 +67,7 @@
   }
  },
  "domain": {
-  "財貨": 104.89,
+  "財貨": 97.69,
   "負債": 320,
   "利率": 0.12,
   "食糧": 1.15,
@@ -96,8 +96,8 @@
   "鉄価格": 4.0
  },
  "military": {
-  "騎士": 1,
-  "常備兵": 4,
+  "騎士": 0,
+  "常備兵": 0,
   "徴募兵": 0
  },
  "clocks": {
@@ -215,7 +215,8 @@
   "マティアスの嘘": true,
   "マティアスの篤志家はザルム": true,
   "刻の司の記録": true,
-  "動員令": true
+  "動員令": true,
+  "動員中": true
  },
  "harvest": null,
  "projects_active": [
@@ -732,6 +733,19 @@
    "hidden": false,
    "effects": {
     "flags.マティアス春の再訪": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 130 and flag_動員中",
+   "text": "四十日の軍役を終えて、ボルドたちが東の国境から戻ってきた",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.動員中": false,
+    "military.騎士": 1,
+    "military.常備兵": 4,
+    "flags.ボルドオーベル駐留": false
    },
    "repeat": false
   }

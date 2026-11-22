@@ -39,7 +39,7 @@
     "id": "辺_小姓",
     "w": 5,
     "once": true,
-    "if": "年齢 >= 11",
+    "if": "年齢 >= 11 and not flag_出仕中 and not flag_小姓の打診",
     "text": "辺境伯家から、若様を小姓として迎えたいとの打診が来た",
     "stop": true
    },

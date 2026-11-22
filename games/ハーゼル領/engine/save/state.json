@@ -1,5 +1,5 @@
 {
- "week": 362,
+ "week": 363,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,20 +15,19 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 634,
+   "魔力": 644,
    "体力": 30.5,
    "弁舌": 4.0,
    "知識": 48.0,
-   "武芸": 65.0,
-   "礼法": 20.0
+   "武芸": 66.0,
+   "礼法": 22.25
   },
-  "fatigue": 1.5,
+  "fatigue": 0.6,
   "pocket": 0,
   "routine": {
    "務め": 3,
    "剣の稽古": 1,
-   "読み書き": 1,
-   "体を鍛える": 1
+   "休む": 2
   },
   "items": [
    "木彫りの馬（父が彫った。前脚を父に教わって自分で直した）",
@@ -80,16 +79,16 @@
   }
  },
  "domain": {
-  "財貨": 344.85,
+  "財貨": 286.45,
   "負債": 156,
   "利率": 0.1,
-  "食糧": 7.56,
+  "食糧": 8.36,
   "人口": 1105,
   "木材": 1,
   "石材": 2.5,
   "鉄": 0,
   "民心": 56,
-  "治安": 65,
+  "治安": 66,
   "開発": 74,
   "衛生": 62,
   "森の健全度": 64,
@@ -441,35 +440,36 @@
   "ヒルダ施療所": true,
   "槍衾隊": true,
   "森の縁の見回り": true,
-  "つなぎ819返した": true
+  "つなぎ819返した": true,
+  "麦の引き取り819": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "長弓隊",
    "labor": 104,
-   "weeks": 14,
+   "weeks": 15,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "地図づくり",
-   "labor": 6,
-   "weeks": 1,
+   "labor": 12,
+   "weeks": 2,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "狼煙の網",
-   "labor": 8,
-   "weeks": 1,
+   "labor": 16,
+   "weeks": 2,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "手当て隊",
-   "labor": 4,
-   "weeks": 1,
+   "labor": 8,
+   "weeks": 2,
    "people": 4,
    "hero_days_needed": false
   }
@@ -1337,16 +1337,6 @@
    "hidden": false,
    "effects": {
     "flags.風車を始めた": true
-   },
-   "repeat": false
-  },
-  {
-   "if": "月 == 9 and 週 == 4 and not flag_麦の引き取り819",
-   "text": "商会との約束：南で買い占めた麦のうち、ハーゼルの引き取り分（40金貨ぶん）を、年貢のあとに払う。売れ残りがあれば、ハーゼルの毛織物と薬酒で払ってよい",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.麦の引き取り819": true
    },
    "repeat": false
   },

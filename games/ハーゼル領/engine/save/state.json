@@ -79,7 +79,7 @@
   "民心": 55,
   "治安": 59,
   "開発": 34,
-  "衛生": 33,
+  "衛生": 34,
   "森の健全度": 59,
   "主家の覚え": 50,
   "注目度": 11,
@@ -871,6 +871,38 @@
     "flags.境の森の裁き": true,
     "domain.主家の覚え": 2,
     "factions.アイヒベルク.態度": -2
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 176 and not flag_オーベルの井戸",
+   "text": "オーベル村の井戸と便所が離れた。マグダが村の女たちに、煮た水のことを言い聞かせている",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "flags.オーベルの井戸": true,
+    "domain.衛生": 5
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 180 and not flag_ドルンの井戸",
+   "text": "秋まきのあと、ドルン村の井戸と便所が離れた",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "flags.ドルンの井戸": true,
+    "domain.衛生": 5
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 177 and not flag_ヤーコプの目利き815",
+   "text": "商会のヤーコプが、年に一度の目利きのために館へやってきた。今年は自分で来た",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.ヤーコプの目利き815": true
    },
    "repeat": false
   }

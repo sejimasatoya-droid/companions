@@ -67,7 +67,7 @@
   }
  },
  "domain": {
-  "財貨": 34.82,
+  "財貨": 26.82,
   "負債": 300,
   "利率": 0.12,
   "食糧": 2.63,
@@ -285,7 +285,8 @@
   "ヘルムートと知らせの道": true,
   "ドルンの井戸": true,
   "開戦": true,
-  "陣中の煮沸": true
+  "陣中の煮沸": true,
+  "アンセルム協力": true
  },
  "harvest": null,
  "projects_active": [
@@ -309,6 +310,13 @@
    "weeks": 5,
    "people": 15,
    "hero_days_needed": false
+  },
+  {
+   "id": "学校",
+   "labor": 0,
+   "weeks": 0,
+   "people": 1,
+   "hero_days_needed": true
   }
  ],
  "projects_done": [

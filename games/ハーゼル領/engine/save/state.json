@@ -382,7 +382,8 @@
   "持続する林業": true,
   "風車の番": true,
   "乳の固め方": true,
-  "山の薬草": true
+  "山の薬草": true,
+  "チーズの試し": true
  },
  "harvest": "平年",
  "projects_active": [
@@ -1162,6 +1163,14 @@
    "effects": {
     "flags.風車を始めた": true
    },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 309",
+   "text": "館の台所で試しに作った山のチーズが、八週寝かせて食べごろになった。エッボに見せられる（説得に実物の証 +3）",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
    "repeat": false
   }
  ],

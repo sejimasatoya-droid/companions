@@ -67,7 +67,7 @@
   }
  },
  "domain": {
-  "財貨": 15.82,
+  "財貨": 40.82,
   "負債": 300,
   "利率": 0.12,
   "食糧": 2.63,
@@ -86,7 +86,7 @@
  },
  "domain_extra": {
   "月の固定費": 22.0,
-  "週収入": 1.55,
+  "週収入": 2.15,
   "イベント率": 0.12,
   "借金期限": [
    818,
@@ -287,7 +287,8 @@
   "開戦": true,
   "陣中の煮沸": true,
   "アンセルム協力": true,
-  "見張り塔": true
+  "見張り塔": true,
+  "石鹸三十": true
  },
  "harvest": null,
  "projects_active": [
@@ -964,6 +965,17 @@
    "effects": {
     "flags.代納金半分": true,
     "domain.財貨": 25
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 218 and not flag_冬のつなぎ返済",
+   "text": "秋の年貢から、商会に冬のつなぎ二十五と利二・五を返した",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "flags.冬のつなぎ返済": true,
+    "domain.財貨": -27.5
    },
    "repeat": false
   }

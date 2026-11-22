@@ -370,6 +370,10 @@ def ruler_tick(W):
         annual = 0.002 * math.exp(0.075 * max(0, age - 20))
         if random.random() < annual / 4:
             old = p["ruler"]["name"]
+            if p["kind"] in ("都市", "同盟"):
+                p["ruler"] = {"name": new_name(W, pid, old), "age": random.randint(40, 60)}
+                event(W, f"{pname(W, pid)}の{old}の長が代わった", fr(W, pid), 1, "君主")
+                continue
             r = d(6) + int(p["stab"] / 3)
             heir = new_name(W, pid, old)
             if r <= 2 and len(regions_of(W, pid)) >= 3:

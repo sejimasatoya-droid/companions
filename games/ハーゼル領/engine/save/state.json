@@ -1414,6 +1414,27 @@
     "flags.アルトハイムへ発った": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 400 and not flag_夏の帰郷820",
+   "text": "陽月：辺境伯の許しで、三週だけ館へ帰る。黒の森の塔の谷を見に行く（帰郷中は務めなし。ボルドとクルトが供）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.帰郷中": true,
+    "flags.夏の帰郷820": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 403 and flag_帰郷中 and flag_夏の帰郷820",
+   "text": "夏の帰郷の三週が終わる。城へ戻る",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.帰郷中": false
+   },
+   "repeat": false
   }
  ],
  "factions": {

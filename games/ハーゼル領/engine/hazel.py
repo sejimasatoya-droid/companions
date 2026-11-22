@@ -447,7 +447,8 @@ def projects_week(st, out):
     used = 0
     for p in st["projects_active"]:
         pd = pdefs[p["id"]]
-        people = min(p["people"], max(0, avail - used))
+        need_people = p["labor"] < pd.get("labor", 0)  # 手間が済んだ計画は、人を放して日数だけ待つ
+        people = min(p["people"], max(0, avail - used)) if need_people else 0
         used += people
         p["labor"] += people
         p["weeks"] += 1
@@ -786,7 +787,7 @@ def status(st, gm=False):
         print("■ 取り決め " + " / ".join(f"{t['相手']}と{t['種類']}（{t['条件']}）" for t in st["treaties"]))
     print("■ 情勢クロック")
     for cid, c in CLOCKS.items():
-        if c.get("retired"):
+        if c.get("retired") or (c.get("only_if") and not cond(st, c["only_if"]) and not gm):
             continue
         if c.get("visible", True) or gm:
             print(f"  {c['name']}：{st['clocks'].get(cid, 0)}/{c['max']}" + ("（隠し）" if not c.get('visible', True) else ""))

@@ -1190,6 +1190,16 @@
     "flags.狩人の禁止": true
    },
    "repeat": false
+  },
+  {
+   "if": "月 == 11 and 週 == 4 and not flag_オーベル冬の兵",
+   "text": "冬の初め：マグダとの約束どおり、兵を二人オーベルに置く（春の芽月まで）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.オーベル冬の兵": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

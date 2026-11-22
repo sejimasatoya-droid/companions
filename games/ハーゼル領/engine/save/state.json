@@ -834,6 +834,16 @@
     "clocks.辺境伯家の継嗣問題": 1
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 157 and not flag_ヘルムートの返事2",
+   "text": "ヘルムートから、また短い返事が届いた。『わかった。目は、おまえのものだ。俺は、俺の手で証を立てる。会議で会おう』",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "flags.ヘルムートの返事2": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

@@ -931,6 +931,26 @@
     "flags.ボルドオーベル駐留": false
    },
    "repeat": false
+  },
+  {
+   "if": "石材 >= 4 and 財貨 >= 45 and not flag_道の整備の支度",
+   "text": "石材が四つたまった。財貨にもゆとりがある。街道の整備に取りかかれる",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.道の整備の支度": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "財貨 >= 80 and not flag_水車の改良の支度",
+   "text": "財貨が八十を超えた。水車の歯車の改良（財貨50・木材3・鉄1）の支度ができる",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.水車の改良の支度": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

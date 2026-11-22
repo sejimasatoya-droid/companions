@@ -452,6 +452,10 @@
    {
     "if": "flag_兵糧の策",
     "p_season": -0.12
+   },
+   {
+    "if": "flag_策_商会の買い付け",
+    "p_season": -0.06
    }
   ],
   "thresholds": {

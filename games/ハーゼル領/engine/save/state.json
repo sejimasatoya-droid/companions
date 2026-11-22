@@ -1009,6 +1009,16 @@
     "flags.計画の日を戻す": true
    },
    "repeat": false
+  },
+  {
+   "if": "'水車の改良' in 完成 and '学校' in 完成 and not flag_輪作を広める番",
+   "text": "水車と読み書きが済んだ。約束どおり、カード『輪作』を広める（堆肥とクローバーをミルデなどに）番だ。そのあと蒸留器",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.輪作を広める番": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

@@ -80,12 +80,12 @@
   }
  },
  "domain": {
-  "財貨": 48.58,
+  "財貨": 15.58,
   "負債": 156,
   "利率": 0.1,
   "食糧": 6.11,
   "人口": 1105,
-  "木材": 2,
+  "木材": 0,
   "石材": 1.5,
   "鉄": 0,
   "民心": 55,
@@ -424,7 +424,7 @@
   "風車の粉屋はオットーの家": true,
   "民兵": true,
   "館の守り": true,
-  "長弓隊を始めた": false,
+  "長弓隊を始めた": true,
   "陣に出る": true,
   "糸2オズヴィン": true,
   "陣へ発った": true,
@@ -439,7 +439,22 @@
   "ルドルフ派の恨み": true
  },
  "harvest": "平年",
- "projects_active": [],
+ "projects_active": [
+  {
+   "id": "長弓隊",
+   "labor": 0,
+   "weeks": 0,
+   "people": 8,
+   "hero_days_needed": false
+  },
+  {
+   "id": "槍衾隊",
+   "labor": 0,
+   "weeks": 0,
+   "people": 8,
+   "hero_days_needed": false
+  }
+ ],
  "projects_done": [
   "手洗いと煮沸",
   "水車の修理",

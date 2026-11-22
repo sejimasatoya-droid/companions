@@ -802,5 +802,183 @@
   },
   "done_text": "川下の湿った荒れ地に溝が掘られ、水が抜けて、新しい畑ができた。森を切らずに畑が増えた",
   "opposition": "なし"
+ },
+ "手当て隊": {
+  "name": "従軍の手当て隊",
+  "tier": 2,
+  "requires": "カード_野戦衛生 >= 4",
+  "requires_text": "カード「野戦衛生」段階4",
+  "permit": "当主・ボルド",
+  "cost": {
+   "財貨": 8
+  },
+  "labor": 10,
+  "min_weeks": 6,
+  "effects": {
+   "flags.野戦の手当て": true,
+   "protagonist.cards.野戦衛生": 1
+  },
+  "done_text": "兵の中に、煮た布と薬酒と山の薬草を持った手当ての者を置いた。戦の損害が三割減り、深手の者が死ににくくなる",
+  "opposition": "なし",
+  "card": "野戦衛生"
+ },
+ "狼煙の網": {
+  "name": "狼煙の網",
+  "tier": 2,
+  "requires": "カード_狼煙と信号 >= 3 and '見張り塔' in 完成",
+  "requires_text": "カード「狼煙と信号」段階3・北の見張り塔",
+  "permit": "当主・ボルド",
+  "cost": {
+   "財貨": 6
+  },
+  "labor": 20,
+  "min_weeks": 6,
+  "effects": {
+   "flags.狼煙の網": true,
+   "domain.治安": 1,
+   "protagonist.cards.狼煙と信号": 1
+  },
+  "done_text": "見張り塔から村々の丘へ、煙と火の合図の網を張った。敵が来れば、半日で領じゅうに知れる（不意打ちを受けにくい）",
+  "opposition": "なし",
+  "card": "狼煙と信号"
+ },
+ "兵糧の隠し蔵": {
+  "name": "兵糧の隠し蔵",
+  "tier": 2,
+  "requires": "カード_兵站と補給 >= 2",
+  "requires_text": "カード「兵站と補給」段階2",
+  "permit": "当主・ボルド",
+  "cost": {
+   "財貨": 10
+  },
+  "labor": 20,
+  "min_weeks": 8,
+  "effects": {
+   "flags.兵糧の隠し蔵": true,
+   "protagonist.cards.兵站と補給": 1
+  },
+  "done_text": "村ごとに、徴発の目の届かない隠し蔵を作った。敵に麦を奪われても、領の食糧の半分は残る",
+  "opposition": "なし",
+  "card": "兵站と補給"
+ },
+ "号令": {
+  "name": "規律と号令",
+  "tier": 3,
+  "requires": "カード_規律と号令 >= 2 and '民兵の訓練' in 完成",
+  "requires_text": "カード「規律と号令」段階2・民兵の訓練",
+  "permit": "当主・ボルド",
+  "cost": {
+   "財貨": 5
+  },
+  "labor": 10,
+  "min_weeks": 8,
+  "effects": {
+   "flags.号令": true,
+   "protagonist.cards.規律と号令": 1
+  },
+  "done_text": "太鼓と号令で、隊列を組んだまま進み、退き、向きを変えられるようになった（戦いの判定 +1）",
+  "opposition": "なし",
+  "card": "規律と号令"
+ },
+ "槍衾隊": {
+  "name": "槍衾隊",
+  "tier": 3,
+  "requires": "カード_槍衾 >= 2 and '民兵の訓練' in 完成",
+  "requires_text": "カード「槍衾」段階2・民兵の訓練",
+  "permit": "当主・ボルド",
+  "cost": {
+   "財貨": 15,
+   "鉄": 1
+  },
+  "labor": 30,
+  "min_weeks": 10,
+  "effects": {
+   "flags.槍衾隊": true,
+   "protagonist.cards.槍衾": 1
+  },
+  "done_text": "長い槍を密に並べる槍衾の隊ができた。平地で騎士の突撃を止められる（兵種「槍衾兵」）",
+  "opposition": "なし",
+  "card": "槍衾"
+ },
+ "地図づくり": {
+  "name": "領の地図づくり",
+  "tier": 3,
+  "requires": "カード_地図と測量 >= 2",
+  "requires_text": "カード「地図と測量」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 10
+  },
+  "labor": 15,
+  "min_weeks": 10,
+  "effects": {
+   "flags.領の地図": true,
+   "protagonist.cards.地図と測量": 1
+  },
+  "done_text": "縮尺をそろえた領の地図ができた。自分の領で戦うとき、地の利を選べる（判定 +1）",
+  "opposition": "なし",
+  "card": "地図と測量"
+ },
+ "荷車の砦": {
+  "name": "荷車の砦",
+  "tier": 3,
+  "requires": "カード_荷車の砦 >= 2 and flag_号令",
+  "requires_text": "カード「荷車の砦」段階2・規律と号令",
+  "permit": "当主・ボルド",
+  "cost": {
+   "財貨": 20,
+   "木材": 3,
+   "鉄": 1
+  },
+  "labor": 25,
+  "min_weeks": 10,
+  "effects": {
+   "flags.荷車の砦": true,
+   "protagonist.cards.荷車の砦": 1
+  },
+  "done_text": "鎖でつないだ荷車を輪に並べ、その中から弩と槍で戦うやり方を覚えた。平地でも守りの戦いができる（平地で ×1.5）",
+  "opposition": "なし",
+  "card": "荷車の砦"
+ },
+ "多重の守り": {
+  "name": "塔と土塁と二重の壁",
+  "tier": 4,
+  "requires": "カード_堀と土塁 >= 2 and '館の守り' in 完成",
+  "requires_text": "カード「堀と土塁」段階2・館の守りを固める",
+  "permit": "当主・ボルド",
+  "cost": {
+   "財貨": 40,
+   "石材": 4
+  },
+  "labor": 80,
+  "min_weeks": 16,
+  "effects": {
+   "flags.多重の守り": true,
+   "protagonist.cards.堀と土塁": 1
+  },
+  "done_text": "館に、死角のない張り出しの塔と、二重の壁と土塁ができた（館で守る戦いが ×2.5）",
+  "opposition": "なし",
+  "card": "堀と土塁"
+ },
+ "竜の粉": {
+  "name": "竜の粉（火薬）",
+  "tier": 4,
+  "requires": "カード_火薬 >= 2 and '蒸留' in 完成",
+  "requires_text": "カード「火薬」段階2・蒸留器（硝石を煮つめる釜）",
+  "permit": "当主（父）",
+  "cost": {
+   "財貨": 30
+  },
+  "labor": 20,
+  "min_weeks": 12,
+  "effects": {
+   "flags.火薬": true,
+   "protagonist.cards.火薬": 1,
+   "clocks.異端の目": 2,
+   "domain.注目度": 10
+  },
+  "done_text": "硝石と硫黄と炭から、火をつけると雷のように弾ける黒い粉ができた。初めて見る敵は崩れる（戦いの判定 +2）。教会と諸国の目が、ハーゼルに向く",
+  "opposition": "教会（悪魔のわざ）、父（騎士の戦ではない）",
+  "card": "火薬"
  }
 }

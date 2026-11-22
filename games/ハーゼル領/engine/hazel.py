@@ -1136,16 +1136,27 @@ def battle(st, a, b, terrain="平地", a_lead=0, b_lead=0, named=None):
         return s
 
     ra, rb = d(6) + d(6), d(6) + d(6)
+    fl = st["flags"]
+    # 味方（a）はハーゼルとする。戦の計画の効き目
+    bonus = (1 if fl.get("号令") else 0) + (2 if fl.get("火薬") else 0)
+    if bonus:
+        print(f"  （戦の計画の効き目：判定 +{bonus}　" + "・".join(x for x, f in (("規律と号令", "号令"), ("竜の粉", "火薬")) if fl.get(f)) + "）")
+    a_lead += bonus
     sa = strength(a) * (1 + (ra + a_lead - 7) / 10)
     sb = strength(b) * (1 + (rb + b_lead - 7) / 10)
     if terrain == "防御":
-        sa *= 2.0
+        sa *= 2.5 if fl.get("多重の守り") else 2.0
+    elif terrain == "平地" and fl.get("荷車の砦"):
+        sa *= 1.5
     ratio = sa / max(sb, 0.01)
     table = [(2.0, "大勝", 0.05, 0.5, 0), (1.25, "勝ち", 0.1, 0.3, 1), (0.8, "拮抗", 0.2, 0.2, 2),
              (0.5, "負け", 0.3, 0.1, 4), (0, "大敗", 0.5, 0.05, 7)]
     for th, res, la, lb, risk in table:
         if ratio >= th:
             break
+    if fl.get("野戦の手当て"):
+        la = round(la * 0.7, 3)
+        risk = max(0, risk - 1)
     print(f"⚔ 戦い（{terrain}）：味方 戦力{strength(a):.1f} 🎲{ra}{a_lead:+d} → {sa:.1f} ／ 敵 戦力{strength(b):.1f} 🎲{rb}{b_lead:+d} → {sb:.1f}")
     print(f"  比 {ratio:.2f} → 【{res}】 味方の損害 約{int(la*100)}% ／ 敵の損害 約{int(lb*100)}%")
     for u, n in a.items():

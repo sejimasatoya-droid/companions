@@ -1,5 +1,5 @@
 {
- "week": 292,
+ "week": 294,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 15
   },
   "xp": {
-   "魔力": 132,
+   "魔力": 122,
    "体力": 27.5,
    "弁舌": 4.0,
-   "知識": 56.25,
+   "知識": 58.75,
    "武芸": 72,
    "礼法": 0.5
   },
-  "fatigue": 0.0,
+  "fatigue": 0.2,
   "pocket": 0,
   "routine": {
    "読み書き": 1,
@@ -57,7 +57,7 @@
    "持続する林業": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 12,
+  "魔力点": 20,
   "魔力点上限": 30,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 93.34,
+  "財貨": 100.7,
   "負債": 189,
   "利率": 0.1,
   "食糧": 3.8,
@@ -378,31 +378,32 @@
  "projects_active": [
   {
    "id": "クローバー輪作",
-   "labor": 270,
-   "weeks": 18,
+   "labor": 300,
+   "weeks": 20,
    "people": 15,
    "hero_days_needed": false
   },
   {
    "id": "森の手入れ",
-   "labor": 170,
-   "weeks": 18,
+   "labor": 190,
+   "weeks": 20,
    "people": 10,
    "hero_days_needed": false
   },
   {
    "id": "山の飼い葉",
-   "labor": 20,
-   "weeks": 4,
+   "labor": 30,
+   "weeks": 6,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "蒸留",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 4,
+   "weeks": 2,
    "people": 2,
-   "hero_days_needed": true
+   "hero_days_needed": true,
+   "hero_days": 2
   }
  ],
  "projects_done": [
@@ -1138,14 +1139,6 @@
    "effects": {
     "domain_extra.週収入": -0.25
    },
-   "repeat": false
-  },
-  {
-   "if": "通算週 >= 294",
-   "text": "ヤーコプから、クーノとリーベンの誰かについての返事が届く",
-   "stop": true,
-   "hidden": false,
-   "effects": {},
    "repeat": false
   }
  ],

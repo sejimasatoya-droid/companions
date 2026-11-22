@@ -491,7 +491,8 @@
   "白樺の谷の勝ち": true,
   "ハーゲンを捕らえた": true,
   "和議を受ける": true,
-  "和議の随員の話": true
+  "和議の随員の話": true,
+  "和議の随員": true
  },
  "harvest": null,
  "projects_active": [
@@ -1405,6 +1406,16 @@
    "hidden": false,
    "effects": {
     "flags.メリディアの返事": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "月 == 11 and 週 == 1 and flag_和議の随員 and not flag_アルトハイムへ発った",
+   "text": "屠月：ラインハルトの一行と、和議の席のために自由都市アルトハイムへ発つ（片道十二日ほど）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.アルトハイムへ発った": true
    },
    "repeat": false
   }

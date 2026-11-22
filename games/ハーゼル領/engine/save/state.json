@@ -1531,6 +1531,26 @@
     "flags.火薬種痘を書いた": true
    },
    "repeat": false
+  },
+  {
+   "if": "'冬の手仕事' in 完成 and 財貨 >= 20 and not flag_瓶と帳簿を始めた",
+   "text": "冬の手仕事の人手が空いた。瓶詰めと商いの帳簿を始める：project start 瓶詰め 3 / project start 複式簿記 0",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.瓶と帳簿を始めた": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "'鋸場' in 完成 and 木材 >= 4 and 鉄 >= 1 and 財貨 >= 30 and not flag_投石機を始めた",
+   "text": "鋸場ができ、木材と鉄がそろった。錘の投石機を始める：project start 投石機 4",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.投石機を始めた": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

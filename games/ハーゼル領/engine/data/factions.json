@@ -538,7 +538,10 @@
     "once": true,
     "if": "灰の書庫 >= 3",
     "text": "旅の女学者イルメラが館を訪ね、『割れた杯を継いだ子』に会いたいと言った",
-    "stop": true
+    "stop": true,
+    "effects": {
+     "flags.糸3イルメラ": true
+    }
    }
   ],
   "hidden": true

@@ -645,5 +645,86 @@
     "visible": true
    }
   }
+ },
+ "学院の誓い": {
+  "name": "学院の誓いのほころび",
+  "max": 8,
+  "p_season": 0.2,
+  "only_if": "flag_学院編",
+  "mods": [
+   {
+    "if": "東の休み戦 >= 6",
+    "p_season": 0.15
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "学院で、アルヴェンとカルディアの学生が喧嘩をし、けが人が出た",
+    "stop": true
+   },
+   "5": {
+    "text": "いくつかの国の使節が、学生を国へ呼び戻しはじめた",
+    "stop": true
+   },
+   "8": {
+    "text": "学院の門の内で、剣が抜かれた",
+    "stop": true
+   }
+  }
+ },
+ "刻の司の噂": {
+  "name": "刻の司の噂",
+  "max": 8,
+  "p_season": 0.15,
+  "only_if": "flag_学院編",
+  "visible": false,
+  "mods": [
+   {
+    "if": "flag_時繰りを人前で使った",
+    "p_season": 0.2
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "学生のあいだで、『誰かが壊れた物を戻している』と噂になっている",
+    "stop": true,
+    "visible": true
+   },
+   "5": {
+    "text": "聖座の監督官ドミニクスが、噂を調べはじめた",
+    "stop": true,
+    "visible": true
+   },
+   "8": {
+    "text": "学院長マグヌスが、ライを学院長室に呼んだ",
+    "stop": true,
+    "visible": true
+   }
+  }
+ },
+ "地下書庫の鍵": {
+  "name": "地下書庫の鍵",
+  "max": 6,
+  "p_season": 0.12,
+  "only_if": "flag_学院編",
+  "visible": false,
+  "mods": [
+   {
+    "if": "塔を探す者 >= 5",
+    "p_season": 0.1
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "（書庫の番ヨアヒムが、夜に地下へ下りている）",
+    "stop": false,
+    "visible": false
+   },
+   "6": {
+    "text": "学院の地下書庫から、古い書が一冊、盗まれたという",
+    "stop": true,
+    "visible": true
+   }
+  }
  }
 }

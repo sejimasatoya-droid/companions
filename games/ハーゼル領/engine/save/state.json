@@ -1288,6 +1288,54 @@
    "hidden": false,
    "effects": {},
    "repeat": true
+  },
+  {
+   "if": "通算週 >= 340 and flag_出仕中 and not flag_糸2オズヴィン",
+   "text": "（GM 学院の糸2）アンセルムの手紙：修道院の書庫で、院長ベネディクトと、聖オズヴィンが若いころアルトハイムの学院で学び『刻の覚え書き』を残したという写本の注を見つけた（gm/学院編.md）",
+   "stop": true,
+   "hidden": true,
+   "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 349 and not flag_糸7ヒルダ",
+   "text": "（GM 学院の糸7）草月の交易：ヒルダが、谷の教会で洗礼を受けたいと言い出す。ウルガとアンセルムの許しが要る（gm/学院編.md）",
+   "stop": true,
+   "hidden": true,
+   "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 360 and not flag_糸3イルメラ",
+   "text": "（GM 学院の糸3）旅の女学者イルメラがハーゼルを訪ねてくる（クロックで来ていなければ）（gm/学院編.md）",
+   "stop": true,
+   "hidden": true,
+   "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 364 and not flag_糸8ペーター",
+   "text": "（GM 学院の糸8）鍛冶屋の息子ペーターの鍛冶場で、火がひとりでに強くなった。洗礼をすれば火の祝福が見つかる（gm/学院編.md）",
+   "stop": true,
+   "hidden": true,
+   "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 412 and not flag_糸6学院長",
+   "text": "（GM 学院の糸6）学院長マグヌスが辺境伯に『割れた杯を継いだ子を、十五の秋に学院へ』と書き送る（クロックで来ていなければ）（gm/学院編.md）",
+   "stop": true,
+   "hidden": true,
+   "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 420 and not flag_糸1封の寿命",
+   "text": "（GM 学院の糸1）ヴェレナの知らせ：主が夢で言った。封は、刻の司の作り方でなければ、長くはもたない（gm/学院編.md）",
+   "stop": true,
+   "hidden": true,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

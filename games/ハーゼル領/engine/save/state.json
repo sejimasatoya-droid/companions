@@ -1,5 +1,5 @@
 {
- "week": 316,
+ "week": 317,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 164,
-   "体力": 48.5,
+   "魔力": 174,
+   "体力": 25.0,
    "弁舌": 4.0,
-   "知識": 86.25,
-   "武芸": 64.0,
-   "礼法": 3.5
+   "知識": 87.5,
+   "武芸": 66.0,
+   "礼法": 6.0
   },
-  "fatigue": 0.5,
+  "fatigue": 0.6,
   "pocket": 0,
   "routine": {
    "読み書き": 1,
@@ -57,7 +57,7 @@
    "持続する林業": 3
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 20,
+  "魔力点": 24,
   "魔力点上限": 34,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 178.95,
+  "財貨": 183.18,
   "負債": 156,
   "利率": 0.1,
   "食糧": 4.41,
@@ -394,71 +394,71 @@
  "projects_active": [
   {
    "id": "クローバー輪作",
-   "labor": 630,
-   "weeks": 42,
+   "labor": 645,
+   "weeks": 43,
    "people": 15,
    "hero_days_needed": false
   },
   {
    "id": "山の麦蔵",
-   "labor": 8,
-   "weeks": 2,
+   "labor": 12,
+   "weeks": 3,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "産婆の手洗い",
-   "labor": 2,
-   "weeks": 2,
+   "labor": 3,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "施療所",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "毛織物工房",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "薬酒",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "養蜂の拡張",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "縮絨水車",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "館の守り",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "山のチーズ",
    "labor": 0,
-   "weeks": 1,
+   "weeks": 2,
    "people": 2,
    "hero_days_needed": false
   }
@@ -1243,14 +1243,6 @@
    "effects": {
     "flags.オーベル冬の兵": true
    },
-   "repeat": false
-  },
-  {
-   "if": "通算週 >= 317",
-   "text": "秋の家臣の集まり：約束どおり、皆の前でブレッケンに仔牛を一頭贈る",
-   "stop": true,
-   "hidden": false,
-   "effects": {},
    "repeat": false
   },
   {

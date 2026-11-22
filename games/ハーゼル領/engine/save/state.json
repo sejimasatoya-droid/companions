@@ -86,7 +86,7 @@
   "名誉": 69
  },
  "domain_extra": {
-  "月の固定費": 22.0,
+  "月の固定費": 22.5,
   "週収入": 3.1,
   "イベント率": 0.12,
   "借金期限": [
@@ -386,7 +386,8 @@
   "チーズの試し": true,
   "辺境伯の森番": true,
   "風車を始めた": true,
-  "山の飼い葉": true
+  "山の飼い葉": true,
+  "城との定期便": true
  },
  "harvest": null,
  "projects_active": [
@@ -1279,6 +1280,14 @@
     "flags.湿地を始めた": true
    },
    "repeat": false
+  },
+  {
+   "if": "flag_出仕中 and 週 in (2, 4)",
+   "text": "城との定期便：母の手紙が届いた（領の様子・計画の進み・帳面の写し）。ライは返事で助言できる",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": true
   }
  ],
  "factions": {

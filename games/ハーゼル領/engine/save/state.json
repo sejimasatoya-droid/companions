@@ -347,7 +347,8 @@
   "叔父の四十": true,
   "ゼバスティアンが時繰りを見た": true,
   "院長が審き手": true,
-  "聖オズヴィンの杯の逸話": true
+  "聖オズヴィンの杯の逸話": true,
+  "審問に王太子が臨む": true
  },
  "harvest": "平年",
  "projects_active": [],
@@ -1043,6 +1044,16 @@
    "hidden": false,
    "effects": {
     "flags.ザルムが動く": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 273 and not flag_審問の日",
+   "text": "屠月の第2週。シュタインフェルスの司教座で、審問の日が来た",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.審問の日": true
    },
    "repeat": false
   }

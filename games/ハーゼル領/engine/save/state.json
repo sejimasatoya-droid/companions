@@ -1192,6 +1192,14 @@
     "flags.辺境伯の森番": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 315",
+   "text": "刈り入れが済んだ。エッボとの約束どおり、ドルンで山のチーズを始める（ヒルダが教える。初めの年は乳の半分だけ）：project start 山のチーズ",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

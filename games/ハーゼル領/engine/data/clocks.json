@@ -448,6 +448,10 @@
    {
     "if": "flag_摂政軍の足止め",
     "p_season": -0.12
+   },
+   {
+    "if": "flag_兵糧の策",
+    "p_season": -0.12
    }
   ],
   "thresholds": {

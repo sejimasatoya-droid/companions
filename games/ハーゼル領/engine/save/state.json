@@ -970,6 +970,16 @@
     "flags.品の返済816": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 206 and not flag_ザルムの噂の手",
+   "text": "（GM）ザルムが宰相派を通して、王都で見識の子と森の魔女の噂を広める。2d6で7以下なら異端の目 +1",
+   "stop": true,
+   "hidden": true,
+   "effects": {
+    "flags.ザルムの噂の手": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

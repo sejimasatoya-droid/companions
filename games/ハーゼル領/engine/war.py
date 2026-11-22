@@ -41,7 +41,7 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
     # 兵糧狩り：毎月の第3週、王太子の側の小隊が、摂政の麦の列を叩く
     if st["flags"].get("兵糧狩り") and wk == 3 and "摂政" in W["sides"] and "王太子" in W["sides"]:
         r = random.randint(1, 6) + random.randint(1, 6)
-        lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0)
+        lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0) + (1 if st["flags"].get("夜の襲い") else 0)
         guard = W.get("摂政の護り", 0)
         tot = r + lead - guard
         reg, pr = W["sides"]["摂政"], W["sides"]["王太子"]
@@ -60,6 +60,36 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
         pr["troops"]["兵"] = max(0, pr["troops"].get("兵", 0) - (loss // div))
         out.report(f"［戦］{txt}（🎲{r}+{lead}−守り{guard}＝{tot}）", stop=False, log=True)
         append_md(gm_log, f"- {y_m_w}：（戦の台帳）兵糧狩り {tot}：摂政の兵糧 {reg['兵糧']}、守り {W.get('摂政の護り', 0)}、味方の損害 {loss}")
+    # ザルム狩り：毎月の第1週、ザルム領から摂政の陣へ出る麦の荷と、ザルムの蔵を叩く
+    #   旗 ザルム狩り_村も があれば村の蔵まで焼く（効きは大きいが、名誉・民の恨み）
+    if st["flags"].get("ザルム狩り") and wk == 1 and "摂政" in W["sides"] and "王太子" in W["sides"]:
+        r = random.randint(1, 6) + random.randint(1, 6)
+        lead = (1 if st["flags"].get("襲撃隊") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0) \
+            + (1 if st["flags"].get("領の地図") or st["flags"].get("地図づくり") else 0) + (1 if st["flags"].get("夜の襲い") else 0)
+        guard = W.get("ザルムの守り", 0)
+        tot = r + lead - guard
+        reg, pr = W["sides"]["摂政"], W["sides"]["王太子"]
+        inc = reg["入り"].get("ザルムの蔵")
+        village = st["flags"].get("ザルム狩り_村も")
+        if tot >= 10:
+            cut, burn, loss, txt = 250, 1500, 3, "ザルム領の蔵を焼き、摂政の陣へ向かう荷を奪った（大きく）"
+        elif tot >= 7:
+            cut, burn, loss, txt = 150, 700, 6, "ザルム領で、摂政の陣へ向かう荷の一部を焼いた"
+        else:
+            cut, burn, loss, txt = 0, 0, 12, "ザルム領の蔵を狙ったが、見張りに気づかれ、退いた"
+        if village and cut:
+            cut, burn = int(cut * 1.5), int(burn * 1.5)
+            apply_effects(st, {"domain.名誉": -2, "clocks.イゾルデの恨み": 1})
+            txt += "。村の蔵にも火をかけた"
+        if inc and cut:
+            inc["週"] = max(300, inc["週"] - cut)
+        reg["兵糧"] = max(0, reg["兵糧"] - burn)
+        if cut:
+            W["ザルムの守り"] = min(4, guard + 1)
+        div = (2 if st["flags"].get("野戦の手当て") else 1) * (2 if st["flags"].get("全軍_手当て") else 1)
+        pr["troops"]["兵"] = max(0, pr["troops"].get("兵", 0) - (loss // div))
+        out.report(f"［戦］{txt}（🎲{r}+{lead}−守り{guard}＝{tot}）", stop=False, log=True)
+        append_md(gm_log, f"- {y_m_w}：（戦の台帳）ザルム狩り {tot}：ザルムの蔵の入り {inc['週'] if inc else '-'}/週、摂政の兵糧 {reg['兵糧']}、ザルムの守り {W.get('ザルムの守り', 0)}、味方の損害 {loss}")
     for name, s in W["sides"].items():
         t = total(s)
         # 金のある側は、兵糧が細れば、高値で麦を買い足す（摂政の打ち返し）。8 週に一度まで

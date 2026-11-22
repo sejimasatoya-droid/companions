@@ -1473,6 +1473,16 @@
     "flags.荷車の砦を始めた": true
    },
    "repeat": false
+  },
+  {
+   "if": "石材 >= 4 and 財貨 >= 60 and '館の守り' in 完成 and not flag_多重の守りを始めた",
+   "text": "石材が4たまった。塔と土塁と二重の壁を始める：project start 多重の守り 10",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.多重の守りを始めた": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

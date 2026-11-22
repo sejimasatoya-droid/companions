@@ -501,7 +501,9 @@
   "王太子_兵糧十分": false,
   "王太子_士気低い": false,
   "鷲の飼い葉を始めた": true,
-  "メリディアの返事": true
+  "メリディアの返事": true,
+  "兵糧狩り": true,
+  "商会の耳": true
  },
  "harvest": "平年",
  "projects_active": [

@@ -38,8 +38,37 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
         kk = {"凶作": 0.5, "平年": 1.0, "豊作": 1.3}.get(h, 1.0)
         for name, s in W["sides"].items():
             s["兵糧"] += int(s.get("刈り入れ", 0) * kk)
+    # 兵糧狩り：毎月の第3週、王太子の側の小隊が、摂政の麦の列を叩く
+    if st["flags"].get("兵糧狩り") and wk == 3 and "摂政" in W["sides"] and "王太子" in W["sides"]:
+        r = random.randint(1, 6) + random.randint(1, 6)
+        lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0)
+        guard = W.get("摂政の護り", 0)
+        tot = r + lead - guard
+        reg, pr = W["sides"]["摂政"], W["sides"]["王太子"]
+        if tot >= 10:
+            reg["兵糧"] = max(0, reg["兵糧"] - 2500); W["摂政の護り"] = min(4, guard + 1)
+            txt = "白樺の谷道で、また摂政の麦の列を焼いた（大きく）"
+            loss = 3
+        elif tot >= 7:
+            reg["兵糧"] = max(0, reg["兵糧"] - 1200); W["摂政の護り"] = min(4, guard + 1)
+            txt = "白樺の谷道で、摂政の麦の列の一部を焼いた"
+            loss = 6
+        else:
+            txt = "摂政の麦の列を狩りに出たが、守りが厚く、退いた"
+            loss = 12
+        pr["troops"]["兵"] = max(0, pr["troops"].get("兵", 0) - (loss // (2 if st["flags"].get("野戦の手当て") else 1)))
+        out.report(f"［戦］{txt}（🎲{r}+{lead}−守り{guard}＝{tot}）", stop=False, log=True)
+        append_md(gm_log, f"- {y_m_w}：（戦の台帳）兵糧狩り {tot}：摂政の兵糧 {reg['兵糧']}、守り {W.get('摂政の護り', 0)}、味方の損害 {loss}")
     for name, s in W["sides"].items():
         t = total(s)
+        # 金のある側は、兵糧が細れば、高値で麦を買い足す（摂政の打ち返し）。8 週に一度まで
+        if weeks_left(s) < 3 and s["金"] >= 600 and st["week"] - s.get("_買い足し", -99) >= 8:
+            s["金"] -= 400
+            s["兵糧"] += 4000
+            s["_買い足し"] = st["week"]
+            append_md(gm_log, f"- {y_m_w}：（戦の台帳）{name}が、兵糧が細ったので、高値で麦を買い足した（金 −400、兵糧 +4000）")
+            if s.get("敵"):
+                out.report(f"［戦］{s.get('呼び名', name)}が、南から麦を高値で買い足したという", stop=False, log=True)
         # 兵糧
         inc = 0
         for src, v in s.get("入り", {}).items():
@@ -82,7 +111,8 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
         if lost:
             txt = "、".join(f"{u} {n}" for u, n in lost.items())
             append_md(gm_log, f"- {y_m_w}：（戦の台帳）{name}の兵が逃げた：{txt}（士気 {s['士気']}、兵糧 残り {wl:.1f} 週{'、給金が払えない' if unpaid else ''}）")
-            if sum(lost.values()) >= 30:
+            if sum(lost.values()) >= 30 and st["week"] - s.get("_逃げの知らせ", -99) >= 8:
+                s["_逃げの知らせ"] = st["week"]
                 out.report(f"［戦］{s.get('呼び名', name)}の陣から、兵が逃げはじめているという", stop=False, log=True)
         # 旗：クロックとのつながり
         tag = s.get("旗", name)

@@ -326,6 +326,14 @@ def econ_week(st, out):
         dues = 25 * (2 if st["clocks"].get("カルディア国境の緊張", 0) >= 4 else 1)
         money(-dues, "辺境伯への軍役代納金")
         money(20 * pop_k, "冬越しの年貢の残り")
+    # 季節ごとの石材と木材（石切り場・森の手入れ）
+    if (m, wk) in ((3, 1), (6, 1), (9, 1), (12, 1)):
+        if "石切り場" in st["projects_done"]:
+            dm["石材"] = round(dm.get("石材", 0) + 1, 2)
+            out.report(f"石切り場から、季節の石が出た（石材 {dm['石材']}）")
+        if "森の手入れ" in st["projects_done"]:
+            dm["木材"] = round(dm.get("木材", 0) + 1, 2)
+            out.report(f"森の手入れで、季節の木材がとれた（木材 {dm['木材']}）")
     # ヴァルクとの夏・冬の交易：約束があれば、山の飢えが一つ和らぐ
     if (m, wk) in ((7, 2), (12, 2)) and any(t.get("相手") == "ヴァルク" for t in st.get("treaties", [])):
         cur = st["clocks"].get("ヴァルク族の飢え", 0)

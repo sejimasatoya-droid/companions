@@ -80,7 +80,7 @@
   }
  },
  "domain": {
-  "財貨": -3.24,
+  "財貨": 16.76,
   "負債": 156,
   "利率": 0.1,
   "食糧": 5.81,
@@ -1312,6 +1312,17 @@
    "stop": true,
    "hidden": false,
    "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "月 == 9 and 週 == 3 and not flag_つなぎ819返した",
+   "text": "ヤーコプのつなぎの返済：22（実月の年貢のあと）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "domain.財貨": -22,
+    "flags.つなぎ819返した": true
+   },
    "repeat": false
   }
  ],

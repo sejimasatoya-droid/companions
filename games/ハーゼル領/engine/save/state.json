@@ -1330,6 +1330,27 @@
     "flags.長弓隊を始めた": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 329 and not flag_帰郷した819",
+   "text": "霜月：年始の挨拶を終えた父と一緒に、二週間だけ館へ帰る（帰郷中は務めなし）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.帰郷中": true,
+    "flags.帰郷した819": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 331 and flag_帰郷中",
+   "text": "冬の帰郷の二週間が終わる。城へ戻る",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.帰郷中": false
+   },
+   "repeat": false
   }
  ],
  "factions": {

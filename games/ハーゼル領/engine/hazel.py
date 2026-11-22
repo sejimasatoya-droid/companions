@@ -963,6 +963,8 @@ def page_month(st, out):
         return
     pg = st["page"]
     need = 3 if pg.get("段階") == "小姓" else 2
+    if st["flags"].get("帰郷中"):
+        return  # 冬の帰郷のあいだは、務めはない
     if st["protagonist"]["routine"].get("務め", 0) < need:
         apply_effects(st, {"page.評判": -1}, out)
         out.report(f"務めの日数が足りない（{pg.get('段階')}は週 {need} 日）。城での評判 −1")

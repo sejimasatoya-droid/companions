@@ -227,7 +227,8 @@
   "ティルの償い": true,
   "塔の札": true,
   "古銭の代金": true,
-  "水番の帳面": true
+  "水番の帳面": true,
+  "塔の一目の段取り": true
  },
  "harvest": null,
  "projects_active": [

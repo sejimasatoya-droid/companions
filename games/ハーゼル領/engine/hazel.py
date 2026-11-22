@@ -335,11 +335,11 @@ def econ_week(st, out):
             dm["木材"] = round(dm.get("木材", 0) + 1, 2)
             out.report(f"森の手入れで、季節の木材がとれた（木材 {dm['木材']}）")
     # ヴァルクとの夏・冬の交易：約束があれば、山の飢えが一つ和らぐ
-    if (m, wk) in ((7, 2), (12, 2)) and any(t.get("相手") == "ヴァルク" for t in st.get("treaties", [])):
+    if (m, wk) in ((6, 3), (12, 2)) and any(t.get("相手") == "ヴァルク" for t in st.get("treaties", [])):
         cur = st["clocks"].get("ヴァルク族の飢え", 0)
         if 0 < cur < 6:
             st["clocks"]["ヴァルク族の飢え"] = cur - 1
-            out.report(f"ヴァルクとの{'夏' if m == 7 else '冬'}の交易：山に麦が上がる（ヴァルク族の飢え {cur}→{cur-1}）", log=True)
+            out.report(f"ヴァルクとの{'夏' if m == 6 else '冬'}の交易：山に麦が上がる（ヴァルク族の飢え {cur}→{cur-1}）", log=True)
     if (m, wk) == (4, 4):
         money(20 * pop_k * (1.3 if "羊の選抜" in st["projects_done"] else 1.0), "羊毛の売り上げ")
     if (m, wk) == (6, 1):

@@ -510,15 +510,17 @@ def hero_week(st, out):
             v = h["abilities"][ab]
             need = max(8, v * v // 2)
             cap = cap_body if ab in ("体力", "武芸") else cap_mind
-            if h["xp"][ab] >= need:
-                if v >= cap:
-                    h["xp"][ab] = need
-                    continue
+            # 上限に届いていても経験点は捨てずにためる。上限が上がったら、たまった分で続けて判定する
+            while h["abilities"][ab] < cap:
+                v = h["abilities"][ab]
+                need = max(8, v * v // 2)
+                if h["xp"][ab] < need:
+                    break
                 r = d(20)
-                if r >= h["abilities"][ab]:
+                if r >= v:
                     h["abilities"][ab] += 1
                     h["xp"][ab] -= need
-                    out.report(f"主人公の{ab}が伸びた：{h['abilities'][ab]-1} → {h['abilities'][ab]}（🎲{r}）", log=True)
+                    out.report(f"主人公の{ab}が伸びた：{v} → {v+1}（🎲{r}）", log=True)
                 else:
                     h["xp"][ab] -= need // 2
     rest = rt.get("休む", 0)

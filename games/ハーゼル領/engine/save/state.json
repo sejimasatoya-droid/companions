@@ -1,5 +1,5 @@
 {
- "week": 322,
+ "week": 323,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 226,
-   "体力": 32.5,
+   "魔力": 236,
+   "体力": 34.0,
    "弁舌": 4.0,
-   "知識": 93.75,
-   "武芸": 74.0,
-   "礼法": 18.0
+   "知識": 95.0,
+   "武芸": 75.0,
+   "礼法": 20.25
   },
-  "fatigue": 1.1,
+  "fatigue": 1.2,
   "pocket": 0,
   "routine": {
    "務め": 3,
@@ -80,7 +80,7 @@
   }
  },
  "domain": {
-  "財貨": 162.03,
+  "財貨": 108.86,
   "負債": 156,
   "利率": 0.1,
   "食糧": 5.41,
@@ -410,71 +410,80 @@
   "出仕中": true,
   "城で見識": true,
   "オーベルを見回る": true,
-  "長弓の思い違い": true
+  "長弓の思い違い": true,
+  "オーベル冬の兵": true,
+  "乳牛を始めた": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "施療所",
-   "labor": 12,
-   "weeks": 8,
+   "labor": 18,
+   "weeks": 9,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "毛織物工房",
-   "labor": 4,
-   "weeks": 8,
+   "labor": 8,
+   "weeks": 9,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "薬酒",
-   "labor": 2,
-   "weeks": 8,
+   "labor": 4,
+   "weeks": 9,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "養蜂の拡張",
-   "labor": 2,
-   "weeks": 8,
+   "labor": 4,
+   "weeks": 9,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "縮絨水車",
-   "labor": 5,
-   "weeks": 8,
+   "labor": 10,
+   "weeks": 9,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "館の守り",
-   "labor": 1,
-   "weeks": 8,
+   "labor": 2,
+   "weeks": 9,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "山のチーズ",
    "labor": 0,
-   "weeks": 7,
+   "weeks": 8,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "民兵の訓練",
    "labor": 0,
-   "weeks": 1,
+   "weeks": 2,
    "people": 10,
    "hero_days_needed": false
   },
   {
    "id": "兵糧の隠し蔵",
    "labor": 0,
-   "weeks": 1,
+   "weeks": 2,
    "people": 5,
+   "hero_days_needed": false
+  },
+  {
+   "id": "乳牛",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
    "hero_days_needed": false
   }
  ],
@@ -1244,26 +1253,6 @@
    "repeat": false
   },
   {
-   "if": "月 == 11 and 週 == 4 and not flag_オーベル冬の兵",
-   "text": "冬の初め：マグダとの約束どおり、兵を二人オーベルに置く（春の芽月まで）",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.オーベル冬の兵": true
-   },
-   "repeat": false
-  },
-  {
-   "if": "'クローバー輪作' in 完成 and not flag_乳牛を始めた",
-   "text": "輪作が仕上がった。約束の順で、牧草地を広げて乳牛を始める：project start 乳牛 3",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.乳牛を始めた": true
-   },
-   "repeat": false
-  },
-  {
    "if": "月 == 12 and 週 == 1 and not flag_湿地を始めた",
    "text": "冬の人手が空いた。湿地の排水と開墾を始める：project start 湿地の開墾 15",
    "stop": true,
@@ -1548,7 +1537,7 @@
   },
   {
    "text": "館村の市で、恵みの子が、熱の子の手当てを皆に教えた。『これは祝福じゃない、誰にでもできる』と言ったそうだ",
-   "stage": 3,
+   "stage": 4,
    "strange": false,
    "week": 292,
    "twisted": true

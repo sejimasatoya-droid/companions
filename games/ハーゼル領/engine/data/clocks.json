@@ -459,31 +459,23 @@
  "摂政軍の北上": {
   "name": "摂政軍の北上",
   "max": 8,
-  "p_season": 0.22,
+  "p_season": 0.12,
   "mods": [
    {
     "if": "flag_摂政軍の足止め",
     "p_season": -0.12
    },
    {
-    "if": "flag_兵糧の策",
-    "p_season": -0.12
+    "if": "flag_摂政_兵糧不足",
+    "p_season": -0.15
    },
    {
-    "if": "flag_策_商会の買い付け",
-    "p_season": -0.06
+    "if": "flag_摂政_兵糧十分",
+    "p_season": 0.15
    },
    {
-    "if": "flag_摂政_麦の別の道",
-    "p_season": 0.06
-   },
-   {
-    "if": "flag_摂政_傭兵",
-    "p_season": 0.08
-   },
-   {
-    "if": "flag_白樺の谷の勝ち",
-    "p_season": -0.05
+    "if": "flag_摂政_士気低い",
+    "p_season": -0.1
    }
   ],
   "thresholds": {
@@ -809,6 +801,10 @@
    {
     "if": "摂政軍の北上 == 4",
     "p_season": 0.12
+   },
+   {
+    "if": "flag_摂政_兵糧不足",
+    "p_season": 0.1
    }
   ],
   "thresholds": {

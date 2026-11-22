@@ -41,6 +41,7 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import world as WORLD  # 世界シミュレーション（engine/world.py）
+import war as WAR  # 戦の台帳（engine/war.py）
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 GAME = os.path.dirname(BASE)
@@ -740,6 +741,9 @@ def advance(st, n):
         world_week(st, out)
         calendar_week(st, out)
         econ_week(st, out)
+        st["_mw"] = lambda w: cal(w)[1:]
+        WAR.war_week(st, out, cond, apply_effects, append_md, GM_LOG, cal_str)
+        st.pop("_mw", None)
         tick_clocks(st, out)
         factions_month(st, out)
         offices_month(st, out)
@@ -798,6 +802,8 @@ def status(st, gm=False):
     print("■ 役職 " + " / ".join(offs) + ("" if st["flags"].get("当主") else "　※当主になるまで委任の判定は動かない"))
     if st.get("treaties"):
         print("■ 取り決め " + " / ".join(f"{t['相手']}と{t['種類']}（{t['条件']}）" for t in st["treaties"]))
+    if st.get("war"):
+        print(WAR.summary(st, mine_only=not gm))
     print("■ 情勢クロック")
     for cid, c in CLOCKS.items():
         if c.get("retired") or (c.get("only_if") and not cond(st, c["only_if"]) and not gm):

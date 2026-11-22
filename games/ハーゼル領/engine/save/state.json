@@ -67,7 +67,7 @@
   }
  },
  "domain": {
-  "財貨": 37.22,
+  "財貨": 47.22,
   "負債": 300,
   "利率": 0.12,
   "食糧": 2.63,
@@ -86,7 +86,7 @@
  },
  "domain_extra": {
   "月の固定費": 22.4,
-  "週収入": 0.35,
+  "週収入": 1.55,
   "イベント率": 0.12,
   "借金期限": [
    818,
@@ -273,7 +273,8 @@
   "石切り場": true,
   "塔の修復を始める": true,
   "ヤーコプの目利き815": true,
-  "かまどを書く": true
+  "かまどを書く": true,
+  "石鹸の独占": true
  },
  "harvest": null,
  "projects_active": [
@@ -916,6 +917,16 @@
    "hidden": false,
    "effects": {
     "flags.家督の決着": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 192 and flag_石鹸の独占 and not flag_石鹸三十",
+   "text": "春になった。商会との約束で、石鹸を月に三十個に増やすときだ（大きな釜が届いている）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.石鹸三十": true
    },
    "repeat": false
   }

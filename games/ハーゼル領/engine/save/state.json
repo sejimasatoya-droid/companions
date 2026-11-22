@@ -1441,11 +1441,12 @@
   },
   {
    "if": "月 == 10 and 週 == 1 and not flag_帰した兵が戻った820",
-   "text": "葡萄月：刈り入れが済んで、畑に帰した徴募の兵六百が陣に戻る（GM：adj war.sides.王太子.troops.兵 600）",
+   "text": "葡萄月：刈り入れが済んで、畑に帰した徴募の兵六百が陣に戻った",
    "stop": true,
    "hidden": false,
    "effects": {
-    "flags.帰した兵が戻った820": true
+    "flags.帰した兵が戻った820": true,
+    "war.sides.王太子.troops.兵": 600
    },
    "repeat": false
   }

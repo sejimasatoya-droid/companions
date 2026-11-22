@@ -508,7 +508,7 @@
   "夏の帰郷820": true,
   "鉄の炉": true,
   "ブレッケンと仔牛の取り決め": true,
-  "糸1封の寿命": true
+  "糸1封の寿命": false
  },
  "harvest": "平年",
  "projects_active": [
@@ -1381,14 +1381,6 @@
   {
    "if": "通算週 >= 412 and not flag_糸6学院長",
    "text": "（GM 学院の糸6）学院長マグヌスが辺境伯に『割れた杯を継いだ子を、十五の秋に学院へ』と書き送る（クロックで来ていなければ）（gm/学院編.md）",
-   "stop": true,
-   "hidden": true,
-   "effects": {},
-   "repeat": false
-  },
-  {
-   "if": "通算週 >= 420 and not flag_糸1封の寿命",
-   "text": "（GM 学院の糸1）ヴェレナの知らせ：主が夢で言った。封は、刻の司の作り方でなければ、長くはもたない（gm/学院編.md）",
    "stop": true,
    "hidden": true,
    "effects": {},

@@ -511,6 +511,10 @@
    {
     "if": "flag_施療所",
     "p_season": -0.05
+   },
+   {
+    "if": "flag_城で見識",
+    "p_season": 0.05
    }
   ],
   "thresholds": {

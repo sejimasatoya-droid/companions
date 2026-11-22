@@ -1,5 +1,5 @@
 {
- "week": 296,
+ "week": 297,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 15
   },
   "xp": {
-   "魔力": 128,
+   "魔力": 122,
    "体力": 27.5,
    "弁舌": 4.0,
-   "知識": 61.25,
+   "知識": 62.5,
    "武芸": 72,
    "礼法": 0.5
   },
-  "fatigue": 0.4,
+  "fatigue": 0.5,
   "pocket": 0,
   "routine": {
    "読み書き": 1,
@@ -57,7 +57,7 @@
    "持続する林業": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 13,
+  "魔力点": 18,
   "魔力点上限": 30,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 111.91,
+  "財貨": 115.59,
   "負債": 189,
   "利率": 0.1,
   "食糧": 3.8,
@@ -380,32 +380,32 @@
  "projects_active": [
   {
    "id": "クローバー輪作",
-   "labor": 330,
-   "weeks": 22,
+   "labor": 345,
+   "weeks": 23,
    "people": 15,
    "hero_days_needed": false
   },
   {
    "id": "森の手入れ",
-   "labor": 210,
-   "weeks": 22,
+   "labor": 220,
+   "weeks": 23,
    "people": 10,
    "hero_days_needed": false
   },
   {
    "id": "山の飼い葉",
-   "labor": 40,
-   "weeks": 8,
+   "labor": 45,
+   "weeks": 9,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "蒸留",
-   "labor": 8,
-   "weeks": 4,
+   "labor": 10,
+   "weeks": 5,
    "people": 2,
    "hero_days_needed": true,
-   "hero_days": 4
+   "hero_days": 5
   }
  ],
  "projects_done": [
@@ -1160,11 +1160,13 @@
    "repeat": false
   },
   {
-   "if": "通算週 >= 297",
-   "text": "緑月第2週：辺境伯の城で家臣の集まり（家督と、王太子をどうするか）",
+   "if": "年齢 >= 12 and not flag_小姓の打診",
+   "text": "葡萄月：辺境伯家から、ライを小姓に迎える正式な打診（まだ来ていなければ）",
    "stop": true,
    "hidden": false,
-   "effects": {},
+   "effects": {
+    "flags.小姓の打診": true
+   },
    "repeat": false
   }
  ],

@@ -41,13 +41,13 @@
    "森の主の白い角のかけら（森の主に会った証。森の中で、主にライを知らせる）"
   ],
   "cards": {
-   "輪作": 1,
+   "輪作": 3,
    "位取りの数字": 4,
    "複式簿記": 0,
    "石鹸": 4,
    "煮沸と手洗い": 5,
-   "歯車と水車": 0,
-   "かまどの改良": 0,
+   "歯車と水車": 1,
+   "かまどの改良": 1,
    "説得と交渉の心理": 1,
    "観察と傾聴": 1,
    "集団心理": 1,
@@ -68,12 +68,12 @@
   }
  },
  "domain": {
-  "財貨": 89.42,
+  "財貨": 59.42,
   "負債": 300,
   "利率": 0.12,
   "食糧": 2.63,
   "人口": 1140,
-  "木材": 2,
+  "木材": 0,
   "石材": 1,
   "鉄": 0,
   "民心": 55,
@@ -282,6 +282,20 @@
    "labor": 18,
    "weeks": 2,
    "people": 15,
+   "hero_days_needed": false
+  },
+  {
+   "id": "重量犂",
+   "labor": 0,
+   "weeks": 0,
+   "people": 6,
+   "hero_days_needed": false
+  },
+  {
+   "id": "堆肥",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
    "hero_days_needed": false
   }
  ],
@@ -915,6 +929,28 @@
    "effects": {
     "flags.ミルデの井戸": true,
     "domain.衛生": 6
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 175 and not flag_歯車を書く",
+   "text": "歯車と水車の図と手順を、羊皮紙に書きとめ終えた。鍛冶屋ラルフと粉屋オットーに見せて、話が通じた",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "flags.歯車を書く": true,
+    "protagonist.cards.歯車と水車": 1
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 177 and not flag_かまどを書く",
+   "text": "かまどの煙道と通風の図を書きとめ、グレーテに説明し終えた",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "flags.かまどを書く": true,
+    "protagonist.cards.かまどの改良": 1
    },
    "repeat": false
   }

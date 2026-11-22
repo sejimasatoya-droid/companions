@@ -38,10 +38,29 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
         kk = {"凶作": 0.5, "平年": 1.0, "豊作": 1.3}.get(h, 1.0)
         for name, s in W["sides"].items():
             s["兵糧"] += int(s.get("刈り入れ", 0) * kk)
+    # 全軍の計画：王太子の側の金で、ハーゼルの技を軍全体へ広げる。一つずつ順に進む
+    #   W["全軍の計画"] = [{名, 旗, 費用, 週, 残り, if?, 文}]
+    q = W.get("全軍の計画") or []
+    if q and "王太子" in W["sides"]:
+        pr = W["sides"]["王太子"]
+        cur = q[0]
+        if not cur.get("始めた"):
+            if (not cur.get("if") or cond(st, cur["if"])) and pr["金"] >= cur["費用"]:
+                pr["金"] = round(pr["金"] - cur["費用"], 1)
+                cur["始めた"] = True
+                cur["残り"] = cur["週"]
+                append_md(gm_log, f"- {y_m_w}：（戦の台帳）全軍の計画「{cur['名']}」を始めた（王太子の金 −{cur['費用']}）")
+        else:
+            cur["残り"] -= 1
+            if cur["残り"] <= 0:
+                st["flags"][cur["旗"]] = True
+                q.pop(0)
+                out.report(f"［戦］全軍の計画「{cur['名']}」ができた。{cur.get('文', '')}", stop=False, log=True)
+        W["全軍の計画"] = q
     # 兵糧狩り：毎月の第3週、王太子の側の小隊が、摂政の麦の列を叩く
     if st["flags"].get("兵糧狩り") and wk == 3 and "摂政" in W["sides"] and "王太子" in W["sides"]:
         r = random.randint(1, 6) + random.randint(1, 6)
-        lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0) + (1 if st["flags"].get("夜の襲い") else 0)
+        lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0) + (1 if st["flags"].get("夜の襲い") else 0) + (1 if st["flags"].get("全軍_襲撃隊") else 0)
         guard = W.get("摂政の護り", 0)
         tot = r + lead - guard
         reg, pr = W["sides"]["摂政"], W["sides"]["王太子"]
@@ -65,7 +84,8 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
     if st["flags"].get("ザルム狩り") and wk == 1 and "摂政" in W["sides"] and "王太子" in W["sides"]:
         r = random.randint(1, 6) + random.randint(1, 6)
         lead = (1 if st["flags"].get("襲撃隊") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0) \
-            + (1 if st["flags"].get("領の地図") or st["flags"].get("地図づくり") else 0) + (1 if st["flags"].get("夜の襲い") else 0)
+            + (1 if st["flags"].get("領の地図") or st["flags"].get("地図づくり") else 0) + (1 if st["flags"].get("夜の襲い") else 0) \
+            + (1 if st["flags"].get("全軍_地図") else 0) + (1 if st["flags"].get("全軍_襲撃隊") else 0)
         guard = W.get("ザルムの守り", 0)
         tot = r + lead - guard
         reg, pr = W["sides"]["摂政"], W["sides"]["王太子"]
@@ -125,6 +145,8 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
             dm += 0.03
         if s.get("煮沸") or (name == "王太子" and st["flags"].get("全軍_煮沸")):
             dm += 0.03  # 陣の煮沸と手洗い：腹下しが減る
+        if name == "王太子" and st["flags"].get("全軍_号令"):
+            dm += 0.02  # 全軍の号令：隊列に自信がつく
         s["士気"] = round(max(0, min(10, s["士気"] + dm)), 2)
         # 逃げる兵
         lost = {}
@@ -171,4 +193,7 @@ def summary(st, mine_only=False):
         lines.append(f"  {s.get('呼び名', name)}：兵 {total(s)}（{troops}）　兵糧 {s['兵糧']}（残り {weeks_left(s):.1f} 週）　金 {s['金']}　士気 {s['士気']}")
         inc = " / ".join(f"{k} {v['週']}" + ("" if not v.get("if") else f"［{v['if']}］") for k, v in s.get("入り", {}).items())
         lines.append(f"      兵糧の入り（週）：{inc}　金の入り {s.get('金の入り', 0)}/週")
+    q = W.get("全軍の計画") or []
+    if q:
+        lines.append("  全軍の計画（順に）：" + " → ".join(f"{c['名']}{'（残り ' + str(c['残り']) + ' 週）' if c.get('始めた') else ''}" for c in q))
     return "\n".join(lines)

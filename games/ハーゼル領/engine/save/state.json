@@ -289,7 +289,8 @@
   "アンセルム協力": true,
   "見張り塔": true,
   "石鹸三十": true,
-  "商会と品で返す契約": true
+  "商会と品で返す契約": true,
+  "ザルムをはぐらかす": true
  },
  "harvest": null,
  "projects_active": [
@@ -981,6 +982,16 @@
    "hidden": false,
    "effects": {
     "flags.品の返済816": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 196 and not flag_ザルムの催促",
+   "text": "ザルム子爵から、宰相派の件の返事を催促する書状が届いた。今度は、羊毛の値の話のあとに、ハーゼルの借金のことにも触れている",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.ザルムの催促": true
    },
    "repeat": false
   }

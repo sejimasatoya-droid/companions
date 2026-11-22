@@ -480,6 +480,10 @@
    {
     "if": "flag_摂政_傭兵",
     "p_season": 0.08
+   },
+   {
+    "if": "flag_白樺の谷の勝ち",
+    "p_season": -0.05
    }
   ],
   "thresholds": {

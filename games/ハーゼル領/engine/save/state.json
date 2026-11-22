@@ -866,6 +866,18 @@
     "flags.塔の修復を始める": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 175 and not flag_境の森の裁き",
+   "text": "城から辺境伯の裁きが届いた。『アイヒベルクは境の森の伐採をただちにやめ、罰として金貨三十を納めよ。切った境の森には、十年、斧を入れるな』",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.境の森の裁き": true,
+    "domain.主家の覚え": 2,
+    "factions.アイヒベルク.態度": -2
+   },
+   "repeat": false
   }
  ],
  "factions": {

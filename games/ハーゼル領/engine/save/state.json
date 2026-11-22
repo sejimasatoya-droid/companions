@@ -437,7 +437,8 @@
   "糸3イルメラ": true,
   "イルメラの紹介状": true,
   "ルドルフ派の恨み": true,
-  "糸7ヒルダ": true
+  "糸7ヒルダ": true,
+  "ヒルダ施療所": true
  },
  "harvest": "平年",
  "projects_active": [
@@ -1331,6 +1332,16 @@
    "hidden": false,
    "effects": {
     "flags.麦の引き取り819": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "月 == 12 and 週 == 2 and flag_ヒルダ施療所 and not flag_ヒルダ洗礼の返事",
+   "text": "冬の交易：ヨルンが、ヒルダの洗礼についてのウルガの返事を持ってくる（GM：ウルガの反応を振る）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.ヒルダ洗礼の返事": true
    },
    "repeat": false
   }

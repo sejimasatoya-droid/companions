@@ -58,7 +58,7 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
                 out.report(f"［戦］全軍の計画「{cur['名']}」ができた。{cur.get('文', '')}", stop=False, log=True)
         W["全軍の計画"] = q
     # 兵糧狩り：毎月の第3週、王太子の側の小隊が、摂政の麦の列を叩く
-    if st["flags"].get("兵糧狩り") and wk == 3 and "摂政" in W["sides"] and "王太子" in W["sides"]:
+    if st["flags"].get("兵糧狩り") and W.get("mode") != "和議" and (wk == 3 or (wk == 1 and st["flags"].get("兵糧狩り_月二度"))) and "摂政" in W["sides"] and "王太子" in W["sides"]:
         r = random.randint(1, 6) + random.randint(1, 6)
         lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0) + (1 if st["flags"].get("夜の襲い") else 0) + (1 if st["flags"].get("全軍_襲撃隊") else 0)
         guard = W.get("摂政の護り", 0)
@@ -81,7 +81,7 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
         append_md(gm_log, f"- {y_m_w}：（戦の台帳）兵糧狩り {tot}：摂政の兵糧 {reg['兵糧']}、守り {W.get('摂政の護り', 0)}、味方の損害 {loss}")
     # ザルム狩り：毎月の第1週、ザルム領から摂政の陣へ出る麦の荷と、ザルムの蔵を叩く
     #   旗 ザルム狩り_村も があれば村の蔵まで焼く（効きは大きいが、名誉・民の恨み）
-    if st["flags"].get("ザルム狩り") and wk == 1 and "摂政" in W["sides"] and "王太子" in W["sides"]:
+    if st["flags"].get("ザルム狩り") and W.get("mode") != "和議" and wk == 1 and "摂政" in W["sides"] and "王太子" in W["sides"]:
         r = random.randint(1, 6) + random.randint(1, 6)
         lead = (1 if st["flags"].get("襲撃隊") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0) \
             + (1 if st["flags"].get("領の地図") or st["flags"].get("地図づくり") else 0) + (1 if st["flags"].get("夜の襲い") else 0) \

@@ -1483,6 +1483,36 @@
     "flags.多重の守りを始めた": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 401 and not flag_全軍_煮沸",
+   "text": "陣の煮沸と手洗いが、全軍に行き渡った（陣の病が減り、士気が少しずつ上がる。逃げる兵が半分に）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.全軍_煮沸": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 404 and not flag_全軍_手当て",
+   "text": "全軍の手当て隊がそろった。各隊に、煮た布と薬酒と山の薬草を持った手当ての者がいる（兵糧狩りの損害が半分に）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.全軍_手当て": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 406 and not flag_全軍_遠眼鏡",
+   "text": "館村の硝子窯で磨いたレンズの遠眼鏡が五本、軍の斥候と見張りに渡った（兵糧狩りの判定 +1）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.全軍_遠眼鏡": true
+   },
+   "repeat": false
   }
  ],
  "factions": {
@@ -2027,7 +2057,7 @@
      "兵": 1250
     },
     "兵糧": 39900,
-    "金": 842.0,
+    "金": 802.0,
     "士気": 5.98,
     "金の入り": 70,
     "給金": {

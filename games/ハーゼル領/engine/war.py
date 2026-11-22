@@ -41,7 +41,7 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
     # 兵糧狩り：毎月の第3週、王太子の側の小隊が、摂政の麦の列を叩く
     if st["flags"].get("兵糧狩り") and wk == 3 and "摂政" in W["sides"] and "王太子" in W["sides"]:
         r = random.randint(1, 6) + random.randint(1, 6)
-        lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0)
+        lead = (1 if st["flags"].get("長弓隊") else 0) + (1 if st["flags"].get("商会の耳") else 0) + (1 if st["flags"].get("全軍_遠眼鏡") else 0)
         guard = W.get("摂政の護り", 0)
         tot = r + lead - guard
         reg, pr = W["sides"]["摂政"], W["sides"]["王太子"]
@@ -56,7 +56,8 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
         else:
             txt = "摂政の麦の列を狩りに出たが、守りが厚く、退いた"
             loss = 12
-        pr["troops"]["兵"] = max(0, pr["troops"].get("兵", 0) - (loss // (2 if st["flags"].get("野戦の手当て") else 1)))
+        div = (2 if st["flags"].get("野戦の手当て") else 1) * (2 if st["flags"].get("全軍_手当て") else 1)
+        pr["troops"]["兵"] = max(0, pr["troops"].get("兵", 0) - (loss // div))
         out.report(f"［戦］{txt}（🎲{r}+{lead}−守り{guard}＝{tot}）", stop=False, log=True)
         append_md(gm_log, f"- {y_m_w}：（戦の台帳）兵糧狩り {tot}：摂政の兵糧 {reg['兵糧']}、守り {W.get('摂政の護り', 0)}、味方の損害 {loss}")
     for name, s in W["sides"].items():
@@ -92,12 +93,16 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
             dm -= 0.3
         if W.get("mode") == "和議":
             dm += 0.03
+        if s.get("煮沸") or (name == "王太子" and st["flags"].get("全軍_煮沸")):
+            dm += 0.03  # 陣の煮沸と手洗い：腹下しが減る
         s["士気"] = round(max(0, min(10, s["士気"] + dm)), 2)
         # 逃げる兵
         lost = {}
         if s["士気"] < 4 or wl < 1 or unpaid:
             for u, n in s["troops"].items():
                 r = 0.01 if s["士気"] < 4 else 0
+                if name == "王太子" and st["flags"].get("全軍_煮沸"):
+                    r *= 0.5
                 if wl < 1:
                     r += 0.04
                 if unpaid and u == "傭兵":

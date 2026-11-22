@@ -92,7 +92,7 @@
   }
  },
  "domain": {
-  "財貨": 80.58,
+  "財貨": 68.58,
   "負債": 156,
   "利率": 0.1,
   "食糧": 9.84,
@@ -535,6 +535,13 @@
    "labor": 21,
    "weeks": 10,
    "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "襲撃隊",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
    "hero_days_needed": false
   }
  ],
@@ -1452,6 +1459,16 @@
    "hidden": false,
    "effects": {
     "flags.荷車の砦を始めた": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "'襲撃隊' in 完成 and 財貨 >= 8 and not flag_夜の襲いを始めた",
+   "text": "襲撃隊ができた。夜の襲いを始める：project start 夜の襲い 4",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.夜の襲いを始めた": true
    },
    "repeat": false
   }

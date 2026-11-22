@@ -1,5 +1,5 @@
 {
- "week": 177,
+ "week": 178,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 12
   },
   "xp": {
-   "魔力": 29.0,
+   "魔力": 30.0,
    "体力": 27.5,
    "弁舌": 4.0,
-   "知識": 66.5,
-   "武芸": 25.099999999999966,
+   "知識": 67.75,
+   "武芸": 27.099999999999966,
    "礼法": 0.5
   },
-  "fatigue": 0.3,
+  "fatigue": 0.0,
   "pocket": 0,
   "routine": {
    "読み書き": 1,
@@ -57,7 +57,7 @@
    "損失回避とナッジ": 1
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 22,
+  "魔力点": 24,
   "魔力点上限": 24,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 47.22,
+  "財貨": 49.72,
   "負債": 300,
   "利率": 0.12,
   "食糧": 2.63,
@@ -105,7 +105,7 @@
   "王の病": 6,
   "宮廷の対立": 6,
   "カルディア国境の緊張": 9,
-  "ヴァルク族の飢え": 1,
+  "ヴァルク族の飢え": 2,
   "黒の森の異変": 7,
   "水車の寿命": 5,
   "ブレッケン家の破産": 6,
@@ -275,44 +275,46 @@
   "塔の修復を始める": true,
   "ヤーコプの目利き815": true,
   "かまどを書く": true,
-  "石鹸の独占": true
+  "石鹸の独占": true,
+  "司教座の祭815": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "羊の選抜",
-   "labor": 138,
-   "weeks": 69,
+   "labor": 140,
+   "weeks": 70,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "重量犂",
-   "labor": 24,
-   "weeks": 4,
+   "labor": 30,
+   "weeks": 5,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "堆肥",
-   "labor": 16,
-   "weeks": 4,
+   "labor": 20,
+   "weeks": 5,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "見張り塔",
-   "labor": 15,
-   "weeks": 1,
+   "labor": 30,
+   "weeks": 2,
    "people": 15,
    "hero_days_needed": false
   },
   {
    "id": "かまどの改良",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 2,
+   "weeks": 1,
    "people": 2,
-   "hero_days_needed": true
+   "hero_days_needed": true,
+   "hero_days": 1
   }
  ],
  "projects_done": [
@@ -905,16 +907,6 @@
    "effects": {
     "flags.ミルデの井戸": true,
     "domain.衛生": 6
-   },
-   "repeat": false
-  },
-  {
-   "if": "通算週 >= 178 and not flag_司教座の祭815",
-   "text": "屠月の収穫感謝の祭が近い。司教座から、見識の子を招く書状が今年も届いた",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.司教座の祭815": true
    },
    "repeat": false
   },

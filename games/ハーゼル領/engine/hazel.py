@@ -326,6 +326,12 @@ def econ_week(st, out):
         dues = 25 * (2 if st["clocks"].get("カルディア国境の緊張", 0) >= 4 else 1)
         money(-dues, "辺境伯への軍役代納金")
         money(20 * pop_k, "冬越しの年貢の残り")
+    # ヴァルクとの夏・冬の交易：約束があれば、山の飢えが一つ和らぐ
+    if (m, wk) in ((7, 2), (12, 2)) and any(t.get("相手") == "ヴァルク" for t in st.get("treaties", [])):
+        cur = st["clocks"].get("ヴァルク族の飢え", 0)
+        if 0 < cur < 6:
+            st["clocks"]["ヴァルク族の飢え"] = cur - 1
+            out.report(f"ヴァルクとの{'夏' if m == 7 else '冬'}の交易：山に麦が上がる（ヴァルク族の飢え {cur}→{cur-1}）", log=True)
     if (m, wk) == (4, 4):
         money(20 * pop_k * (1.3 if "羊の選抜" in st["projects_done"] else 1.0), "羊毛の売り上げ")
     if (m, wk) == (6, 1):

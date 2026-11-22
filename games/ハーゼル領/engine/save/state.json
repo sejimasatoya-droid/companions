@@ -60,7 +60,7 @@
    "規律と号令": 0,
    "槍衾": 0,
    "長弓": 0,
-   "兵站と補給": 0,
+   "兵站と補給": 2,
    "地図と測量": 0,
    "荷車の砦": 0,
    "堀と土塁": 0,
@@ -80,7 +80,7 @@
   }
  },
  "domain": {
-  "財貨": 167.7,
+  "財貨": 157.7,
   "負債": 156,
   "利率": 0.1,
   "食糧": 4.41,
@@ -409,7 +409,8 @@
   "山の麦蔵": true,
   "出仕中": true,
   "城で見識": true,
-  "オーベルを見回る": true
+  "オーベルを見回る": true,
+  "長弓の思い違い": true
  },
  "harvest": null,
  "projects_active": [
@@ -474,6 +475,13 @@
    "labor": 0,
    "weeks": 0,
    "people": 10,
+   "hero_days_needed": false
+  },
+  {
+   "id": "兵糧の隠し蔵",
+   "labor": 0,
+   "weeks": 0,
+   "people": 5,
    "hero_days_needed": false
   }
  ],
@@ -1333,6 +1341,16 @@
    "stop": true,
    "hidden": false,
    "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "'民兵の訓練' in 完成 and not flag_長弓隊を始めた",
+   "text": "民兵の訓練が仕上がった。長弓隊を始められる（ライの頼み）：project start 長弓隊。長弓の思い違い（樫）が残っていれば、弓の出来が悪い（GM）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.長弓隊を始めた": true
+   },
    "repeat": false
   }
  ],

@@ -1180,6 +1180,18 @@
    "hidden": false,
    "effects": {},
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 311",
+   "text": "辺境伯の裁きの返事：アイヒベルクは三度目の伐採の償いとして、切った樫二十本をハーゼルへ引き渡せ。境の森には辺境伯の森番を一人置く（木材 +3）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "domain.木材": 3,
+    "factions.アイヒベルク.態度": -1,
+    "flags.辺境伯の森番": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

@@ -617,6 +617,8 @@ def factions_month(st, out):
         cd[a["id"]] = st["week"]
         out.report(f"［{fdefs[fid]['name']}］{a['text']}", stop=a.get("stop", False),
                    visible=a.get("visible", True), log=a.get("visible", True))
+        if a.get("ai"):
+            append_md(GM_LOG, f"- {cal_str(st['week'])}：（{fdefs[fid]['name']}の打ち返し）{a['ai']}")
         apply_effects(st, a.get("effects"), out)
 
 

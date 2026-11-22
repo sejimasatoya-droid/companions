@@ -472,6 +472,14 @@
    {
     "if": "flag_策_商会の買い付け",
     "p_season": -0.06
+   },
+   {
+    "if": "flag_摂政_麦の別の道",
+    "p_season": 0.06
+   },
+   {
+    "if": "flag_摂政_傭兵",
+    "p_season": 0.08
    }
   ],
   "thresholds": {
@@ -811,6 +819,33 @@
    "6": {
     "text": "和議の行方が決まる（GM：和議が開かれるか、破れて決戦か）",
     "stop": true
+   }
+  }
+ },
+ "アイヒベルクの寝返り": {
+  "name": "アイヒベルクの寝返り",
+  "max": 4,
+  "p_season": 0.0,
+  "visible": false,
+  "thresholds": {
+   "2": {
+    "text": "（アイヒベルク男爵が、ベルトルトに、寝返りの値を尋ねた）",
+    "stop": false,
+    "visible": false
+   },
+   "3": {
+    "text": "アイヒベルクの館に、南の訛りの客が、夜に出入りしているという",
+    "stop": true,
+    "visible": true
+   },
+   "4": {
+    "text": "アイヒベルク男爵が摂政に寝返り、女王の旗を館に掲げた。オーベルの東の境が、敵の地になった",
+    "stop": true,
+    "visible": true,
+    "effects": {
+     "factions.アイヒベルク.態度": -5,
+     "domain.治安": -5
+    }
    }
   }
  }

@@ -1,5 +1,5 @@
 {
- "week": 318,
+ "week": 319,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 186,
-   "体力": 26.5,
+   "魔力": 196,
+   "体力": 28.0,
    "弁舌": 4.0,
-   "知識": 88.75,
-   "武芸": 68.0,
-   "礼法": 8.5
+   "知識": 90.0,
+   "武芸": 70.0,
+   "礼法": 11.0
   },
-  "fatigue": 0.7,
+  "fatigue": 0.8,
   "pocket": 0,
   "routine": {
    "読み書き": 1,
@@ -57,7 +57,7 @@
    "持続する林業": 3
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 23,
+  "魔力点": 24,
   "魔力点上限": 34,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 187.41,
+  "財貨": 169.14,
   "負債": 156,
   "利率": 0.1,
   "食糧": 4.41,
@@ -76,10 +76,10 @@
   "木材": 4,
   "石材": 0.5,
   "鉄": 1,
-  "民心": 57,
+  "民心": 58,
   "治安": 65,
   "開発": 53,
-  "衛生": 57,
+  "衛生": 59,
   "森の健全度": 64,
   "主家の覚え": 69,
   "注目度": 53,
@@ -390,77 +390,72 @@
   "城との定期便": true,
   "便はマルクス": true,
   "止まった魔石": true,
-  "止まった魔石を持つ": true
+  "止まった魔石を持つ": true,
+  "狩人の禁止": true,
+  "産婆の手洗い": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "クローバー輪作",
-   "labor": 660,
-   "weeks": 44,
+   "labor": 675,
+   "weeks": 45,
    "people": 15,
    "hero_days_needed": false
   },
   {
    "id": "山の麦蔵",
-   "labor": 16,
-   "weeks": 4,
+   "labor": 20,
+   "weeks": 5,
    "people": 4,
-   "hero_days_needed": false
-  },
-  {
-   "id": "産婆の手洗い",
-   "labor": 4,
-   "weeks": 4,
-   "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "施療所",
    "labor": 0,
-   "weeks": 4,
+   "weeks": 5,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "毛織物工房",
    "labor": 0,
-   "weeks": 4,
+   "weeks": 5,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "薬酒",
    "labor": 0,
-   "weeks": 4,
+   "weeks": 5,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "養蜂の拡張",
    "labor": 0,
-   "weeks": 4,
+   "weeks": 5,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "縮絨水車",
    "labor": 0,
-   "weeks": 4,
+   "weeks": 5,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "館の守り",
    "labor": 0,
-   "weeks": 4,
+   "weeks": 5,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "山のチーズ",
    "labor": 0,
-   "weeks": 3,
+   "weeks": 4,
    "people": 2,
    "hero_days_needed": false
   }
@@ -488,7 +483,8 @@
   "市の開設",
   "森の手入れ",
   "蒸留",
-  "山の飼い葉"
+  "山の飼い葉",
+  "産婆の手洗い"
  ],
  "npcs": {
   "レオポルト": {
@@ -1228,16 +1224,6 @@
    "repeat": false
   },
   {
-   "if": "通算週 >= 319",
-   "text": "辺境伯の返事（ふつう）：アイヒベルクが許した流れ者の狩人は、境の森の縁での狩りを禁じる。境の森番に狩人も見張らせる。オーベルの農奴をアイヒベルクが受け入れることは許さぬと書き送った。ただし自由農民は止められぬ、償いは森猪の害が確かめられてから",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.狩人の禁止": true
-   },
-   "repeat": false
-  },
-  {
    "if": "月 == 11 and 週 == 4 and not flag_オーベル冬の兵",
    "text": "冬の初め：マグダとの約束どおり、兵を二人オーベルに置く（春の芽月まで）",
    "stop": true,
@@ -1789,5 +1775,6 @@
   "古い硬貨": 141,
   "森猪": 269,
   "使者": 284
- }
+ },
+ "world_harvest": null
 }

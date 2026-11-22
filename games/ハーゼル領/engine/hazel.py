@@ -413,6 +413,22 @@ def econ_week(st, out):
 
 
 # ---------------------------------------------------------------- 計画
+def grow(st, h, ab, cap, out):
+    """上限に届いていても経験点は捨てずにためる。上限が上がったら、たまった分で続けて判定する"""
+    while h["abilities"][ab] < cap:
+        v = h["abilities"][ab]
+        need = max(8, v * v // 2)
+        if h["xp"].get(ab, 0) < need:
+            break
+        r = d(20)
+        if r >= v:
+            h["abilities"][ab] += 1
+            h["xp"][ab] -= need
+            out.report(f"主人公の{ab}が伸びた：{v} → {v+1}（🎲{r}）", log=True)
+        else:
+            h["xp"][ab] -= need // 2
+
+
 def labor_available(st):
     y, m, wk = cal(st["week"])
     return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP * policy_effects(st)["labor"] - st["military"].get("徴募兵", 0))
@@ -510,19 +526,12 @@ def hero_week(st, out):
             v = h["abilities"][ab]
             need = max(8, v * v // 2)
             cap = cap_body if ab in ("体力", "武芸") else cap_mind
-            # 上限に届いていても経験点は捨てずにためる。上限が上がったら、たまった分で続けて判定する
-            while h["abilities"][ab] < cap:
-                v = h["abilities"][ab]
-                need = max(8, v * v // 2)
-                if h["xp"][ab] < need:
-                    break
-                r = d(20)
-                if r >= v:
-                    h["abilities"][ab] += 1
-                    h["xp"][ab] -= need
-                    out.report(f"主人公の{ab}が伸びた：{v} → {v+1}（🎲{r}）", log=True)
-                else:
-                    h["xp"][ab] -= need // 2
+            grow(st, h, ab, cap, out)
+    # 過ごし方に入っていない能力も、ほかの道でたまった経験点（見識の暮らしなど）で伸びる判定をする
+    trained = {acts[a].get("ability") for a in rt if a in acts}
+    for ab in h["abilities"]:
+        if ab not in trained:
+            grow(st, h, ab, cap_body if ab in ("体力", "武芸") else cap_mind, out)
     rest = rt.get("休む", 0)
     if "魔力点上限" in h:
         h["魔力点上限"] = h["abilities"]["魔力"] * 2

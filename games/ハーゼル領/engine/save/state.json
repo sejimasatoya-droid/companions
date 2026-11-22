@@ -1,5 +1,5 @@
 {
- "week": 314,
+ "week": 316,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -8,21 +8,21 @@
   ],
   "abilities": {
    "体力": 10,
-   "武芸": 12,
+   "武芸": 14,
    "知識": 14,
    "弁舌": 8,
-   "礼法": 7,
-   "魔力": 15
+   "礼法": 8,
+   "魔力": 17
   },
   "xp": {
-   "魔力": 880,
-   "体力": 45.5,
+   "魔力": 164,
+   "体力": 48.5,
    "弁舌": 4.0,
-   "知識": 83.75,
-   "武芸": 294.0,
-   "礼法": 22.5
+   "知識": 86.25,
+   "武芸": 64.0,
+   "礼法": 3.5
   },
-  "fatigue": 0.3,
+  "fatigue": 0.5,
   "pocket": 0,
   "routine": {
    "読み書き": 1,
@@ -58,7 +58,7 @@
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
   "魔力点": 20,
-  "魔力点上限": 30,
+  "魔力点上限": 34,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
   "洗礼済み": true,
@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 197.99,
+  "財貨": 178.95,
   "負債": 156,
   "利率": 0.1,
   "食糧": 4.41,
@@ -394,65 +394,72 @@
  "projects_active": [
   {
    "id": "クローバー輪作",
-   "labor": 600,
-   "weeks": 40,
+   "labor": 630,
+   "weeks": 42,
    "people": 15,
    "hero_days_needed": false
   },
   {
    "id": "山の麦蔵",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 8,
+   "weeks": 2,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "産婆の手洗い",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 2,
+   "weeks": 2,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "施療所",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "毛織物工房",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "薬酒",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "養蜂の拡張",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "縮絨水車",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "館の守り",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 8,
+   "hero_days_needed": false
+  },
+  {
+   "id": "山のチーズ",
+   "labor": 0,
+   "weeks": 1,
+   "people": 2,
    "hero_days_needed": false
   }
  ],
@@ -1219,14 +1226,6 @@
    "repeat": false
   },
   {
-   "if": "通算週 >= 315",
-   "text": "刈り入れが済んだ。エッボとの約束どおり、ドルンで山のチーズを始める（ヒルダが教える。初めの年は乳の半分だけ）：project start 山のチーズ",
-   "stop": true,
-   "hidden": false,
-   "effects": {},
-   "repeat": false
-  },
-  {
    "if": "通算週 >= 319",
    "text": "辺境伯の返事（ふつう）：アイヒベルクが許した流れ者の狩人は、境の森の縁での狩りを禁じる。境の森番に狩人も見張らせる。オーベルの農奴をアイヒベルクが受け入れることは許さぬと書き送った。ただし自由農民は止められぬ、償いは森猪の害が確かめられてから",
    "stop": true,
@@ -1684,7 +1683,7 @@
   "修_施療": 168,
   "ア_讒言": 304,
   "カ_小競り合い": 284,
-  "ア_自慢": 248,
+  "ア_自慢": 316,
   "司_布告": 40,
   "カ_間者": 300,
   "ブ_宴": 236,

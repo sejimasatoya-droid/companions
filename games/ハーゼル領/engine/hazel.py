@@ -340,6 +340,10 @@ def econ_week(st, out):
         if "石切り場" in st["projects_done"]:
             dm["石材"] = round(dm.get("石材", 0) + 1, 2)
             out.report(f"石切り場から、季節の石が出た（石材 {dm['石材']}）")
+        if st["flags"].get("沼鉄"):
+            n_iron = 1 + (1 if st["flags"].get("鉄の炉") else 0)
+            dm["鉄"] = round(dm.get("鉄", 0) + n_iron, 2)
+            out.report(f"湿地の沼鉄から、季節の鉄がとれた（鉄 {dm['鉄']}）")
         if "森の手入れ" in st["projects_done"]:
             dm["木材"] = round(dm.get("木材", 0) + 1, 2)
             out.report(f"森の手入れで、季節の木材がとれた（木材 {dm['木材']}）")
@@ -710,7 +714,7 @@ def world_week(st, out):
         if e.get("gm"):
             append_md(GM_LOG, f"- {cal_str(st['week'])}：（世界）{e['text']}　〔{e['gm']}〕")
         if e["kind"] == "疫病" and e["region"] == home and ("はやり" in e["text"] or "広がった" in e["text"]):
-            apply_effects(st, {"clocks.灰咳の再来": 2 if "灰咳" in e["text"] else 1}, out)
+            apply_effects(st, {"clocks.灰咳の再来": (1 if st["flags"].get("灰咳の封じこめ") else 2) if "灰咳" in e["text"] else 1}, out)
         elif e["kind"] == "疫病" and W["dist"].get(e["region"], 9) == 1 and ("はやり" in e["text"] or "広がった" in e["text"]):
             apply_effects(st, {"clocks.灰咳の再来": 1}, out)
         if e["kind"] == "戦" and "仕掛けた" in e["text"] and "カルディア" in e["text"] and "王太子" in e["text"] and st["clocks"].get("東の休み戦", 0) < 6:

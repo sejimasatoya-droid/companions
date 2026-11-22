@@ -22,13 +22,11 @@
    "武芸": 82.0,
    "礼法": 8.25
   },
-  "fatigue": 1.5,
+  "fatigue": 3.0,
   "pocket": 0,
   "routine": {
    "務め": 3,
-   "剣の稽古": 1,
-   "読み書き": 1,
-   "体を鍛える": 1
+   "休む": 3
   },
   "items": [
    "木彫りの馬（父が彫った。前脚を父に教わって自分で直した）",
@@ -67,7 +65,16 @@
    "焦土と兵糧攻め": 2,
    "火薬": 0,
    "心理戦と士気": 0,
-   "遠眼鏡": 3
+   "遠眼鏡": 3,
+   "沼鉄の見つけ方": 2,
+   "炉と鉄づくり": 2,
+   "硝子づくり": 2,
+   "種の選び方": 2,
+   "石灰と骨粉": 2,
+   "寄り合いと嘆願": 2,
+   "村の共済": 2,
+   "ネズミとノミ": 2,
+   "隔離と検疫": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
   "魔力点": 24,
@@ -81,13 +88,13 @@
   }
  },
  "domain": {
-  "財貨": 294.41,
+  "財貨": 216.41,
   "負債": 156,
   "利率": 0.1,
-  "食糧": 8.56,
+  "食糧": 8.36,
   "人口": 1075,
-  "木材": 2,
-  "石材": 3.5,
+  "木材": 1,
+  "石材": 0.5,
   "鉄": 0,
   "民心": 55,
   "治安": 66,
@@ -467,7 +474,57 @@
   "帳簿の跡継ぎ": true
  },
  "harvest": null,
- "projects_active": [],
+ "projects_active": [
+  {
+   "id": "沼鉄",
+   "labor": 0,
+   "weeks": 0,
+   "people": 10,
+   "hero_days_needed": false
+  },
+  {
+   "id": "硝子窯",
+   "labor": 0,
+   "weeks": 0,
+   "people": 8,
+   "hero_days_needed": false
+  },
+  {
+   "id": "種の選抜",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "土を直す",
+   "labor": 0,
+   "weeks": 0,
+   "people": 10,
+   "hero_days_needed": false
+  },
+  {
+   "id": "民の声の箱",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "村の共済",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "鼠よけ",
+   "labor": 0,
+   "weeks": 0,
+   "people": 10,
+   "hero_days_needed": false
+  }
+ ],
  "projects_done": [
   "手洗いと煮沸",
   "水車の修理",
@@ -1356,6 +1413,26 @@
    "hidden": false,
    "effects": {
     "flags.ヒルダ洗礼": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "'鼠よけ' in 完成 and not flag_封じこめを始めた",
+   "text": "穀物蔵の鼠よけが仕上がった。灰咳の封じこめを始める：project start 灰咳の封じこめ 6",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.封じこめを始めた": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "'沼鉄' in 完成 and 石材 >= 1 and not flag_鉄の炉を始めた",
+   "text": "沼鉄が掘れるようになった。小さな炉で鉄を作るのを始める：project start 鉄の炉 8",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.鉄の炉を始めた": true
    },
    "repeat": false
   }

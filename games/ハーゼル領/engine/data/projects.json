@@ -1051,5 +1051,188 @@
   },
   "done_text": "鷲の氏族の東の谷あいの村の若い者が、ミルデの畑で学び、クローバーの種とカブの種を山へ持ち帰った。ハーコンの村にも、冬の飼い葉ができた",
   "opposition": "なし"
+ },
+ "沼鉄": {
+  "name": "湿地の沼鉄を掘る",
+  "tier": 3,
+  "requires": "カード_沼鉄の見つけ方 >= 2 and '湿地の開墾' in 完成",
+  "requires_text": "カード「沼鉄の見つけ方」段階2・湿地の排水と開墾",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15
+  },
+  "labor": 30,
+  "min_weeks": 8,
+  "effects": {
+   "flags.沼鉄": true,
+   "protagonist.cards.沼鉄の見つけ方": 1
+  },
+  "done_text": "排水した川下の湿地の底から、赤茶けた沼鉄の塊が掘り出せるようになった（季節ごとに鉄 +1）",
+  "opposition": "なし",
+  "card": "沼鉄の見つけ方"
+ },
+ "鉄の炉": {
+  "name": "小さな炉で鉄を作る",
+  "tier": 3,
+  "requires": "'沼鉄' in 完成 and カード_炉と鉄づくり >= 2",
+  "requires_text": "湿地の沼鉄・カード「炉と鉄づくり」段階2",
+  "permit": "当主・鍛冶屋ラルフ",
+  "cost": {
+   "財貨": 30,
+   "石材": 1
+  },
+  "labor": 40,
+  "min_weeks": 12,
+  "effects": {
+   "flags.鉄の炉": true,
+   "domain_extra.週収入": 0.2,
+   "protagonist.cards.炉と鉄づくり": 1
+  },
+  "done_text": "ラルフの鍛冶場の裏に、石を積んだ小さな炉ができた。ペーターの火で、沼鉄が溶ける（季節ごとに鉄がさらに +1。鉄の値に左右されにくくなる）",
+  "opposition": "なし",
+  "card": "炉と鉄づくり"
+ },
+ "硝子窯": {
+  "name": "館村の硝子窯",
+  "tier": 3,
+  "requires": "カード_硝子づくり >= 2",
+  "requires_text": "カード「硝子づくり」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 25,
+   "石材": 1,
+   "木材": 1
+  },
+  "labor": 30,
+  "min_weeks": 10,
+  "effects": {
+   "flags.硝子窯": true,
+   "domain_extra.週収入": 0.3,
+   "protagonist.cards.硝子づくり": 1
+  },
+  "done_text": "館村の外れに硝子窯ができた。レンズ、蒸留の器、小さな窓硝子が作れる",
+  "opposition": "なし",
+  "card": "硝子づくり"
+ },
+ "種の選抜": {
+  "name": "種の選抜",
+  "tier": 2,
+  "requires": "カード_種の選び方 >= 2",
+  "requires_text": "カード「種の選び方」段階2",
+  "permit": "村長たち",
+  "cost": {
+   "財貨": 5
+  },
+  "labor": 20,
+  "min_weeks": 48,
+  "effects": {
+   "domain.開発": 3,
+   "protagonist.cards.種の選び方": 1
+  },
+  "done_text": "毎年いちばん実りのよい株の種だけを残すうちに、麦の穂が目に見えて重くなった",
+  "opposition": "なし",
+  "card": "種の選び方"
+ },
+ "土を直す": {
+  "name": "畑の土を直す",
+  "tier": 2,
+  "requires": "カード_石灰と骨粉 >= 2",
+  "requires_text": "カード「石灰と骨粉」段階2",
+  "permit": "村長たち",
+  "cost": {
+   "財貨": 15,
+   "石材": 1
+  },
+  "labor": 40,
+  "min_weeks": 12,
+  "effects": {
+   "domain.開発": 3,
+   "domain.食糧": 0.2,
+   "protagonist.cards.石灰と骨粉": 1
+  },
+  "done_text": "石切り場の石灰を焼いて酸っぱい畑に撒き、屠った家畜の骨を砕いて肥やしにした",
+  "opposition": "なし",
+  "card": "石灰と骨粉"
+ },
+ "民の声の箱": {
+  "name": "民の声の箱",
+  "tier": 1,
+  "requires": "カード_寄り合いと嘆願 >= 2",
+  "requires_text": "カード「寄り合いと嘆願」段階2",
+  "permit": "当主・アンセルム",
+  "cost": {
+   "財貨": 3
+  },
+  "labor": 5,
+  "min_weeks": 4,
+  "effects": {
+   "domain.民心": 3,
+   "flags.民の声の箱": true,
+   "protagonist.cards.寄り合いと嘆願": 1
+  },
+  "done_text": "月に一度、館村の教会で寄り合いを開き、村長と村の者が不満を言える場を作った。字の書ける者は、教会の箱に願いを入れられる",
+  "opposition": "なし",
+  "card": "寄り合いと嘆願"
+ },
+ "村の共済": {
+  "name": "村の共済",
+  "tier": 2,
+  "requires": "カード_村の共済 >= 2",
+  "requires_text": "カード「村の共済」段階2",
+  "permit": "村長たち",
+  "cost": {
+   "財貨": 5,
+   "食糧": 0.2
+  },
+  "labor": 10,
+  "min_weeks": 8,
+  "effects": {
+   "domain.民心": 2,
+   "flags.村の共済": true,
+   "protagonist.cards.村の共済": 1
+  },
+  "done_text": "村ごとに、家々が少しずつ麦を出し合う共済の蔵ができた。病や火事の家を、村で助ける",
+  "opposition": "なし",
+  "card": "村の共済"
+ },
+ "鼠よけ": {
+  "name": "穀物蔵の鼠よけ",
+  "tier": 2,
+  "requires": "カード_ネズミとノミ >= 2",
+  "requires_text": "カード「ネズミとノミ」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 10,
+   "石材": 1
+  },
+  "labor": 30,
+  "min_weeks": 8,
+  "effects": {
+   "flags.鼠よけ": true,
+   "domain.食糧": 0.1,
+   "protagonist.cards.ネズミとノミ": 1
+  },
+  "done_text": "蔵を石の台に載せ、ネズミ返しをつけ、猫を飼った。麦の目減りが減り、ノミのつくネズミも減った（灰咳が進みにくくなる）",
+  "opposition": "なし",
+  "card": "ネズミとノミ"
+ },
+ "灰咳の封じこめ": {
+  "name": "灰咳の封じこめ",
+  "tier": 2,
+  "requires": "'鼠よけ' in 完成 and カード_隔離と検疫 >= 2",
+  "requires_text": "穀物蔵の鼠よけ・カード「隔離と検疫」段階2",
+  "permit": "当主・アンセルム",
+  "cost": {
+   "財貨": 8
+  },
+  "labor": 15,
+  "min_weeks": 6,
+  "effects": {
+   "flags.灰咳の封じこめ": true,
+   "protagonist.cards.隔離と検疫": 1
+  },
+  "done_text": "病人を離して寝かせる小屋と、よそから来た荷と人を街道の宿で留め置く決まりができた（疫病が入っても広がりにくい）",
+  "opposition": "なし",
+  "card": "隔離と検疫"
  }
 }

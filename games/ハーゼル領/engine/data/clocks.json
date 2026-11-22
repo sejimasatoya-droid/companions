@@ -244,6 +244,10 @@
    {
     "if": "flag_オーベルを見回る",
     "p_season": -0.08
+   },
+   {
+    "if": "flag_民の声の箱",
+    "p_season": -0.05
    }
   ],
   "thresholds": {
@@ -335,6 +339,14 @@
    {
     "if": "衛生 >= 50",
     "p_season": -1
+   },
+   {
+    "if": "flag_鼠よけ",
+    "p_season": -0.04
+   },
+   {
+    "if": "flag_灰咳の封じこめ",
+    "p_season": -0.04
    }
   ],
   "thresholds": {

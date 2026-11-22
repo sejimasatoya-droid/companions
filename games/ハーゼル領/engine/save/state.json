@@ -1,5 +1,5 @@
 {
- "week": 368,
+ "week": 369,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 694,
-   "体力": 36.5,
+   "魔力": 704,
+   "体力": 38.0,
    "弁舌": 4.0,
-   "知識": 53.0,
-   "武芸": 71.0,
-   "礼法": 33.5
+   "知識": 54.25,
+   "武芸": 72.0,
+   "礼法": 35.75
   },
-  "fatigue": 0.4,
+  "fatigue": 0.5,
   "pocket": 0,
   "routine": {
    "務め": 3,
@@ -81,7 +81,7 @@
   }
  },
  "domain": {
-  "財貨": 267.33,
+  "財貨": 273.3,
   "負債": 156,
   "利率": 0.1,
   "食糧": 8.36,
@@ -131,7 +131,7 @@
   "コンラートの借金": 3,
   "摂政軍の北上": 4,
   "東の休み戦": 1,
-  "恵みの子の名": 5,
+  "恵みの子の名": 6,
   "品の名": 3,
   "灰の書庫": 5,
   "司教の巻き返し": 1,
@@ -450,42 +450,43 @@
   "オーベル駐屯": true,
   "狼煙の網": true,
   "野戦の手当て": true,
-  "修道院の特許状": true
+  "修道院の特許状": true,
+  "糸6学院長": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "長弓隊",
    "labor": 104,
-   "weeks": 20,
+   "weeks": 21,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "地図づくり",
    "labor": 18,
-   "weeks": 7,
+   "weeks": 8,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "遠眼鏡",
    "labor": 10,
-   "weeks": 5,
+   "weeks": 6,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "魚の塩漬け",
-   "labor": 12,
-   "weeks": 5,
+   "labor": 15,
+   "weeks": 6,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "帳簿の跡継ぎ",
-   "labor": 4,
-   "weeks": 5,
+   "labor": 5,
+   "weeks": 6,
    "people": 1,
    "hero_days_needed": false
   }
@@ -1378,6 +1379,16 @@
    "hidden": false,
    "effects": {},
    "repeat": true
+  },
+  {
+   "if": "通算週 >= 383 and not flag_目利き819",
+   "text": "ヤーコプの年に一度の目利き（城下の商会の出店で）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.目利き819": true
+   },
+   "repeat": false
   }
  ],
  "factions": {
@@ -1702,7 +1713,7 @@
  },
  "page": {
   "段階": "小姓",
-  "評判": 36,
+  "評判": 37,
   "派閥": {
    "嫡男派": -3,
    "次男派": 2,

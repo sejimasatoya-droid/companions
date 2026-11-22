@@ -57,7 +57,7 @@
    "持続する林業": 3,
    "野戦衛生": 5,
    "狼煙と信号": 4,
-   "規律と号令": 0,
+   "規律と号令": 2,
    "槍衾": 3,
    "長弓": 2,
    "兵站と補給": 3,
@@ -90,14 +90,14 @@
   }
  },
  "domain": {
-  "財貨": 126.98,
+  "財貨": 91.98,
   "負債": 156,
   "利率": 0.1,
   "食糧": 8.61,
   "人口": 1075,
   "木材": 3,
   "石材": 1.5,
-  "鉄": 1,
+  "鉄": 0,
   "民心": 60,
   "治安": 70,
   "開発": 77,
@@ -527,6 +527,20 @@
    "labor": 0,
    "weeks": 0,
    "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "号令",
+   "labor": 0,
+   "weeks": 0,
+   "people": 6,
+   "hero_days_needed": false
+  },
+  {
+   "id": "民兵の鎧",
+   "labor": 0,
+   "weeks": 0,
+   "people": 6,
    "hero_days_needed": false
   }
  ],
@@ -1447,6 +1461,16 @@
    "effects": {
     "flags.帰した兵が戻った820": true,
     "war.sides.王太子.troops.兵": 600
+   },
+   "repeat": false
+  },
+  {
+   "if": "'号令' in 完成 and not flag_荷車の砦を始めた",
+   "text": "規律と号令が仕上がった。荷車の砦を始められる（財貨20・木材3・鉄1）：project start 荷車の砦",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.荷車の砦を始めた": true
    },
    "repeat": false
   }

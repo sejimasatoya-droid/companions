@@ -1157,7 +1157,10 @@ def battle(st, a, b, terrain="平地", a_lead=0, b_lead=0, named=None):
             if not ud:
                 raise SystemExit(f"兵種がありません: {u}（engine/data/units.json）")
             k = ud.get("terrain", {}).get(terrain, 1.0)
-            s += ud["str"] * n * k
+            base_str = ud["str"]
+            if u in ("訓練された民兵", "槍衾兵", "長弓兵") and st["flags"].get("民兵の鎧"):
+                base_str += 0.5  # 民兵の鎧と盾
+            s += base_str * n * k
         return s
 
     ra, rb = d(6) + d(6), d(6) + d(6)

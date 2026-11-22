@@ -370,7 +370,8 @@
   "ヴェレナの許し林業": true,
   "石鹸の印": true,
   "市の特許状": true,
-  "ウルガの許し": true
+  "ウルガの許し": true,
+  "章": 3
  },
  "harvest": null,
  "projects_active": [
@@ -1106,6 +1107,22 @@
   {
    "if": "通算週 >= 300",
    "text": "草月：ヴァルクの若い者三人（ドランの甥たち）がミルデへ下りてくる。輪作の畑で働かせ、学ばせる",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "年齢 >= 12 and 月 >= 11",
+   "text": "第三章の終わりの目安：ライが城へ小姓に上がる。章の見直し（system.md §17）",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "摂政軍の北上 >= 8 or 通算週 >= 384",
+   "text": "第三章の終わりの目安（摂政軍が城を囲んだ／2年たった）。章の見直し（system.md §17）",
    "stop": true,
    "hidden": false,
    "effects": {},

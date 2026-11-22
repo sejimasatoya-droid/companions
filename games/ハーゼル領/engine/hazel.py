@@ -511,6 +511,10 @@ def hero_week(st, out):
     if "魔力点上限" in h:
         h["魔力点上限"] = h["abilities"]["魔力"] * 2
         h["魔力点"] = min(h["魔力点上限"], h["魔力点"] + h["魔力点上限"] // 2 + rest)
+        if st["flags"].get("見識をよく使う") and h.get("系統") == "見識" and h["魔力点"] >= 3:
+            # 日々の暮らしで見識を使う（帳簿の品、麦、薬草、銀など）。週に初歩の呪文を二、三度ぶん
+            h["魔力点"] -= 3
+            h["xp"]["魔力"] = h["xp"].get("魔力", 0) + 3
         prac = rt.get("時繰りの練習", 0)
         if prac and d(20) <= prac // 2 + (1 if st["flags"].get("夜の見張り") else 0) and not (st["flags"].get("練習の隠れ場所") and d(2) == 1) and not (st["flags"].get("竿を移した") and d(2) == 1):
             out.report("時繰りの練習をしているところを、誰かに見られたかもしれない", stop=True)

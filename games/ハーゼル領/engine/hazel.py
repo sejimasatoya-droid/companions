@@ -698,6 +698,11 @@ def world_week(st, out):
     # ハーゼルの側から世界へ：東の休み戦が破れたら、世界でもカルディアと王太子が戦になる
     if st["clocks"].get("東の休み戦", 0) >= 6 and not WORLD.at_war(W, "カルディア", "王太子") and W["polities"]["カルディア"]["alive"]:
         W["wars"].append({"a": "カルディア", "b": "王太子", "since": W["t"], "goal": "地", "score": 0})
+    # ハーゼルで仕上がった発明は、世界でも北部の国のものになる
+    home_owner = W["regions"][W["home"]]["owner"]
+    for pid_, inv in (("風車", "風車"), ("長弓隊", "長弓"), ("竜の粉", "火薬"), ("活版印刷", "活版"), ("蒸留", "蒸留")):
+        if pid_ in st["projects_done"] and inv not in W["tech"].get(home_owner, []):
+            W["tech"].setdefault(home_owner, []).append(inv)
     # 世界からハーゼルへ
     home = W["home"]
     st["world_harvest"] = W["harvest"].get(home)

@@ -975,8 +975,12 @@ def page_month(st, out):
         out.report(f"務めの日数が足りない（{pg.get('段階')}は週 {need} 日）。城での評判 −1")
     if wk != 2:
         return
-    tasks = [t for t in defs("page_tasks") if cond(st, t.get("if"))]
+    used = pg.setdefault("使った務め", {})
+    tasks = [t for t in defs("page_tasks") if cond(st, t.get("if")) and st["week"] - used.get(t["id"], -999) >= t.get("cd", 36)]
+    if not tasks:
+        tasks = [t for t in defs("page_tasks") if cond(st, t.get("if"))]
     t = random.choices(tasks, weights=[x.get("w", 1) for x in tasks])[0]
+    used[t["id"]] = st["week"]
     pg["今の務め"] = t["id"]
     ch = f"　※{t['choice']}" if t.get("choice") else ""
     out.report(f"〔務め〕{t['text']}（{t['ability']}判定 目標 {t['dc']}。結果は page resolve 成功|失敗）{ch}", stop=True)

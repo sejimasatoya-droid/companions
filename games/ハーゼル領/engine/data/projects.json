@@ -673,5 +673,134 @@
   },
   "done_text": "教会の脇に、煮た布・薬酒・山の薬草をそろえた施療所ができた。グレーテと産婆が手当てをし、アンセルムが祈る。祝福を求めてくる者も、ここで受けとめる（「恵みの子」の名が進みにくくなる）",
   "opposition": "司教座（名目しだい）"
+ },
+ "毛織物工房": {
+  "name": "毛織物の工房",
+  "tier": 2,
+  "requires": "",
+  "requires_text": "なし",
+  "permit": "母（売り物）・ドルンの女たち",
+  "cost": {
+   "財貨": 30
+  },
+  "labor": 40,
+  "min_weeks": 10,
+  "effects": {
+   "domain_extra.週収入": 0.3,
+   "clocks.品の名": 1,
+   "domain.開発": 1
+  },
+  "done_text": "館村に機織りの工房ができた。ドルンの羊毛を、糸に紡ぎ、布に織って売れる",
+  "opposition": "ドルンの女たち（家で紡ぐほうが楽）"
+ },
+ "薬酒": {
+  "name": "薬酒を売り物に",
+  "tier": 2,
+  "requires": "'蒸留' in 完成",
+  "requires_text": "蒸留器",
+  "permit": "院長ベネディクト（名目）",
+  "cost": {
+   "財貨": 20
+  },
+  "labor": 15,
+  "min_weeks": 8,
+  "effects": {
+   "domain_extra.週収入": 0.3,
+   "clocks.異端の目": 1
+  },
+  "done_text": "蒸留器の強い酒に山の薬草を漬けた『聖オズヴィンの薬酒』ができた。修道院の名で売る",
+  "opposition": "司教座（錬金術の疑い）"
+ },
+ "養蜂の拡張": {
+  "name": "養蜂を広げる",
+  "tier": 1,
+  "requires": "'養蜂' in 完成",
+  "requires_text": "養蜂",
+  "permit": "各村の村長",
+  "cost": {
+   "財貨": 15
+  },
+  "labor": 20,
+  "min_weeks": 12,
+  "effects": {
+   "domain_extra.週収入": 0.2
+  },
+  "done_text": "ミルデ・ドルン・オーベルにも巣箱が置かれた。蜜と蜜蝋が増えた",
+  "opposition": "なし"
+ },
+ "縮絨水車": {
+  "name": "縮絨水車",
+  "tier": 2,
+  "requires": "'水車の改良' in 完成",
+  "requires_text": "水車の改良",
+  "permit": "粉屋オットー（水車を分ける）",
+  "cost": {
+   "財貨": 40,
+   "木材": 3,
+   "鉄": 1
+  },
+  "labor": 50,
+  "min_weeks": 12,
+  "effects": {
+   "domain_extra.週収入": 0.4,
+   "domain.開発": 2
+  },
+  "done_text": "水車の軸に木槌を取りつけ、織った布を叩いて締められるようになった。ハーゼルの毛織物は、目が詰んで雨を通さない",
+  "opposition": "粉屋オットー"
+ },
+ "乳牛": {
+  "name": "牧草地を広げて乳牛を",
+  "tier": 1,
+  "requires": "'クローバー輪作' in 完成",
+  "requires_text": "クローバーとカブの輪作",
+  "permit": "ミルデ村長グスタフ",
+  "cost": {
+   "財貨": 35
+  },
+  "labor": 30,
+  "min_weeks": 10,
+  "effects": {
+   "domain.食糧": 0.2,
+   "domain_extra.週収入": 0.1
+  },
+  "done_text": "クローバーの干し草で冬を越せる乳牛を、六頭買い足した。乳とチーズが増えた",
+  "opposition": "なし"
+ },
+ "館の守り": {
+  "name": "館の守りを固める",
+  "tier": 2,
+  "requires": "",
+  "requires_text": "なし",
+  "permit": "当主",
+  "cost": {
+   "財貨": 40,
+   "石材": 4
+  },
+  "labor": 80,
+  "min_weeks": 12,
+  "effects": {
+   "flags.館の守り": true,
+   "domain.治安": 2
+  },
+  "done_text": "館の柵の一部が石の壁になり、空堀が深くなった。戦のとき、館が持ちこたえる（戦で守る側の補正 +1）",
+  "opposition": "なし"
+ },
+ "湿地の開墾": {
+  "name": "湿地の排水と開墾",
+  "tier": 2,
+  "requires": "",
+  "requires_text": "なし",
+  "permit": "当主・ミルデ村長グスタフ",
+  "cost": {
+   "財貨": 50
+  },
+  "labor": 200,
+  "min_weeks": 16,
+  "effects": {
+   "domain.開発": 4,
+   "domain.食糧": 0.3
+  },
+  "done_text": "川下の湿った荒れ地に溝が掘られ、水が抜けて、新しい畑ができた。森を切らずに畑が増えた",
+  "opposition": "なし"
  }
 }

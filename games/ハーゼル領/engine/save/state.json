@@ -68,14 +68,14 @@
   }
  },
  "domain": {
-  "財貨": 342.99,
+  "財貨": 197.99,
   "負債": 156,
   "利率": 0.1,
   "食糧": 4.41,
   "人口": 1105,
-  "木材": 7,
-  "石材": 4.5,
-  "鉄": 2,
+  "木材": 4,
+  "石材": 0.5,
+  "鉄": 1,
   "民心": 57,
   "治安": 65,
   "開発": 53,
@@ -416,6 +416,41 @@
    "labor": 0,
    "weeks": 0,
    "people": 6,
+   "hero_days_needed": false
+  },
+  {
+   "id": "毛織物工房",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "薬酒",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "養蜂の拡張",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "縮絨水車",
+   "labor": 0,
+   "weeks": 0,
+   "people": 5,
+   "hero_days_needed": false
+  },
+  {
+   "id": "館の守り",
+   "labor": 0,
+   "weeks": 0,
+   "people": 8,
    "hero_days_needed": false
   }
  ],
@@ -1223,6 +1258,26 @@
    "stop": true,
    "hidden": false,
    "effects": {},
+   "repeat": false
+  },
+  {
+   "if": "'クローバー輪作' in 完成 and not flag_乳牛を始めた",
+   "text": "輪作が仕上がった。約束の順で、牧草地を広げて乳牛を始める：project start 乳牛 3",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.乳牛を始めた": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "月 == 12 and 週 == 1 and not flag_湿地を始めた",
+   "text": "冬の人手が空いた。湿地の排水と開墾を始める：project start 湿地の開墾 15",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.湿地を始めた": true
+   },
    "repeat": false
   }
  ],

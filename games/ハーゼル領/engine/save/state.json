@@ -80,7 +80,7 @@
   }
  },
  "domain": {
-  "財貨": 384.75,
+  "財貨": 360.75,
   "負債": 156,
   "利率": 0.1,
   "食糧": 7.56,
@@ -449,6 +449,27 @@
    "labor": 104,
    "weeks": 13,
    "people": 8,
+   "hero_days_needed": false
+  },
+  {
+   "id": "地図づくり",
+   "labor": 0,
+   "weeks": 0,
+   "people": 6,
+   "hero_days_needed": false
+  },
+  {
+   "id": "狼煙の網",
+   "labor": 0,
+   "weeks": 0,
+   "people": 8,
+   "hero_days_needed": false
+  },
+  {
+   "id": "手当て隊",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
    "hero_days_needed": false
   }
  ],

@@ -96,8 +96,8 @@
   "鉄価格": 5.0
  },
  "military": {
-  "騎士": 1,
-  "常備兵": 4,
+  "騎士": 0,
+  "常備兵": 0,
   "徴募兵": 0
  },
  "clocks": {
@@ -159,7 +159,7 @@
   "父の傷": false,
   "ハルグリム戦死": true,
   "イェルク重傷": false,
-  "ボルドオーベル駐留": false,
+  "ボルドオーベル駐留": true,
   "マグダ冬の猶予": true,
   "兵と稽古": true,
   "水車故障": false,
@@ -216,7 +216,7 @@
   "マティアスの篤志家はザルム": true,
   "刻の司の記録": true,
   "動員令": true,
-  "動員中": false,
+  "動員中": true,
   "司教の招き": true,
   "辺境伯の一言": true,
   "司教座の祭": true,
@@ -284,7 +284,8 @@
   "ヘルムート陣中の煮沸": true,
   "ヘルムートと知らせの道": true,
   "ドルンの井戸": true,
-  "開戦": true
+  "開戦": true,
+  "陣中の煮沸": true
  },
  "harvest": null,
  "projects_active": [
@@ -917,6 +918,17 @@
    "hidden": false,
    "effects": {
     "flags.かまどのあと": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 190 and flag_動員中",
+   "text": "六十日の軍役を終えて、ボルドたちが東の砦から戻ってきた",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.動員中": false,
+    "flags.ボルドオーベル駐留": false
    },
    "repeat": false
   }

@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 370.99,
+  "財貨": 342.99,
   "負債": 156,
   "利率": 0.1,
   "食糧": 4.41,
@@ -395,6 +395,27 @@
    "labor": 600,
    "weeks": 40,
    "people": 15,
+   "hero_days_needed": false
+  },
+  {
+   "id": "山の麦蔵",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "産婆の手洗い",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "施療所",
+   "labor": 0,
+   "weeks": 0,
+   "people": 6,
    "hero_days_needed": false
   }
  ],

@@ -114,6 +114,14 @@
    {
     "if": "flag_山の飼い葉 and 作柄 == '凶作'",
     "p_season": -0.2
+   },
+   {
+    "if": "flag_山の麦蔵",
+    "p_season": -0.05
+   },
+   {
+    "if": "flag_山の麦蔵 and 作柄 == '凶作'",
+    "p_season": -0.2
    }
   ],
   "thresholds": {
@@ -498,6 +506,10 @@
    {
     "if": "flag_時繰りを人前で使った",
     "p_season": 0.15
+   },
+   {
+    "if": "flag_施療所",
+    "p_season": -0.05
    }
   ],
   "thresholds": {

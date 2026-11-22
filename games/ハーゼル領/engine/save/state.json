@@ -67,7 +67,7 @@
    "堀と土塁": 2,
    "焦土と兵糧攻め": 2,
    "火薬": 0,
-   "心理戦と士気": 0,
+   "心理戦と士気": 2,
    "遠眼鏡": 3,
    "沼鉄の見つけ方": 3,
    "炉と鉄づくり": 3,
@@ -95,14 +95,14 @@
   }
  },
  "domain": {
-  "財貨": 215.47,
+  "財貨": 140.47,
   "負債": 0,
   "利率": 0.1,
   "食糧": 9.84,
   "人口": 1075,
   "木材": 1,
   "石材": 2.5,
-  "鉄": 1,
+  "鉄": 0,
   "民心": 58,
   "治安": 76,
   "開発": 77,
@@ -558,6 +558,48 @@
    "weeks": 2,
    "people": 4,
    "hero_days_needed": false
+  },
+  {
+   "id": "秋の大市",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "冬の外套",
+   "labor": 0,
+   "weeks": 0,
+   "people": 6,
+   "hero_days_needed": false
+  },
+  {
+   "id": "冬の手仕事",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "鋸場",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "投げ文",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "符丁の手紙",
+   "labor": 0,
+   "weeks": 0,
+   "people": 0,
+   "hero_days_needed": true
   }
  ],
  "projects_done": [
@@ -1467,6 +1509,16 @@
    "hidden": false,
    "effects": {
     "flags.夜の襲いを始めた": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "'投げ文' in 完成 and 財貨 >= 5 and not flag_降る者の門を始めた",
+   "text": "投げ文ができた。降る者の門を始める：project start 降る者の門 2",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.降る者の門を始めた": true
    },
    "repeat": false
   }

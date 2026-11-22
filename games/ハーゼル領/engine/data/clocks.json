@@ -311,7 +311,8 @@
      "flags.辺境伯家督争い": true
     }
    }
-  }
+  },
+  "retired": true
  },
  "灰咳の再来": {
   "name": "灰咳の再来",
@@ -722,6 +723,31 @@
    },
    "6": {
     "text": "学院の地下書庫から、古い書が一冊、盗まれたという",
+    "stop": true,
+    "visible": true
+   }
+  }
+ },
+ "イゾルデの恨み": {
+  "name": "イゾルデの恨み",
+  "max": 6,
+  "p_season": 0.15,
+  "visible": false,
+  "only_if": "flag_出仕中",
+  "mods": [
+   {
+    "if": "page_後妻派 <= -3",
+    "p_season": 0.1
+   }
+  ],
+  "thresholds": {
+   "3": {
+    "text": "城の奥で、ハーゼルの小姓の悪い噂が流れている（後妻イゾルデの侍女から）",
+    "stop": true,
+    "visible": true
+   },
+   "6": {
+    "text": "城で、ハーゼルの小姓に盗みの濡れ衣がかけられた",
     "stop": true,
     "visible": true
    }

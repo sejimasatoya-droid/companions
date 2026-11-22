@@ -224,6 +224,10 @@ def namespace(st):
     for k, v in st["protagonist"].get("cards", {}).items():
         ns[f"カード_{k}"] = v
     ns["軍_常備兵"] = st["military"].get("常備兵", 0)
+    pg = st.get("page") or {}
+    ns["城での評判"] = pg.get("評判", 0)
+    for k, v in (pg.get("派閥") or {}).items():
+        ns[f"page_{k}"] = v
     ns["疲労"] = st["protagonist"].get("fatigue", 0)
     return ns
 

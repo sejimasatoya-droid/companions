@@ -1,5 +1,5 @@
 {
- "week": 317,
+ "week": 318,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 174,
-   "体力": 25.0,
+   "魔力": 186,
+   "体力": 26.5,
    "弁舌": 4.0,
-   "知識": 87.5,
-   "武芸": 66.0,
-   "礼法": 6.0
+   "知識": 88.75,
+   "武芸": 68.0,
+   "礼法": 8.5
   },
-  "fatigue": 0.6,
+  "fatigue": 0.7,
   "pocket": 0,
   "routine": {
    "読み書き": 1,
@@ -57,7 +57,7 @@
    "持続する林業": 3
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 24,
+  "魔力点": 23,
   "魔力点上限": 34,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -68,7 +68,7 @@
   }
  },
  "domain": {
-  "財貨": 183.18,
+  "財貨": 187.41,
   "負債": 156,
   "利率": 0.1,
   "食糧": 4.41,
@@ -109,7 +109,7 @@
   "黒の森の異変": 4,
   "水車の寿命": 5,
   "ブレッケン家の破産": 6,
-  "アイヒベルクの引き抜き": 3,
+  "アイヒベルクの引き抜き": 4,
   "ザルムの手": 6,
   "辺境伯家の継嗣問題": 6,
   "灰咳の再来": 2,
@@ -388,77 +388,78 @@
   "風車を始めた": true,
   "山の飼い葉": true,
   "城との定期便": true,
-  "便はマルクス": true
+  "便はマルクス": true,
+  "止まった魔石": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "クローバー輪作",
-   "labor": 645,
-   "weeks": 43,
+   "labor": 660,
+   "weeks": 44,
    "people": 15,
    "hero_days_needed": false
   },
   {
    "id": "山の麦蔵",
-   "labor": 12,
-   "weeks": 3,
+   "labor": 16,
+   "weeks": 4,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "産婆の手洗い",
-   "labor": 3,
-   "weeks": 3,
+   "labor": 4,
+   "weeks": 4,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "施療所",
    "labor": 0,
-   "weeks": 3,
+   "weeks": 4,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "毛織物工房",
    "labor": 0,
-   "weeks": 3,
+   "weeks": 4,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "薬酒",
    "labor": 0,
-   "weeks": 3,
+   "weeks": 4,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "養蜂の拡張",
    "labor": 0,
-   "weeks": 3,
+   "weeks": 4,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "縮絨水車",
    "labor": 0,
-   "weeks": 3,
+   "weeks": 4,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "館の守り",
    "labor": 0,
-   "weeks": 3,
+   "weeks": 4,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "山のチーズ",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   }
@@ -1243,14 +1244,6 @@
    "effects": {
     "flags.オーベル冬の兵": true
    },
-   "repeat": false
-  },
-  {
-   "if": "通算週 >= 318",
-   "text": "ヤーコプの年に一度の目利き：ライが城へ上がる前に済ませるか、城下で済ませるか決める",
-   "stop": true,
-   "hidden": false,
-   "effects": {},
    "repeat": false
   },
   {

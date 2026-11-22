@@ -994,6 +994,18 @@
     "flags.ザルムの催促": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 191 and not flag_オスカーの件",
+   "text": "ヤーコプから手紙が届いた。ザルムブルクの支店の手代オスカーが、ザルムの家令から金をもらって、石鹸の出どころを漏らしていた。オスカーは暇を出された",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.オスカーの件": true,
+    "npcs.ヤーコプ.借り": 1,
+    "factions.商会.態度": 1
+   },
+   "repeat": false
   }
  ],
  "factions": {

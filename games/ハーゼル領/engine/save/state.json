@@ -1,5 +1,5 @@
 {
- "week": 361,
+ "week": 362,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 624,
-   "体力": 29.0,
+   "魔力": 634,
+   "体力": 30.5,
    "弁舌": 4.0,
-   "知識": 46.75,
-   "武芸": 64.0,
-   "礼法": 17.75
+   "知識": 48.0,
+   "武芸": 65.0,
+   "礼法": 20.0
   },
-  "fatigue": 1.4,
+  "fatigue": 1.5,
   "pocket": 0,
   "routine": {
    "務め": 3,
@@ -80,7 +80,7 @@
   }
  },
  "domain": {
-  "財貨": 360.75,
+  "財貨": 344.85,
   "負債": 156,
   "利率": 0.1,
   "食糧": 7.56,
@@ -440,35 +440,36 @@
   "糸7ヒルダ": true,
   "ヒルダ施療所": true,
   "槍衾隊": true,
-  "森の縁の見回り": true
+  "森の縁の見回り": true,
+  "つなぎ819返した": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "長弓隊",
    "labor": 104,
-   "weeks": 13,
+   "weeks": 14,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "地図づくり",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 6,
+   "weeks": 1,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "狼煙の網",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 8,
+   "weeks": 1,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "手当て隊",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 4,
+   "weeks": 1,
    "people": 4,
    "hero_days_needed": false
   }
@@ -1336,17 +1337,6 @@
    "hidden": false,
    "effects": {
     "flags.風車を始めた": true
-   },
-   "repeat": false
-  },
-  {
-   "if": "月 == 9 and 週 == 3 and not flag_つなぎ819返した",
-   "text": "ヤーコプのつなぎの返済：22（実月の年貢のあと）",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "domain.財貨": -22,
-    "flags.つなぎ819返した": true
    },
    "repeat": false
   },

@@ -39,6 +39,9 @@ import re
 import sys
 from datetime import date
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import world as WORLD  # 世界シミュレーション（engine/world.py）
+
 BASE = os.path.dirname(os.path.abspath(__file__))
 GAME = os.path.dirname(BASE)
 DATA = os.path.join(BASE, "data")
@@ -343,7 +346,7 @@ def econ_week(st, out):
     if (m, wk) == (4, 4):
         money(20 * pop_k * (1.3 if "羊の選抜" in st["projects_done"] else 1.0), "羊毛の売り上げ")
     if (m, wk) == (6, 1):
-        r = d(20) + (1 if dm["開発"] >= 40 else 0)
+        r = d(20) + (1 if dm["開発"] >= 40 else 0) + {"凶作": -6, "豊作": 6}.get(st.get("world_harvest"), 0)
         st["harvest"] = "凶作" if r <= 3 else ("豊作" if r >= 17 else "平年")
         hint = {"凶作": "麦の育ちが悪い。村々に不安が広がる", "平年": "麦はまずまずの育ち", "豊作": "麦の穂が重い。今年は豊作になりそうだ"}
         out.report(f"作柄の見通し：{hint[st['harvest']]}（🎲{r}）", stop=st["harvest"] == "凶作", log=True)
@@ -670,12 +673,53 @@ def yearly(st, out):
     out.report("年の終わり：注目度が下がり、強くない感情は少し薄れた")
 
 
+# ---------------------------------------------------------------- 世界（engine/world.py）
+def world_week(st, out):
+    """季節の初めに世界を一季節進め、届いた知らせを出し、ハーゼルの数値につなぐ"""
+    if st["flags"].get("世界を止める"):
+        return
+    y, m, wk = cal(st["week"])
+    W = WORLD.load()
+    new = []
+    if (m, wk) in ((3, 1), (6, 1), (9, 1), (12, 1)):
+        start = len(W["events"])
+        WORLD.season_tick(W)
+        W["wk"] = 0
+        new = W["events"][start:]
+    else:
+        W["wk"] = W.get("wk", 0) + 1
+    # ハーゼルの側から世界へ：東の休み戦が破れたら、世界でもカルディアと王太子が戦になる
+    if st["clocks"].get("東の休み戦", 0) >= 6 and not WORLD.at_war(W, "カルディア", "王太子") and W["polities"]["カルディア"]["alive"]:
+        W["wars"].append({"a": "カルディア", "b": "王太子", "since": W["t"], "goal": "地", "score": 0})
+    # 世界からハーゼルへ
+    home = W["home"]
+    st["world_harvest"] = W["harvest"].get(home)
+    for e in new:
+        if e.get("gm"):
+            append_md(GM_LOG, f"- {cal_str(st['week'])}：（世界）{e['text']}　〔{e['gm']}〕")
+        if e["kind"] == "疫病" and e["region"] == home and ("はやり" in e["text"] or "広がった" in e["text"]):
+            apply_effects(st, {"clocks.灰咳の再来": 2 if "灰咳" in e["text"] else 1}, out)
+        elif e["kind"] == "疫病" and W["dist"].get(e["region"], 9) == 1 and ("はやり" in e["text"] or "広がった" in e["text"]):
+            apply_effects(st, {"clocks.灰咳の再来": 1}, out)
+        if e["kind"] == "戦" and "仕掛けた" in e["text"] and "カルディア" in e["text"] and "王太子" in e["text"] and st["clocks"].get("東の休み戦", 0) < 6:
+            st["clocks"]["東の休み戦"] = 5
+            apply_effects(st, {"clocks.東の休み戦": 1}, out)
+        if e["kind"] == "戦" and "迫る勢い" in e["text"] and "摂政" in e["text"]:
+            apply_effects(st, {"clocks.摂政軍の北上": 1}, out)
+    for n in WORLD.pop_news(W, W["t"] * 12 + W.get("wk", 0)):
+        text = n["text"] + ("（尾ひれがついているらしい）" if n["twisted"] else "")
+        big = n["mag"] >= 4 or (n["dist"] <= 1 and n["mag"] >= 3)
+        out.report(f"［遠い知らせ］{text}", stop=big, log=True)
+    WORLD.save(W)
+
+
 def advance(st, n):
     global CLOCKS
     CLOCKS = defs("clocks")
     for i in range(n):
         st["week"] += 1
         out = Out(st)
+        world_week(st, out)
         calendar_week(st, out)
         econ_week(st, out)
         tick_clocks(st, out)

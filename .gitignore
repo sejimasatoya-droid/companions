@@ -1,3 +1,4 @@
 # 論文のPDFなどの原文はここに置く（GitHub には上げない）
 pdfs/
 *.pdf
+__pycache__/

@@ -286,7 +286,7 @@ def check_thresholds(st, cid, old, new, out):
 
 def tick_clocks(st, out):
     for cid, c in CLOCKS.items():
-        if st["flags"].get(f"停止_{cid}"):
+        if st["flags"].get(f"停止_{cid}") or c.get("retired"):
             continue
         cur = st["clocks"].get(cid, 0)
         if cur >= c["max"]:
@@ -719,6 +719,8 @@ def status(st, gm=False):
         print("■ 取り決め " + " / ".join(f"{t['相手']}と{t['種類']}（{t['条件']}）" for t in st["treaties"]))
     print("■ 情勢クロック")
     for cid, c in CLOCKS.items():
+        if c.get("retired"):
+            continue
         if c.get("visible", True) or gm:
             print(f"  {c['name']}：{st['clocks'].get(cid, 0)}/{c['max']}" + ("（隠し）" if not c.get('visible', True) else ""))
     pdefs = defs("projects")
@@ -741,6 +743,8 @@ def status(st, gm=False):
     print("■ 勢力")
     fdefs = defs("factions")
     for fid, f in st["factions"].items():
+        if fdefs[fid].get("hidden") and not gm and not st["flags"].get(f"知った_{fid}"):
+            continue
         print(f"  {fdefs[fid]['name']}：態度 {f['態度']:+d}　" + " ".join(f"{k}{v}" for k, v in f.items() if k not in ('態度',)))
     if gm and st.get("rel"):
         print("■ 勢力どうしの関係（GM）　" + " / ".join(f"{k} {v:+d}" for k, v in st["rel"].items()))

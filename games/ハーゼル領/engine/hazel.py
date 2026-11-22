@@ -190,6 +190,8 @@ def apply_effects(st, effects, out=None):
         key = path.split(".")[-1]
         if path.startswith("clocks."):
             cid = path.split(".")[1]
+            if CLOCKS.get(cid, {}).get("retired"):
+                continue  # 退いたクロックは、ほかの手でも動かない
             mx = CLOCKS.get(cid, {}).get("max", 99)
             new = max(0, min(mx, new))
             if out is not None and new != cur:

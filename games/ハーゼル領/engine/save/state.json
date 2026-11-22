@@ -1,5 +1,5 @@
 {
- "week": 323,
+ "week": 324,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 236,
-   "体力": 34.0,
+   "魔力": 246,
+   "体力": 35.5,
    "弁舌": 4.0,
-   "知識": 95.0,
-   "武芸": 75.0,
-   "礼法": 20.25
+   "知識": 96.25,
+   "武芸": 76.0,
+   "礼法": 22.5
   },
-  "fatigue": 1.2,
+  "fatigue": 1.3,
   "pocket": 0,
   "routine": {
    "務め": 3,
@@ -80,13 +80,13 @@
   }
  },
  "domain": {
-  "財貨": 108.86,
+  "財貨": 63.19,
   "負債": 156,
   "利率": 0.1,
   "食糧": 5.41,
   "人口": 1105,
-  "木材": 4,
-  "石材": 0.5,
+  "木材": 5,
+  "石材": 1.5,
   "鉄": 1,
   "民心": 59,
   "治安": 65,
@@ -95,7 +95,7 @@
   "森の健全度": 64,
   "主家の覚え": 70,
   "注目度": 58,
-  "名誉": 69
+  "名誉": 71
  },
  "domain_extra": {
   "月の固定費": 22.5,
@@ -412,78 +412,87 @@
   "オーベルを見回る": true,
   "長弓の思い違い": true,
   "オーベル冬の兵": true,
-  "乳牛を始めた": true
+  "乳牛を始めた": true,
+  "湿地を始めた": true,
+  "コンラートの改心": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "施療所",
-   "labor": 18,
-   "weeks": 9,
+   "labor": 24,
+   "weeks": 10,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "毛織物工房",
-   "labor": 8,
-   "weeks": 9,
+   "labor": 12,
+   "weeks": 10,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "薬酒",
-   "labor": 4,
-   "weeks": 9,
+   "labor": 6,
+   "weeks": 10,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "養蜂の拡張",
-   "labor": 4,
-   "weeks": 9,
+   "labor": 6,
+   "weeks": 10,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "縮絨水車",
-   "labor": 10,
-   "weeks": 9,
+   "labor": 15,
+   "weeks": 10,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "館の守り",
-   "labor": 2,
-   "weeks": 9,
+   "labor": 10,
+   "weeks": 10,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "山のチーズ",
-   "labor": 0,
-   "weeks": 8,
+   "labor": 2,
+   "weeks": 9,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "民兵の訓練",
-   "labor": 0,
-   "weeks": 2,
+   "labor": 10,
+   "weeks": 3,
    "people": 10,
    "hero_days_needed": false
   },
   {
    "id": "兵糧の隠し蔵",
-   "labor": 0,
-   "weeks": 2,
+   "labor": 5,
+   "weeks": 3,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "乳牛",
+   "labor": 3,
+   "weeks": 1,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "湿地の開墾",
    "labor": 0,
    "weeks": 0,
-   "people": 3,
+   "people": 15,
    "hero_days_needed": false
   }
  ],
@@ -1253,16 +1262,6 @@
    "repeat": false
   },
   {
-   "if": "月 == 12 and 週 == 1 and not flag_湿地を始めた",
-   "text": "冬の人手が空いた。湿地の排水と開墾を始める：project start 湿地の開墾 15",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.湿地を始めた": true
-   },
-   "repeat": false
-  },
-  {
    "if": "flag_出仕中 and 週 in (2, 4)",
    "text": "城との定期便：母の手紙が届いた（領の様子・計画の進み・帳面の写し）。ライは返事で助言できる",
    "stop": true,
@@ -1727,7 +1726,7 @@
   "カ_小競り合い": 284,
   "ア_自慢": 316,
   "司_布告": 40,
-  "カ_間者": 300,
+  "カ_間者": 324,
   "ブ_宴": 236,
   "ア_祝宴": 52,
   "修_三圃": 52,
@@ -1735,7 +1734,7 @@
   "ヴ_斥候": 292,
   "辺_森の報告": 260,
   "ザ_土地": 64,
-  "ア_コンラート": 252,
+  "ア_コンラート": 324,
   "ヴ_使者": 72,
   "商_鉄": 200,
   "王_戦費税": 108,
@@ -1755,7 +1754,8 @@
   "摂_誘い": 296,
   "太_兵": 296,
   "摂_密偵": 312,
-  "リ_買い付け": 320
+  "リ_買い付け": 320,
+  "太_褒美": 324
  },
  "auto_routine": [
   {

@@ -113,7 +113,8 @@
     "effects": {
      "clocks.コンラートの借金": 1
     },
-    "cd": 48
+    "cd": 48,
+    "if": "True and not flag_コンラートの改心"
    },
    {
     "id": "ア_祝宴",

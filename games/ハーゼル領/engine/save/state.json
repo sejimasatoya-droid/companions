@@ -1139,6 +1139,14 @@
     "domain_extra.週収入": -0.25
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 294",
+   "text": "ヤーコプから、クーノとリーベンの誰かについての返事が届く",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

@@ -65,7 +65,8 @@
    "堀と土塁": 2,
    "焦土と兵糧攻め": 2,
    "火薬": 0,
-   "心理戦と士気": 0
+   "心理戦と士気": 0,
+   "遠眼鏡": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
   "魔力点": 24,
@@ -79,7 +80,7 @@
   }
  },
  "domain": {
-  "財貨": 286.45,
+  "財貨": 261.45,
   "負債": 156,
   "利率": 0.1,
   "食糧": 8.36,
@@ -471,6 +472,27 @@
    "labor": 8,
    "weeks": 2,
    "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "遠眼鏡",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "魚の塩漬け",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "帳簿の跡継ぎ",
+   "labor": 0,
+   "weeks": 0,
+   "people": 1,
    "hero_days_needed": false
   }
  ],
@@ -1347,6 +1369,16 @@
    "hidden": false,
    "effects": {
     "flags.ヒルダ洗礼の返事": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "月 == 6 and 週 == 2 and not flag_鷲の飼い葉を始めた",
+   "text": "草月の交易：ヨルンを通して、鷲の氏族ハーコンの村の若い者をミルデに迎える：project start 鷲の飼い葉 3",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.鷲の飼い葉を始めた": true
    },
    "repeat": false
   }

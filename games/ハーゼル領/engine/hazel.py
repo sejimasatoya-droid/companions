@@ -348,6 +348,12 @@ def econ_week(st, out):
         if "森の手入れ" in st["projects_done"]:
             dm["木材"] = round(dm.get("木材", 0) + 1, 2)
             out.report(f"森の手入れで、季節の木材がとれた（木材 {dm['木材']}）")
+        if st["flags"].get("鋸場"):
+            dm["木材"] = round(dm.get("木材", 0) + 1, 2)
+            out.report(f"水の鋸場で、季節の板がとれた（木材 {dm['木材']}）")
+        if st["flags"].get("煉瓦窯"):
+            dm["石材"] = round(dm.get("石材", 0) + 1, 2)
+            out.report(f"煉瓦の窯から、季節の煉瓦が出た（石材 {dm['石材']}）")
     # ヴァルクとの夏・冬の交易：約束があれば、山の飢えが一つ和らぐ
     if (m, wk) in ((6, 3), (12, 2)) and any(t.get("相手") == "ヴァルク" for t in st.get("treaties", [])):
         cur = st["clocks"].get("ヴァルク族の飢え", 0)
@@ -357,7 +363,7 @@ def econ_week(st, out):
     if (m, wk) == (4, 4):
         money(20 * pop_k * (1.3 if "羊の選抜" in st["projects_done"] else 1.0), "羊毛の売り上げ")
     if (m, wk) == (6, 1):
-        r = d(20) + (1 if dm["開発"] >= 40 else 0) + {"凶作": -6, "豊作": 6}.get(st.get("world_harvest"), 0)
+        r = d(20) + (1 if dm["開発"] >= 40 else 0) + (2 if st["flags"].get("溜め池") else 0) + {"凶作": -6, "豊作": 6}.get(st.get("world_harvest"), 0)
         st["harvest"] = "凶作" if r <= 3 else ("豊作" if r >= 17 else "平年")
         hint = {"凶作": "麦の育ちが悪い。村々に不安が広がる", "平年": "麦はまずまずの育ち", "豊作": "麦の穂が重い。今年は豊作になりそうだ"}
         out.report(f"作柄の見通し：{hint[st['harvest']]}（🎲{r}）", stop=st["harvest"] == "凶作", log=True)

@@ -145,6 +145,10 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
             dm += 0.03
         if s.get("煮沸") or (name == "王太子" and st["flags"].get("全軍_煮沸")):
             dm += 0.03  # 陣の煮沸と手洗い：腹下しが減る
+        if s.get("敵") and st["flags"].get("投げ文") and W.get("mode") != "和議":
+            dm -= 0.03  # 敵陣への投げ文
+        if m in (12, 1, 2) and not (name == "王太子" and st["flags"].get("全軍_冬着")):
+            dm -= 0.04  # 冬の寒さ（冬の外套がなければ）
         if name == "王太子" and st["flags"].get("全軍_号令"):
             dm += 0.02  # 全軍の号令：隊列に自信がつく
         s["士気"] = round(max(0, min(10, s["士気"] + dm)), 2)
@@ -161,10 +165,17 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
                     r += 0.06
                 if s["士気"] < 2:
                     r += 0.03
+                if s.get("敵") and st["flags"].get("降る者の門"):
+                    r *= 1.5
                 d = int(n * r + (1 if random.random() < (n * r) % 1 else 0))
                 if d:
                     s["troops"][u] = n - d
                     lost[u] = d
+        if lost and s.get("敵") and st["flags"].get("降る者の門") and "王太子" in W["sides"]:
+            came = int(sum(lost.values()) * 0.3)
+            if came:
+                W["sides"]["王太子"]["troops"]["兵"] = W["sides"]["王太子"]["troops"].get("兵", 0) + came
+                append_md(gm_log, f"- {y_m_w}：（戦の台帳）降る者の門：摂政の陣から逃げた兵のうち {came} が北へ降った")
         if lost:
             txt = "、".join(f"{u} {n}" for u, n in lost.items())
             append_md(gm_log, f"- {y_m_w}：（戦の台帳）{name}の兵が逃げた：{txt}（士気 {s['士気']}、兵糧 残り {wl:.1f} 週{'、給金が払えない' if unpaid else ''}）")

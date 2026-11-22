@@ -300,7 +300,9 @@
   "見識をよく使う": true,
   "ザルムの噂の手": true,
   "ブレッケン訴え": true,
-  "修道院の書庫": true
+  "修道院の書庫": true,
+  "ハインツの証言": true,
+  "主の封があと三つの冬": true
  },
  "harvest": "平年",
  "projects_active": [
@@ -1001,6 +1003,16 @@
    "hidden": false,
    "effects": {
     "flags.草地の手入れの費え": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 222 and not flag_草地の裁き",
+   "text": "秋の家臣の集まり。シュタインフェルス城で、ブレッケンの訴え（川下の牧草地）の裁きが開かれる",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.草地の裁き": true
    },
    "repeat": false
   }

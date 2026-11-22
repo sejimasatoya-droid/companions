@@ -1401,6 +1401,26 @@
    "hidden": false,
    "effects": {},
    "repeat": true
+  },
+  {
+   "if": "通算週 >= 394 and not flag_白樺の谷",
+   "text": "緑月第3週：白樺の谷で、摂政の麦の列（荷車三十、傭兵六十、頭はハーゲン）を叩く。ヘルムートの軽騎兵、ボルド、ハーゼルの長弓隊と猟師（GM：battle。地は森の谷。ライは陣の後ろの手当ての幕）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.白樺の谷": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 397 and not flag_メリディアの返事",
+   "text": "草月：メリディア帝国から、王太子の書状への返事（GM：2d6 で 10 以上なら、摂政への麦の売りを細める）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.メリディアの返事": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

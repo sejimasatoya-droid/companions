@@ -1,5 +1,5 @@
 {
- "week": 380,
+ "week": 381,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 816,
+   "魔力": 826,
    "体力": 53.0,
    "弁舌": 4.0,
    "知識": 66.75,
-   "武芸": 83.0,
-   "礼法": 10.5
+   "武芸": 90.0,
+   "礼法": 12.75
   },
-  "fatigue": 2.1,
+  "fatigue": 1.2,
   "pocket": 0,
   "routine": {
    "務め": 3,
@@ -89,7 +89,7 @@
   }
  },
  "domain": {
-  "財貨": 222.38,
+  "財貨": 228.35,
   "負債": 156,
   "利率": 0.1,
   "食糧": 8.36,
@@ -478,50 +478,50 @@
  "projects_active": [
   {
    "id": "沼鉄",
-   "labor": 10,
-   "weeks": 1,
+   "labor": 20,
+   "weeks": 2,
    "people": 10,
    "hero_days_needed": false
   },
   {
    "id": "硝子窯",
-   "labor": 8,
-   "weeks": 1,
+   "labor": 16,
+   "weeks": 2,
    "people": 8,
    "hero_days_needed": false
   },
   {
    "id": "種の選抜",
-   "labor": 4,
-   "weeks": 1,
+   "labor": 8,
+   "weeks": 2,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "土を直す",
-   "labor": 10,
-   "weeks": 1,
+   "labor": 20,
+   "weeks": 2,
    "people": 10,
    "hero_days_needed": false
   },
   {
    "id": "民の声の箱",
-   "labor": 2,
-   "weeks": 1,
+   "labor": 4,
+   "weeks": 2,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "村の共済",
-   "labor": 4,
-   "weeks": 1,
+   "labor": 8,
+   "weeks": 2,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "鼠よけ",
-   "labor": 10,
-   "weeks": 1,
+   "labor": 20,
+   "weeks": 2,
    "people": 10,
    "hero_days_needed": false
   }
@@ -1764,7 +1764,7 @@
   "評判": 41,
   "派閥": {
    "嫡男派": -3,
-   "次男派": 2,
+   "次男派": 4,
    "後妻派": -1,
    "家宰": 1
   },
@@ -1779,7 +1779,8 @@
    "奥方の茶会": 333,
    "城の書庫": 349,
    "代筆": 321,
-   "狩りのお供": 377
+   "狩りのお供": 377,
+   "ヘルムートの稽古": 381
   }
  },
  "treaties": [

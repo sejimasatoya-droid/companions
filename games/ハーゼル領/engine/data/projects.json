@@ -3304,7 +3304,7 @@
  "暖炉の改良": {
   "name": "煙の出ない暖炉と煙突",
   "tier": 3,
-  "requires": "'かまど' in 完成 and '煉瓦窯' in 完成",
+  "requires": "'かまどの改良' in 完成 and '煉瓦窯' in 完成",
   "requires_text": "かまどの改良・煉瓦の窯",
   "permit": "当主",
   "cost": {

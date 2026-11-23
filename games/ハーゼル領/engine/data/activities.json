@@ -110,5 +110,35 @@
   "requires": "flag_当主 or flag_外出の許し",
   "requires_text": "外出の許しか当主",
   "text": "村々を見て回る"
+ },
+ "講義": {
+  "ability": "知識",
+  "rate": 1.3,
+  "requires": "flag_学院に入った",
+  "requires_text": "学院にいるとき"
+ },
+ "祝福の稽古": {
+  "ability": "魔力",
+  "rate": 1.2,
+  "requires": "flag_学院に入った",
+  "requires_text": "学院にいるとき（見識の稽古。時繰りは見せない）"
+ },
+ "学院の書庫": {
+  "ability": "知識",
+  "rate": 1.0,
+  "requires": "flag_学院に入った",
+  "requires_text": "学院にいるとき"
+ },
+ "学友と話す": {
+  "ability": "弁舌",
+  "rate": 1.2,
+  "requires": "flag_学院に入った",
+  "requires_text": "学院にいるとき"
+ },
+ "武芸の稽古場": {
+  "ability": "武芸",
+  "rate": 1.2,
+  "requires": "flag_学院に入った",
+  "requires_text": "学院にいるとき（古城の稽古場）"
  }
 }

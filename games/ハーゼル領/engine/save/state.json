@@ -702,7 +702,8 @@
   "商会の出資者": true,
   "東の壁_土塁": true,
   "商会_同盟に為替を出さない": true,
-  "化学肥料": true
+  "化学肥料": true,
+  "ザントハーフェン案_受けた": true
  },
  "harvest": null,
  "projects_active": [
@@ -1893,6 +1894,14 @@
    "effects": {
     "clocks.同盟の給金": 1
    },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 516 and not flag_同盟と和",
+   "text": "同盟の議会が、ザントハーフェンの和の案を議する（GM：議会の判定。ヴァイデンブルクが決め手）",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
    "repeat": false
   }
  ],

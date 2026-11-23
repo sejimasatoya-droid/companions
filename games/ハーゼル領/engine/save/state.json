@@ -564,7 +564,8 @@
   "樽の工房": true,
   "川の堤": true,
   "大市_南の買い手": true,
-  "煉瓦窯を始めた": true
+  "煉瓦窯を始めた": true,
+  "休み戦明けの備え": true
  },
  "harvest": null,
  "projects_active": [
@@ -1556,7 +1557,8 @@
    "effects": {
     "flags.休み戦が解けた": true,
     "flags.和議_冬営": false,
-    "war.mode": "対峙"
+    "war.mode": "対峙",
+    "flags.ザルム狩り": true
    },
    "repeat": false
   },
@@ -1568,7 +1570,8 @@
    "effects": {
     "flags.休み戦が解けた": true,
     "flags.和議_冬営": false,
-    "war.mode": "対峙"
+    "war.mode": "対峙",
+    "flags.ザルム狩り": true
    },
    "repeat": false
   },

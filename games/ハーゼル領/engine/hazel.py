@@ -506,6 +506,31 @@ def projects_week(st, out):
     st["projects_active"] = [p for p in st["projects_active"] if not p.get("finished")]
     if used > avail:
         out.report("人手が足りず、計画の進みが遅れている")
+    # 計画の順番待ち（821年 実月）：人手が空いたら、st["計画の順番"] の順に始める。財貨は 30 を残す
+    q = st.get("計画の順番") or []
+    if q:
+        busy = sum(p["people"] for p in st["projects_active"] if p["labor"] < pdefs[p["id"]].get("labor", 0))
+        free = avail - busy
+        active_ids = {p["id"] for p in st["projects_active"]}
+        rest = []
+        for pid in q:
+            pd = pdefs.get(pid)
+            if not pd or pid in st["projects_done"] or pid in active_ids:
+                continue
+            need = pd.get("labor", 0)
+            ppl = 0 if not need else min(15, max(3, math.ceil(need / max(1, pd.get("min_weeks", 1))) + 1))
+            cost = pd.get("cost", {})
+            ok = cond(st, pd.get("requires")) and all(st["domain"].get(k, 0) >= v + (30 if k == "財貨" else 0) for k, v in cost.items())
+            if ok and (ppl == 0 or free >= 3):
+                ppl = min(ppl, free) if ppl else 0
+                for k, v in cost.items():
+                    st["domain"][k] = round(st["domain"][k] - v, 2)
+                st["projects_active"].append({"id": pid, "labor": 0, "weeks": 0, "people": ppl, "hero_days_needed": bool(pd.get("hero_days"))})
+                free -= ppl
+                out.report(f"順番待ちの計画「{pd['name']}」を始めた（{ppl} 人、費用 {cost}）", log=True)
+            else:
+                rest.append(pid)
+        st["計画の順番"] = rest
 
 
 # ---------------------------------------------------------------- 主人公

@@ -1,5 +1,5 @@
 {
- "week": 461,
+ "week": 463,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,20 +15,19 @@
    "魔力": 20
   },
   "xp": {
-   "魔力": 29,
+   "魔力": 49,
    "体力": 36.0,
    "弁舌": 14.0,
    "知識": 101.75,
-   "武芸": 36.0,
-   "礼法": 52.25
+   "武芸": 38.0,
+   "礼法": 56.75
   },
-  "fatigue": 1.5,
+  "fatigue": 0.0,
   "pocket": 0,
   "routine": {
    "務め": 3,
    "剣の稽古": 1,
-   "読み書き": 1,
-   "体を鍛える": 1
+   "休む": 2
   },
   "items": [
    "木彫りの馬（父が彫った。前脚を父に教わって自分で直した）",
@@ -110,7 +109,7 @@
   "魔力の保留": 1132
  },
  "domain": {
-  "財貨": 345.1,
+  "財貨": 331.02,
   "負債": 0,
   "利率": 0.1,
   "食糧": 11.16,
@@ -119,7 +118,7 @@
   "石材": 2.5,
   "鉄": 10,
   "民心": 67,
-  "治安": 87,
+  "治安": 88,
   "開発": 85,
   "衛生": 63,
   "森の健全度": 60,
@@ -445,7 +444,7 @@
   "狩人の禁止": true,
   "産婆の手洗い": true,
   "山の麦蔵": true,
-  "出仕中": true,
+  "出仕中": false,
   "城で見識": true,
   "オーベルを見回る": true,
   "長弓の思い違い": false,
@@ -630,42 +629,52 @@
   "多重の守りを始めた": true,
   "ザルム領を狙う": true,
   "第五章": true,
-  "恩賞は願わない": true
+  "恩賞は願わない": true,
+  "即位": true,
+  "学院の推挙": true,
+  "学費は王家": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "多重の守り",
-   "labor": 40,
-   "weeks": 4,
+   "labor": 60,
+   "weeks": 6,
    "people": 10,
    "hero_days_needed": false
   },
   {
    "id": "兵の入植",
    "labor": 24,
-   "weeks": 4,
+   "weeks": 6,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "寡婦の家",
-   "labor": 12,
-   "weeks": 4,
+   "labor": 15,
+   "weeks": 6,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "染め物",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 6,
+   "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "紡ぎ車の改良",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 6,
+   "weeks": 2,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "人の帳面",
+   "labor": 3,
+   "weeks": 1,
    "people": 3,
    "hero_days_needed": false
   }
@@ -1665,6 +1674,19 @@
     "flags.思い出し直し": true
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 465",
+   "text": "自由都市アルトハイムに着き、エルデン学院の門をくぐった（GM：学院編の始まり。学寮のくじ）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.学院に入った": true,
+    "flags.学院編": true,
+    "flags.師に学ぶ": true,
+    "flags.旅の途中": false
+   },
+   "repeat": false
   }
  ],
  "factions": {
@@ -2265,7 +2287,6 @@
   "ザルムの守り": 4
  },
  "計画の順番": [
-  "人の帳面",
   "木管の水道",
   "接ぎ木の果樹園",
   "石炭を探す",

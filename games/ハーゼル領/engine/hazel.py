@@ -209,7 +209,7 @@ def namespace(st):
     """条件式で使える名前。領の数値・クロック・季節・人物の関係値（人物_信頼）・旗（flag_名前）など"""
     y, m, wk = cal(st["week"])
     ns = dict(st["domain"])
-    ns.update(st["clocks"])
+    ns.update({k: (0 if CLOCKS.get(k, {}).get("retired") else v) for k, v in st["clocks"].items()})  # 退いたクロックは条件では 0
     ns.update({"年": y, "月": m, "週": wk, "季節": SEASON_OF[m], "年齢": age(st), "通算週": st["week"],
                "作柄": st.get("harvest") or "未定"})
     for name, r in st["npcs"].items():

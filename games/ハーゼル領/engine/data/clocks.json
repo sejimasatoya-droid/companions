@@ -161,6 +161,10 @@
    {
     "if": "flag_境の森は辺境伯の直轄",
     "p_season": -0.08
+   },
+   {
+    "if": "flag_境の森は辺境伯の直轄 and flag_森の縁の見回り",
+    "p_season": -0.12
    }
   ],
   "thresholds": {

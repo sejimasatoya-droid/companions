@@ -1,5 +1,5 @@
 {
- "week": 505,
+ "week": 506,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 312.0,
+   "魔力": 313.2,
    "体力": 39.0,
-   "弁舌": 2.799999999999997,
-   "知識": 63.75,
-   "武芸": 48.20000000000002,
+   "弁舌": 4.799999999999997,
+   "知識": 65.375,
+   "武芸": 49.40000000000002,
    "礼法": 56.75
   },
-  "fatigue": 1.0,
+  "fatigue": 1.1,
   "pocket": 0,
   "routine": {
    "講義": 1,
@@ -110,13 +110,13 @@
   "魔力の保留": 0
  },
  "domain": {
-  "財貨": 426.46,
+  "財貨": 332.68,
   "負債": 0,
   "利率": 0.1,
   "食糧": 15.93,
   "人口": 1311,
   "木材": 11,
-  "石材": 12.5,
+  "石材": 8.5,
   "鉄": 16,
   "民心": 75,
   "治安": 97,
@@ -130,7 +130,7 @@
  },
  "domain_extra": {
   "月の固定費": 22.5,
-  "週収入": 14.88,
+  "週収入": 14.98,
   "イベント率": 0.12,
   "借金期限": [
    820,
@@ -690,28 +690,22 @@
   "クラウスが家令を追う": true,
   "為替": true,
   "谷の畑": true,
-  "谷の蔵": true
+  "谷の蔵": true,
+  "谷の森": true
  },
  "harvest": null,
  "projects_active": [
   {
-   "id": "谷の森の手入れ",
-   "labor": 20,
-   "weeks": 11,
-   "people": 2,
-   "hero_days_needed": false
-  },
-  {
    "id": "開拓村",
    "labor": 50,
-   "weeks": 10,
+   "weeks": 11,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "掟の書",
    "labor": 0,
-   "weeks": 10,
+   "weeks": 11,
    "people": 0,
    "hero_days_needed": true,
    "hero_days": 24
@@ -719,55 +713,90 @@
   {
    "id": "算術の学舎",
    "labor": 10,
-   "weeks": 10,
+   "weeks": 11,
    "people": 2,
    "hero_days_needed": true,
    "hero_days": 24
   },
   {
    "id": "谷の守り",
-   "labor": 8,
-   "weeks": 2,
+   "labor": 12,
+   "weeks": 3,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "谷の旅籠",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "高炉",
-   "labor": 8,
-   "weeks": 2,
+   "labor": 12,
+   "weeks": 3,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "分業の工房",
-   "labor": 5,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "灰汁の工場",
-   "labor": 3,
-   "weeks": 2,
+   "labor": 6,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "骨粉の肥やし",
+   "labor": 3,
+   "weeks": 1,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "強い酒の消毒",
+   "labor": 3,
+   "weeks": 1,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "下水",
+   "labor": 0,
+   "weeks": 0,
+   "people": 5,
+   "hero_days_needed": false
+  },
+  {
+   "id": "谷の学び舎",
    "labor": 0,
    "weeks": 0,
    "people": 3,
    "hero_days_needed": false
   },
   {
-   "id": "強い酒の消毒",
+   "id": "郵便",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "検地",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "魔石の工房",
    "labor": 0,
    "weeks": 0,
    "people": 3,
@@ -872,7 +901,8 @@
   "木管の水道",
   "為替",
   "谷の畑",
-  "谷の蔵"
+  "谷の蔵",
+  "谷の森の手入れ"
  ],
  "npcs": {
   "レオポルト": {
@@ -2409,13 +2439,7 @@
   },
   "ザルムの守り": 4
  },
- "計画の順番": [
-  "下水",
-  "谷の学び舎",
-  "郵便",
-  "検地",
-  "魔石の工房"
- ],
+ "計画の順番": [],
  "academy": {
   "単位": 13,
   "評判": 57,

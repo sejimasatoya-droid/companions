@@ -176,7 +176,8 @@
   "亡命の侯の手": 1,
   "地下書庫の鍵": 2,
   "刻の司の噂": 1,
-  "谷の心": 6
+  "谷の心": 6,
+  "同盟の給金": 0
  },
  "flags": {
   "外出の許し": false,
@@ -699,7 +700,8 @@
   "算術の学舎": true,
   "谷の守り": true,
   "商会の出資者": true,
-  "東の壁_土塁": true
+  "東の壁_土塁": true,
+  "商会_同盟に為替を出さない": true
  },
  "harvest": null,
  "projects_active": [
@@ -1818,6 +1820,46 @@
     "clocks.品の名": 0
    },
    "repeat": true
+  },
+  {
+   "if": "通算週 >= 513 and flag_商会_同盟に為替を出さない and not flag_同盟の傭兵が離れた and not flag_同盟と和",
+   "text": "（同盟の傭兵の給金が、また遅れた）",
+   "stop": false,
+   "hidden": true,
+   "effects": {
+    "clocks.同盟の給金": 1
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 515 and flag_商会_同盟に為替を出さない and not flag_同盟の傭兵が離れた and not flag_同盟と和",
+   "text": "（同盟の傭兵の給金が、また遅れた）",
+   "stop": false,
+   "hidden": true,
+   "effects": {
+    "clocks.同盟の給金": 1
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 517 and flag_商会_同盟に為替を出さない and not flag_同盟の傭兵が離れた and not flag_同盟と和",
+   "text": "（同盟の傭兵の給金が、また遅れた）",
+   "stop": false,
+   "hidden": true,
+   "effects": {
+    "clocks.同盟の給金": 1
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 519 and flag_商会_同盟に為替を出さない and not flag_同盟の傭兵が離れた and not flag_同盟と和",
+   "text": "（同盟の傭兵の給金が、また遅れた）",
+   "stop": false,
+   "hidden": true,
+   "effects": {
+    "clocks.同盟の給金": 1
+   },
+   "repeat": false
   }
  ],
  "factions": {

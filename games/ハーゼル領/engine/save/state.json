@@ -669,7 +669,11 @@
   "検め_王の文": true,
   "検め_院長の文": true,
   "検め_ディートリヒ": true,
-  "検め_隠さない": true
+  "検め_隠さない": true,
+  "検め_相手に任せる": true,
+  "検め_アンセルム": true,
+  "検め_ゼバスティアン": true,
+  "検め_クレメンス": true
  },
  "harvest": null,
  "projects_active": [

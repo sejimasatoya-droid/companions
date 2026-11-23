@@ -2306,5 +2306,717 @@
   "done_text": "ヴァルクの魔石を、見識で質を見分け、硝子窯の砥石で磨いて売る工房（週収入 +0.15）",
   "opposition": "なし",
   "branch": "魔と学院"
+ },
+ "度量衡": {
+  "name": "升と物差しをそろえる",
+  "tier": 3,
+  "requires": "'人の帳面' in 完成",
+  "requires_text": "村々の人の帳面",
+  "permit": "当主",
+  "cost": {
+   "財貨": 10,
+   "鉄": 1
+  },
+  "labor": 10,
+  "min_weeks": 8,
+  "effects": {
+   "flags.度量衡": true,
+   "domain_extra.週収入": 0.08,
+   "domain.民心": 1
+  },
+  "done_text": "館の鍛冶で、鉄の升と物差しと分銅を作り、領のどこでも同じ量で量るようにした。粉屋と市の揉めごとが消える",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "分業の工房": {
+  "name": "分けて作る工房",
+  "tier": 4,
+  "requires": "'度量衡' in 完成 and カード_分業 >= 2",
+  "requires_text": "升と物差し・カード「分業」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 25,
+   "木材": 2
+  },
+  "labor": 30,
+  "min_weeks": 12,
+  "effects": {
+   "flags.分業": true,
+   "domain_extra.週収入": 0.25
+  },
+  "done_text": "一人が全部を作るのでなく、削る者・磨く者・組む者に分けた。同じ人数で、樽も石鹸も倍できる（週収入 +0.25）",
+  "opposition": "親方たち（腕が要らなくなる）",
+  "branch": "工と商",
+  "card": "分業"
+ },
+ "品の検め": {
+  "name": "品の検めと印",
+  "tier": 3,
+  "requires": "'分業の工房' in 完成",
+  "requires_text": "分けて作る工房",
+  "permit": "当主",
+  "cost": {
+   "財貨": 5
+  },
+  "labor": 5,
+  "min_weeks": 6,
+  "effects": {
+   "clocks.品の名": 1,
+   "domain_extra.週収入": 0.1
+  },
+  "done_text": "出す品を一つずつ検め、合格した品だけにハーゼルの印を焼きつけた。印の品は高く売れる",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "共済の保険": {
+  "name": "船荷と火事の共済",
+  "tier": 4,
+  "requires": "'村の共済' in 完成 and '為替' in 完成",
+  "requires_text": "村の共済・商会との為替",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20
+  },
+  "labor": 0,
+  "min_weeks": 10,
+  "effects": {
+   "flags.保険": true,
+   "domain_extra.週収入": 0.1
+  },
+  "done_text": "商会と組んで、船荷と蔵の火事に備える掛け金の仕組みを作った。損を皆で分ける",
+  "opposition": "なし",
+  "branch": "工と商",
+  "hero_days": 4
+ },
+ "持ち分の商会": {
+  "name": "ハーゼルの持ち分の商会",
+  "tier": 5,
+  "requires": "'為替' in 完成 and '共済の保険' in 完成",
+  "requires_text": "商会との為替・共済の保険",
+  "permit": "当主",
+  "cost": {
+   "財貨": 50
+  },
+  "labor": 0,
+  "min_weeks": 16,
+  "effects": {
+   "flags.持ち分の商会": true,
+   "domain_extra.週収入": 0.3
+  },
+  "done_text": "大きな工房を開く金を、一人ではなく大勢の持ち分で集める商会を作った。儲けは持ち分に応じて分ける（週収入 +0.3）",
+  "opposition": "なし",
+  "branch": "工と商",
+  "hero_days": 6
+ },
+ "ハーゼルの銀行": {
+  "name": "預けと貸しの館",
+  "tier": 5,
+  "requires": "'持ち分の商会' in 完成",
+  "requires_text": "ハーゼルの持ち分の商会",
+  "permit": "当主",
+  "cost": {
+   "財貨": 80,
+   "石材": 3
+  },
+  "labor": 20,
+  "min_weeks": 20,
+  "effects": {
+   "flags.銀行": true,
+   "domain_extra.週収入": 0.4,
+   "domain.注目度": 5
+  },
+  "done_text": "金を預かり、利をつけて貸す館を建てた。教会は利を取ることを嫌うが、商人は列を作る（週収入 +0.4）",
+  "opposition": "教会（利息は罪）",
+  "branch": "工と商"
+ },
+ "石炭を探す": {
+  "name": "黒い石を探す",
+  "tier": 3,
+  "requires": "カード_石炭 >= 2",
+  "requires_text": "カード「石炭」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 10
+  },
+  "labor": 15,
+  "min_weeks": 8,
+  "effects": {
+   "flags.石炭の在りか": true
+  },
+  "done_text": "北の山のふもとの崖に、黒く燃える石の層を見つけた（見識の物の性を見るで確かめた）",
+  "opposition": "なし",
+  "branch": "工と商",
+  "card": "石炭"
+ },
+ "石炭の坑": {
+  "name": "石炭の坑",
+  "tier": 4,
+  "requires": "flag_石炭の在りか",
+  "requires_text": "黒い石を探す",
+  "permit": "当主",
+  "cost": {
+   "財貨": 30,
+   "木材": 4
+  },
+  "labor": 40,
+  "min_weeks": 16,
+  "effects": {
+   "flags.石炭の坑": true,
+   "domain.森の健全度": 3
+  },
+  "done_text": "崖に坑を掘り、黒い石を掘り出した。薪の代わりに燃やせる。森を切らずに済む（季節ごとに石炭 +2）",
+  "opposition": "ヴァルク（山の石に手をつけるのか）",
+  "branch": "工と商"
+ },
+ "コークス": {
+  "name": "石炭を蒸し焼きにする",
+  "tier": 5,
+  "requires": "'石炭の坑' in 完成 and '高炉' in 完成",
+  "requires_text": "石炭の坑・水車の鞴の炉",
+  "permit": "当主",
+  "cost": {
+   "財貨": 30,
+   "石材": 2
+  },
+  "labor": 20,
+  "min_weeks": 12,
+  "effects": {
+   "flags.コークス": true,
+   "domain.開発": 2
+  },
+  "done_text": "石炭を土の窯で蒸し焼きにして、硫黄を抜いた。高炉が、炭よりずっと熱く燃える（季節ごとに鉄 +2）",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "紡ぎ車の改良": {
+  "name": "足踏みの紡ぎ車",
+  "tier": 3,
+  "requires": "'毛織物工房' in 完成",
+  "requires_text": "毛織物の工房",
+  "permit": "当主",
+  "cost": {
+   "財貨": 10,
+   "木材": 1
+  },
+  "labor": 10,
+  "min_weeks": 6,
+  "effects": {
+   "domain_extra.週収入": 0.1
+  },
+  "done_text": "糸車を足で踏んで回し、両手で糸を引けるようにした。紡ぐ速さが倍になる",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "飛び杼": {
+  "name": "飛び杼の機",
+  "tier": 4,
+  "requires": "'紡ぎ車の改良' in 完成 and カード_織機 >= 2",
+  "requires_text": "足踏みの紡ぎ車・カード「織機」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15,
+   "木材": 2
+  },
+  "labor": 15,
+  "min_weeks": 8,
+  "effects": {
+   "domain_extra.週収入": 0.15
+  },
+  "done_text": "紐を引くと杼が経糸のあいだを飛んでいく機。一人で幅の広い布が織れる",
+  "opposition": "織り手たち（仕事が減る）",
+  "branch": "工と商",
+  "card": "織機"
+ },
+ "多錘の紡ぎ機": {
+  "name": "一度に八本紡ぐ機",
+  "tier": 5,
+  "requires": "'飛び杼' in 完成 and '分業の工房' in 完成",
+  "requires_text": "飛び杼の機・分けて作る工房",
+  "permit": "当主",
+  "cost": {
+   "財貨": 30,
+   "木材": 3,
+   "鉄": 1
+  },
+  "labor": 20,
+  "min_weeks": 12,
+  "effects": {
+   "domain_extra.週収入": 0.3,
+   "clocks.品の名": 1
+  },
+  "done_text": "一つの車輪で八本の錘を回す紡ぎ機。糸が布に追いつく（週収入 +0.3）",
+  "opposition": "紡ぎの女たち",
+  "branch": "工と商"
+ },
+ "水力の紡ぎ工場": {
+  "name": "水車で回す紡ぎ工場",
+  "tier": 6,
+  "requires": "'多錘の紡ぎ機' in 完成 and '縮絨水車' in 完成",
+  "requires_text": "一度に八本紡ぐ機・縮絨水車",
+  "permit": "当主",
+  "cost": {
+   "財貨": 80,
+   "石材": 4,
+   "木材": 4,
+   "鉄": 2
+  },
+  "labor": 60,
+  "min_weeks": 20,
+  "effects": {
+   "domain_extra.週収入": 0.8,
+   "domain.人口": 30,
+   "domain.開発": 4,
+   "domain.注目度": 10,
+   "flags.工場": true
+  },
+  "done_text": "ハーゼル川のほとりに、水車一つで百の錘を回す石造りの工場を建てた。よそからも人が働きに来る（週収入 +0.8、人口 +30）",
+  "opposition": "村の古い者（娘を工場にやるのか）",
+  "branch": "工と商"
+ },
+ "工場の掟": {
+  "name": "工場の働き方の掟",
+  "tier": 5,
+  "requires": "flag_工場 and カード_ストレスと心の傷 >= 1",
+  "requires_text": "水車で回す紡ぎ工場・ストレスと心の傷",
+  "permit": "当主",
+  "cost": {
+   "財貨": 10
+  },
+  "labor": 0,
+  "min_weeks": 8,
+  "effects": {
+   "domain.民心": 3,
+   "domain_extra.週収入": 0.1
+  },
+  "done_text": "子どもを機の前に立たせない、日に十刻まで、昼に休み、病の者に給金の半分。前世の『工場法』の聞きかじりと、心の疲れの知識から決めた。人が辞めず、かえって儲かる",
+  "opposition": "なし",
+  "branch": "学びと治",
+  "hero_days": 4
+ },
+ "大気の力の汲み上げ機": {
+  "name": "火と大気で水を汲む機",
+  "tier": 6,
+  "requires": "'石炭の坑' in 完成 and '高炉' in 完成 and カード_蒸気 >= 2",
+  "requires_text": "石炭の坑・水車の鞴の炉・カード「蒸気」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 60,
+   "鉄": 5,
+   "石材": 3
+  },
+  "labor": 40,
+  "min_weeks": 20,
+  "effects": {
+   "flags.汲み上げ機": true,
+   "domain.注目度": 15,
+   "clocks.異端の目": 1
+  },
+  "done_text": "釜で湯を沸かし、筒の中の湯気を冷やして、大気の重みで腕を押し下げる。坑の水を休まず汲み出す（石炭の坑が深く掘れる：季節ごとに石炭 +2）",
+  "opposition": "なし",
+  "branch": "工と商",
+  "card": "蒸気"
+ },
+ "湯気の機関": {
+  "name": "冷ます釜を分けた湯気の機関",
+  "tier": 7,
+  "requires": "'大気の力の汲み上げ機' in 完成 and '旋盤' in 完成",
+  "requires_text": "火と大気で水を汲む機・ねじと旋盤",
+  "permit": "当主",
+  "cost": {
+   "財貨": 100,
+   "鉄": 8
+  },
+  "labor": 50,
+  "min_weeks": 24,
+  "effects": {
+   "flags.蒸気機関": true,
+   "domain_extra.週収入": 0.6,
+   "domain.注目度": 20,
+   "clocks.異端の目": 1
+  },
+  "done_text": "湯気を冷ます釜を筒から分けた。石炭が三分の一で済み、回る力も取り出せる。川がなくても、工場が回る（週収入 +0.6）",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "旋盤": {
+  "name": "ねじと旋盤",
+  "tier": 5,
+  "requires": "'高炉' in 完成 and カード_旋盤 >= 2",
+  "requires_text": "水車の鞴の炉・カード「旋盤」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 30,
+   "鉄": 3
+  },
+  "labor": 15,
+  "min_weeks": 12,
+  "effects": {
+   "flags.旋盤": true,
+   "domain.開発": 2
+  },
+  "done_text": "鉄の棒を回して削る旋盤と、同じ山のねじを切る刃を作った。部品が取り替えられる",
+  "opposition": "なし",
+  "branch": "工と商",
+  "card": "旋盤"
+ },
+ "鉄の道": {
+  "name": "鉄の道と馬の車",
+  "tier": 6,
+  "requires": "'鋼の農具' in 完成 and '石炭の坑' in 完成",
+  "requires_text": "鋼の鋤と鎌・石炭の坑",
+  "permit": "当主",
+  "cost": {
+   "財貨": 60,
+   "鉄": 6,
+   "木材": 4
+  },
+  "labor": 60,
+  "min_weeks": 16,
+  "effects": {
+   "domain_extra.週収入": 0.3,
+   "domain.開発": 3
+  },
+  "done_text": "坑から川の船着き場まで、木の枕に鉄の帯を打った道を敷いた。馬一頭で、荷車十台ぶんの石炭を運べる",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "運河": {
+  "name": "ハーゼル川の運河",
+  "tier": 6,
+  "requires": "'畑の水路' in 完成 and '検地' in 完成",
+  "requires_text": "畑への水路・畑の測り直し",
+  "permit": "当主",
+  "cost": {
+   "財貨": 80,
+   "石材": 5
+  },
+  "labor": 100,
+  "min_weeks": 24,
+  "effects": {
+   "domain_extra.週収入": 0.4,
+   "domain.開発": 3
+  },
+  "done_text": "ハーゼル川の早瀬を避けて、閘門のある掘割を作った。川船が館村まで上れる",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "硫酸": {
+  "name": "緑礬の油",
+  "tier": 5,
+  "requires": "'蒸留' in 完成 and カード_化学 >= 2",
+  "requires_text": "蒸留器・カード「化学」段階2",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20,
+   "鉄": 1
+  },
+  "labor": 10,
+  "min_weeks": 12,
+  "effects": {
+   "flags.硫酸": true,
+   "clocks.異端の目": 1
+  },
+  "done_text": "緑礬を焼いて出る煙を水に吸わせ、鉄も溶かす油を作った。扱いを誤れば肌が焼ける",
+  "opposition": "なし",
+  "branch": "衛生と医",
+  "card": "化学"
+ },
+ "骨粉の肥やし": {
+  "name": "骨と緑礬の油の肥やし",
+  "tier": 5,
+  "requires": "'硫酸' in 完成 and '土を直す' in 完成",
+  "requires_text": "緑礬の油・畑の土を直す",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15
+  },
+  "labor": 15,
+  "min_weeks": 8,
+  "effects": {
+   "domain.開発": 3,
+   "flags.化学肥料": true
+  },
+  "done_text": "骨粉に緑礬の油をかけて、畑によく効く肥やしにした（作柄の見通し +1）",
+  "opposition": "なし",
+  "branch": "農と食"
+ },
+ "灰汁の工場": {
+  "name": "海の塩から灰汁を作る",
+  "tier": 5,
+  "requires": "'硫酸' in 完成 and '石鹸づくり' in 完成",
+  "requires_text": "緑礬の油・石鹸づくり",
+  "permit": "当主",
+  "cost": {
+   "財貨": 30
+  },
+  "labor": 20,
+  "min_weeks": 12,
+  "effects": {
+   "domain_extra.週収入": 0.3,
+   "clocks.品の名": 1
+  },
+  "done_text": "塩と緑礬の油から、木の灰を使わずに灰汁（ソーダ）を作る。石鹸と硝子が、森を切らずに大量にできる（週収入 +0.3）",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "眠りの油": {
+  "name": "眠りの油（麻酔）",
+  "tier": 6,
+  "requires": "'硫酸' in 完成 and '縫い合わせ' in 完成",
+  "requires_text": "緑礬の油・傷の縫い合わせ",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15
+  },
+  "labor": 5,
+  "min_weeks": 12,
+  "effects": {
+   "flags.麻酔": true,
+   "domain.衛生": 2,
+   "clocks.異端の目": 1
+  },
+  "done_text": "強い酒に緑礬の油を混ぜて蒸すと、甘い匂いの油ができた。嗅がせると、痛みを感じずに眠る。手術ができる",
+  "opposition": "なし",
+  "branch": "衛生と医"
+ },
+ "小さな生き物の説": {
+  "name": "病の小さな生き物の説",
+  "tier": 5,
+  "requires": "'顕微鏡' in 完成 and '種痘' in 完成",
+  "requires_text": "小さなものを見る筒・牛の疱瘡の種痘",
+  "permit": "当主",
+  "cost": {
+   "財貨": 5
+  },
+  "labor": 0,
+  "min_weeks": 12,
+  "effects": {
+   "domain.衛生": 4,
+   "flags.病の種": true,
+   "domain.注目度": 8
+  },
+  "done_text": "顕微鏡で見た小さな生き物が、腐りと病のもとだと、実験で示した（施療所で、煮た器と煮ない器を比べた）。学院の審きの『前例のない成し』になりうる",
+  "opposition": "なし",
+  "branch": "衛生と医",
+  "hero_days": 6
+ },
+ "下水": {
+  "name": "館村の下水",
+  "tier": 5,
+  "requires": "'木管の水道' in 完成 and '煉瓦窯' in 完成",
+  "requires_text": "溜め池からの水道・煉瓦の窯",
+  "permit": "当主",
+  "cost": {
+   "財貨": 40,
+   "石材": 4
+  },
+  "labor": 60,
+  "min_weeks": 16,
+  "effects": {
+   "domain.衛生": 6,
+   "domain.人口": 10
+  },
+  "done_text": "煉瓦で溝を組んで、汚れた水を村の外の溜めへ流すようにした。夏の腹下しが消える（衛生 +6）",
+  "opposition": "なし",
+  "branch": "衛生と医"
+ },
+ "師範の学舎": {
+  "name": "教える者を教える学舎",
+  "tier": 4,
+  "requires": "'算術の学舎' in 完成 and カード_発達と学習の心理 >= 1",
+  "requires_text": "算術と帳簿の学舎・発達と学習の心理",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20
+  },
+  "labor": 0,
+  "min_weeks": 16,
+  "effects": {
+   "flags.師範": true,
+   "domain.開発": 2
+  },
+  "done_text": "子どもの学び方（ほめる、少しずつ、手で触らせる）を、教える者に教える学舎。前世の発達心理学の講義そのまま",
+  "opposition": "なし",
+  "branch": "学びと治",
+  "hero_days": 8
+ },
+ "村々の学校": {
+  "name": "村ごとの学校",
+  "tier": 5,
+  "requires": "'師範の学舎' in 完成",
+  "requires_text": "教える者を教える学舎",
+  "permit": "当主",
+  "cost": {
+   "財貨": 40
+  },
+  "labor": 20,
+  "min_weeks": 20,
+  "effects": {
+   "domain.開発": 4,
+   "domain.民心": 2,
+   "domain.注目度": 5
+  },
+  "done_text": "四つの村すべてに、読み書きと算術の学校を開いた。十年後のハーゼルの書き手と職人が、ここで育つ",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "郵便": {
+  "name": "郵便の網",
+  "tier": 4,
+  "requires": "'道の整備' in 完成 and '為替' in 完成",
+  "requires_text": "街道の整備・商会との為替",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20
+  },
+  "labor": 10,
+  "min_weeks": 10,
+  "effects": {
+   "domain_extra.週収入": 0.1,
+   "flags.郵便": true
+  },
+  "done_text": "決まった日に決まった道を回る、誰でも使える便の網を作った。手紙の代は受け取る側でなく、出す側が払う",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "ハーゼルの帳の役所": {
+  "name": "数で治める役所",
+  "tier": 5,
+  "requires": "'人の帳面' in 完成 and カード_統計と実験計画 >= 1",
+  "requires_text": "村々の人の帳面・統計と実験計画",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15
+  },
+  "labor": 0,
+  "min_weeks": 12,
+  "effects": {
+   "flags.統計": true,
+   "domain_extra.週収入": 0.1
+  },
+  "done_text": "人・麦・家畜・病・生まれと死を、毎年数で表にする役所を作った。どこが痩せ、どこが病むかが、先にわかる",
+  "opposition": "なし",
+  "branch": "学びと治",
+  "hero_days": 6
+ },
+ "売り文句": {
+  "name": "品の売り文句と見本",
+  "tier": 4,
+  "requires": "'瓦版' in 完成 and カード_損失回避とナッジ >= 1",
+  "requires_text": "ハーゼルの瓦版・損失回避とナッジ",
+  "permit": "当主",
+  "cost": {
+   "財貨": 5
+  },
+  "labor": 0,
+  "min_weeks": 6,
+  "effects": {
+   "domain_extra.週収入": 0.15,
+   "clocks.品の名": 1
+  },
+  "done_text": "瓦版に品の売り文句と絵を載せ、市で見本をただで配った。前世の広告と、人は失うのを嫌うという知識",
+  "opposition": "なし",
+  "branch": "工と商",
+  "hero_days": 3
+ },
+ "火打ち石の銃": {
+  "name": "火打ち石の銃",
+  "tier": 6,
+  "requires": "'手砲' in 完成 and '旋盤' in 完成",
+  "requires_text": "鉄の筒（手砲）・ねじと旋盤",
+  "permit": "当主",
+  "cost": {
+   "財貨": 40,
+   "鉄": 5
+  },
+  "labor": 20,
+  "min_weeks": 12,
+  "effects": {
+   "flags.燧発銃": true,
+   "domain.注目度": 10
+  },
+  "done_text": "火縄の代わりに火打ち石で火をつける銃。雨でも撃てる（戦いの判定 +1、GM）",
+  "opposition": "なし",
+  "branch": "戦"
+ },
+ "銃剣と横隊": {
+  "name": "銃剣と横隊",
+  "tier": 6,
+  "requires": "'火打ち石の銃' in 完成 and '号令' in 完成",
+  "requires_text": "火打ち石の銃・規律と号令",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20,
+   "鉄": 2
+  },
+  "labor": 20,
+  "min_weeks": 10,
+  "effects": {
+   "flags.銃剣": true
+  },
+  "done_text": "銃の先に短い剣をつけ、槍衾の代わりにした。号令で三列に並んで、順に撃つ（戦いの判定 +1、GM）",
+  "opposition": "なし",
+  "branch": "戦"
+ },
+ "野の砲": {
+  "name": "車のついた砲",
+  "tier": 6,
+  "requires": "'手砲' in 完成 and 'コークス' in 完成",
+  "requires_text": "鉄の筒（手砲）・石炭を蒸し焼きにする",
+  "permit": "当主",
+  "cost": {
+   "財貨": 60,
+   "鉄": 8
+  },
+  "labor": 30,
+  "min_weeks": 16,
+  "effects": {
+   "flags.野砲": true,
+   "domain.注目度": 15
+  },
+  "done_text": "鋳鉄の砲に車をつけ、馬で引けるようにした。投石機より遠く、城壁を崩せる（町を攻める戦い +3、GM）",
+  "opposition": "なし",
+  "branch": "戦"
+ },
+ "魔石の熱": {
+  "name": "魔石の熱の炉",
+  "tier": 6,
+  "requires": "'魔石の工房' in 完成 and '湯気の機関' in 完成",
+  "requires_text": "魔石を見分けて磨く工房・湯気の機関",
+  "permit": "当主",
+  "cost": {
+   "財貨": 60
+  },
+  "labor": 20,
+  "min_weeks": 20,
+  "effects": {
+   "flags.魔石の機関": true,
+   "domain.注目度": 20,
+   "clocks.異端の目": 2,
+   "clocks.学院の誓いのほころび": 1
+  },
+  "done_text": "ヴァルクの火の魔石を砕いて釜に入れ、石炭なしに湯を沸かす。この世界にしかない機関（石炭が要らない。教会と学院の目が強く向く）",
+  "opposition": "なし",
+  "branch": "魔と学院"
+ },
+ "時繰りの検め": {
+  "name": "刻を測る器",
+  "tier": 6,
+  "requires": "flag_学院に入った and '旋盤' in 完成",
+  "requires_text": "学院に入る・ねじと旋盤",
+  "permit": "当主",
+  "cost": {
+   "財貨": 40,
+   "鉄": 2
+  },
+  "labor": 10,
+  "min_weeks": 16,
+  "effects": {
+   "flags.時計": true,
+   "domain.開発": 2
+  },
+  "done_text": "振り子と歯車の時計を作った。ライが時繰りで何をどれだけ動かしたか、刻で測れる（時繰りの判定 +1、GM）",
+  "opposition": "なし",
+  "branch": "魔と学院"
  }
 }

@@ -1691,6 +1691,16 @@
     "flags.思い出し直し": true
    },
    "repeat": false
+  },
+  {
+   "if": "年 == 822 and 月 == 3 and 週 == 1",
+   "text": "王家が、召し上げた北の飛び地（白樺の谷 400・柳の渡し 200・川下の草地 80）の買い手を募りはじめた（GM：プレイヤーに聞く）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.飛び地の売り出し": true
+   },
+   "repeat": false
   }
  ],
  "factions": {

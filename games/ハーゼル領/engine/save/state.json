@@ -1894,6 +1894,14 @@
     "clocks.同盟の給金": 1
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 527",
+   "text": "カルディアの老宰相ヤロミールから、一通目の手紙の返事が届く（GM：返事の中身は gm/秘密.md）",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

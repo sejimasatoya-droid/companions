@@ -324,7 +324,7 @@ def econ_week(st, out):
     # 毎週の小さな収入
     mill = 0 if fl.get("水車故障") else (20 + (6 if "水車の改良" in st["projects_done"] else 0) + (2 if "水車の修理" in st["projects_done"] else 0))
     toll = 10 * (0.5 if dm["治安"] < 40 else 1.0) * (1.5 if "道の整備" in st["projects_done"] else 1.0)
-    weekly = (mill + 5 + toll + 10) / 48 * pop_k + st["domain_extra"].get("週収入", 0)
+    weekly = (mill + 5 + toll + 10) / 48 * pop_k + st["domain_extra"].get("週収入", 0) - 0.25 * st.get("雇い人", 0)  # 雇い人の給金
     dm["財貨"] = round(dm["財貨"] + weekly, 2)
 
     def money(amount, why):
@@ -483,7 +483,7 @@ def gain_xp(st, ab, res):
 
 def labor_available(st):
     y, m, wk = cal(st["week"])
-    return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP * policy_effects(st)["labor"] - st["military"].get("徴募兵", 0))
+    return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP * policy_effects(st)["labor"] - st["military"].get("徴募兵", 0)) + st.get("雇い人", 0)
 
 
 def projects_week(st, out):

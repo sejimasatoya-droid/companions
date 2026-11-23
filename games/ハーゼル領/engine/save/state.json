@@ -1904,6 +1904,16 @@
     "clocks.同盟の給金": 1
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 532",
+   "text": "カルディアとの荷が、ヴィシェグラの商会の倉から動きはじめた（週収入 +0.5）",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "domain_extra.週収入": 0.5
+   },
+   "repeat": false
   }
  ],
  "factions": {

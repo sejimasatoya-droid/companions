@@ -1,5 +1,5 @@
 {
- "week": 497,
+ "week": 499,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -22,10 +22,12 @@
    "武芸": 41.0,
    "礼法": 56.75
   },
-  "fatigue": 0.2,
+  "fatigue": 0.4,
   "pocket": 0,
   "routine": {
-   "計画": 6
+   "講義": 1,
+   "算術を教える": 2,
+   "目利き": 3
   },
   "items": [
    "木彫りの馬（父が彫った。前脚を父に教わって自分で直した）",
@@ -107,7 +109,7 @@
   "魔力の保留": 82
  },
  "domain": {
-  "財貨": 197.88,
+  "財貨": 205.62,
   "負債": 86,
   "利率": 0.1,
   "食糧": 10.36,
@@ -116,7 +118,7 @@
   "石材": 3.5,
   "鉄": 14,
   "民心": 70,
-  "治安": 95,
+  "治安": 96,
   "開発": 91,
   "衛生": 70,
   "森の健全度": 60,
@@ -551,7 +553,7 @@
   "夜の襲いを始めた": true,
   "全軍_号令": true,
   "アルトハイムへ発った": true,
-  "旅の途中": true,
+  "旅の途中": false,
   "和議_密約の疑い": true,
   "東の早馬": true,
   "和議_使者の不和": true,
@@ -689,55 +691,55 @@
  "projects_active": [
   {
    "id": "谷の畑",
-   "labor": 9,
-   "weeks": 3,
+   "labor": 15,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "谷の蔵",
-   "labor": 9,
-   "weeks": 3,
+   "labor": 15,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "谷の森の手入れ",
-   "labor": 6,
-   "weeks": 3,
+   "labor": 10,
+   "weeks": 5,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "開拓村",
-   "labor": 10,
-   "weeks": 2,
+   "labor": 20,
+   "weeks": 4,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "為替",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 4,
    "people": 0,
    "hero_days_needed": true,
-   "hero_days": 12
+   "hero_days": 24
   },
   {
    "id": "掟の書",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 4,
    "people": 0,
    "hero_days_needed": true,
-   "hero_days": 12
+   "hero_days": 24
   },
   {
    "id": "算術の学舎",
-   "labor": 0,
-   "weeks": 2,
+   "labor": 4,
+   "weeks": 4,
    "people": 2,
    "hero_days_needed": true,
-   "hero_days": 12
+   "hero_days": 24
   }
  ],
  "projects_done": [
@@ -1766,16 +1768,6 @@
     "clocks.品の名": 0
    },
    "repeat": true
-  },
-  {
-   "if": "通算週 >= 499 and flag_旅の途中",
-   "text": "アルトハイムの学院に戻った。夏の休みが終わる",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.旅の途中": false
-   },
-   "repeat": false
   },
   {
    "if": "年 == 822 and 月 == 10 and 週 == 2",

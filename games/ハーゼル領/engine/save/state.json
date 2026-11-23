@@ -110,13 +110,13 @@
   "魔力の保留": 32
  },
  "domain": {
-  "財貨": 277.6,
+  "財貨": 57.6,
   "負債": 86,
   "利率": 0.1,
   "食糧": 13.93,
   "人口": 1311,
-  "木材": 0,
-  "石材": 3.5,
+  "木材": 5,
+  "石材": 10.5,
   "鉄": 14,
   "民心": 70,
   "治安": 97,
@@ -735,6 +735,48 @@
    "people": 2,
    "hero_days_needed": true,
    "hero_days": 24
+  },
+  {
+   "id": "谷の守り",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "谷の旅籠",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "高炉",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "分業の工房",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "石炭の坑",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "灰汁の工場",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
   }
  ],
  "projects_done": [
@@ -2370,8 +2412,13 @@
   "ザルムの守り": 4
  },
  "計画の順番": [
-  "谷の守り",
-  "谷の旅籠"
+  "骨粉の肥やし",
+  "強い酒の消毒",
+  "下水",
+  "谷の学び舎",
+  "郵便",
+  "検地",
+  "魔石の工房"
  ],
  "academy": {
   "単位": 13,

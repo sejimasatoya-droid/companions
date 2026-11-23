@@ -558,7 +558,8 @@
   "囮の陣": true,
   "瓶詰め": true,
   "炭焼き": true,
-  "リーベンの荷揚げ料": true
+  "リーベンの荷揚げ料": true,
+  "リーベンの悪評": true
  },
  "harvest": null,
  "projects_active": [

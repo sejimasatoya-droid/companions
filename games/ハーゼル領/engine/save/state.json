@@ -1,5 +1,5 @@
 {
- "week": 511,
+ "week": 512,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 322.59999999999997,
+   "魔力": 323.2,
    "体力": 39.0,
-   "弁舌": 13.799999999999997,
-   "知識": 73.5,
+   "弁舌": 14.799999999999997,
+   "知識": 75.125,
    "武芸": 54.20000000000003,
    "礼法": 56.75
   },
-  "fatigue": 0.1,
+  "fatigue": 0.0,
   "pocket": 0,
   "routine": {
    "講義": 1,
@@ -97,7 +97,7 @@
    "化学": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 46,
+  "魔力点": 48,
   "魔力点上限": 48,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -110,14 +110,14 @@
   "魔力の保留": 0
  },
  "domain": {
-  "財貨": 156.61,
+  "財貨": 109.64,
   "負債": 0,
   "利率": 0.1,
   "食糧": 15.93,
   "人口": 1384,
-  "木材": 8,
+  "木材": 5,
   "石材": 8.5,
-  "鉄": 16,
+  "鉄": 14,
   "民心": 77,
   "治安": 100,
   "開発": 95,
@@ -707,78 +707,106 @@
  "projects_active": [
   {
    "id": "高炉",
-   "labor": 32,
-   "weeks": 8,
+   "labor": 36,
+   "weeks": 9,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "分業の工房",
-   "labor": 29,
-   "weeks": 8,
+   "labor": 33,
+   "weeks": 9,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "灰汁の工場",
    "labor": 21,
-   "weeks": 8,
+   "weeks": 9,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "骨粉の肥やし",
    "labor": 15,
-   "weeks": 6,
+   "weeks": 7,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "下水",
-   "labor": 25,
-   "weeks": 5,
+   "labor": 30,
+   "weeks": 6,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "谷の学び舎",
    "labor": 6,
-   "weeks": 5,
+   "weeks": 6,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "郵便",
    "labor": 12,
-   "weeks": 5,
+   "weeks": 6,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "検地",
-   "labor": 20,
-   "weeks": 5,
+   "labor": 24,
+   "weeks": 6,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "魔石の工房",
    "labor": 15,
-   "weeks": 5,
+   "weeks": 6,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "馬の飼育",
-   "labor": 12,
-   "weeks": 4,
+   "labor": 15,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "腕木の合図",
-   "labor": 12,
-   "weeks": 4,
+   "labor": 15,
+   "weeks": 5,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "種まき機",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "牛の選抜",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "温床",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "問屋の機",
+   "labor": 0,
+   "weeks": 0,
    "people": 3,
    "hero_days_needed": false
   }
@@ -2459,10 +2487,6 @@
   "ザルムの守り": 4
  },
  "計画の順番": [
-  "種まき機",
-  "牛の選抜",
-  "温床",
-  "問屋の機",
   "石灰窯",
   "里程石",
   "特許状",
@@ -2527,7 +2551,7 @@
   "label": "advance 12",
   "when": "聖暦822年 草月（6月・夏）第4週"
  },
- "雇い人": 3,
+ "雇い人": 5,
  "雇い人_上限": 80,
  "計画_除く": [
   "石炭の坑",

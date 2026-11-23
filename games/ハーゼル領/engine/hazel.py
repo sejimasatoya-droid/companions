@@ -489,8 +489,39 @@ def labor_available(st):
     return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP * policy_effects(st)["labor"] - st["military"].get("徴募兵", 0)) + int(st.get("雇い人", 0))
 
 
+def auto_plan(st, pdefs):
+    """計画を絶えず動かす（822年 実月）。旗 計画をどんどん：順番待ちが空なら、始められる計画のうち
+    異端の目を上げず、ライの手も要らないものを、段の低い順に足す（除くもの：st["計画_除く"]）。
+    旗 雇い人_自動：足りない人手だけを雇う（上限 st["雇い人_上限"]、既定 80）"""
+    fl = st["flags"]
+    if fl.get("計画をどんどん") and not st.get("計画の順番"):
+        done = set(st["projects_done"]); act = {p["id"] for p in st["projects_active"]}
+        skip = set(st.get("計画_除く", []))
+        cand = []
+        for k, v in pdefs.items():
+            if k in done or k in act or k in skip or v.get("hero_days"):
+                continue
+            eff = v.get("effects", {})
+            if "clocks.異端の目" in eff or eff.get("domain.注目度", 0) >= 8:
+                continue
+            if v.get("requires") and not cond(st, v["requires"]):
+                continue
+            cand.append((v.get("tier", 9), k))
+        st["計画の順番"] = [k for _, k in sorted(cand)][:6]
+    if fl.get("雇い人_自動"):
+        st["雇い人"] = 0
+        base = labor_available(st)
+        need = sum(p["people"] for p in st["projects_active"] if p["labor"] < pdefs[p["id"]].get("labor", 0))
+        for pid in (st.get("計画の順番") or [])[:3]:
+            pd = pdefs.get(pid)
+            if pd and pd.get("labor"):
+                need += min(15, max(3, math.ceil(pd["labor"] / max(1, pd.get("min_weeks", 1))) + 1))
+        st["雇い人"] = max(0, min(st.get("雇い人_上限", 80), need - base))
+
+
 def projects_week(st, out):
     pdefs = defs("projects")
+    auto_plan(st, pdefs)
     avail = labor_available(st)
     used = 0
     for p in st["projects_active"]:
@@ -526,7 +557,7 @@ def projects_week(st, out):
             need = pd.get("labor", 0)
             ppl = 0 if not need else min(15, max(3, math.ceil(need / max(1, pd.get("min_weeks", 1))) + 1))
             cost = pd.get("cost", {})
-            ok = cond(st, pd.get("requires")) and all(st["domain"].get(k, 0) >= v + (30 if k == "財貨" else 0) for k, v in cost.items())
+            ok = cond(st, pd.get("requires")) and all(st["domain"].get(k, 0) >= v + (st.get("財貨の残し", 30) if k == "財貨" else 0) for k, v in cost.items())
             if ok and (ppl == 0 or free >= 3):
                 ppl = min(ppl, free) if ppl else 0
                 for k, v in cost.items():

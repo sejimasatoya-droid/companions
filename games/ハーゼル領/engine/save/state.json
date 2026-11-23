@@ -25,7 +25,7 @@
   "fatigue": 1.0,
   "pocket": 0,
   "routine": {
-   "務め": 3,
+   "計画": 3,
    "剣の稽古": 1,
    "読み書き": 1,
    "体を鍛える": 1
@@ -1586,7 +1586,9 @@
    "stop": true,
    "hidden": false,
    "effects": {
-    "flags.帰郷中": false
+    "flags.帰郷中": false,
+    "protagonist.routine.務め": 3,
+    "protagonist.routine.計画": -3
    },
    "repeat": false
   }
@@ -2046,7 +2048,7 @@
  },
  "auto_routine": [
   {
-   "if": "疲労 >= 1.5",
+   "if": "(疲労 >= 1.5) and not flag_帰郷中",
    "routine": {
     "務め": 3,
     "剣の稽古": 1,
@@ -2055,7 +2057,7 @@
    "why": "疲労が 2 に近づいたので、読み書きと体を鍛える日を休みに回す"
   },
   {
-   "if": "疲労 <= 0",
+   "if": "(疲労 <= 0) and not flag_帰郷中",
    "routine": {
     "務め": 3,
     "剣の稽古": 1,

@@ -3018,5 +3018,127 @@
   "done_text": "振り子と歯車の時計を作った。ライが時繰りで何をどれだけ動かしたか、刻で測れる（時繰りの判定 +1、GM）",
   "opposition": "なし",
   "branch": "魔と学院"
+ },
+ "谷の畑": {
+  "name": "谷の荒れた畑を立て直す",
+  "tier": 2,
+  "requires": "flag_白樺の谷を得た",
+  "requires_text": "白樺の谷",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20,
+   "食糧": 0.3
+  },
+  "labor": 30,
+  "min_weeks": 10,
+  "effects": {
+   "domain.民心": 2,
+   "flags.谷の畑": true,
+   "clocks.谷の心": 1
+  },
+  "done_text": "二年荒れた谷の畑に、重量犂を入れ、堆肥とクローバーを撒き、種麦を貸した。来年の秋には、谷の畑が実る",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "谷の蔵": {
+  "name": "焼けた谷の蔵を建て直す",
+  "tier": 2,
+  "requires": "flag_白樺の谷を得た",
+  "requires_text": "白樺の谷",
+  "permit": "当主",
+  "cost": {
+   "財貨": 25,
+   "石材": 2,
+   "木材": 2
+  },
+  "labor": 30,
+  "min_weeks": 10,
+  "effects": {
+   "domain.民心": 2,
+   "flags.谷の蔵": true,
+   "clocks.谷の心": 2
+  },
+  "done_text": "ハーゼルの襲撃隊が焼いたザルムの蔵の跡に、煉瓦と石の新しい蔵を建てた。鼠よけの台もつけた。谷の者が、黙って見に来た",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "谷の守り": {
+  "name": "谷の見張りと狼煙",
+  "tier": 2,
+  "requires": "flag_白樺の谷を得た and '狼煙の網' in 完成",
+  "requires_text": "白樺の谷・狼煙の網",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15,
+   "木材": 2
+  },
+  "labor": 20,
+  "min_weeks": 8,
+  "effects": {
+   "domain.治安": 2,
+   "flags.谷の守り": true,
+   "clocks.谷の心": 1
+  },
+  "done_text": "谷の口と、アイヒベルクとの境の尾根に、見張りの小屋と狼煙の台を置いた。クルトの手の者が五人、交代で詰める",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "谷の森の手入れ": {
+  "name": "谷の森の択伐",
+  "tier": 2,
+  "requires": "flag_白樺の谷を得た and '森の手入れ' in 完成",
+  "requires_text": "白樺の谷・森の手入れ",
+  "permit": "当主",
+  "cost": {
+   "財貨": 10
+  },
+  "labor": 20,
+  "min_weeks": 12,
+  "effects": {
+   "domain_extra.週収入": 0.1,
+   "flags.谷の森": true
+  },
+  "done_text": "谷の森で、育ちすぎた木だけを選んで伐り、若木を植えた。樫とブナの板が、鋸場へ流れる（週収入 +0.1）。アイヒベルクの伐り方とは違う",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "谷の旅籠": {
+  "name": "谷の口の旅籠",
+  "tier": 2,
+  "requires": "flag_白樺の谷を得た and flag_降る者の門",
+  "requires_text": "白樺の谷・降る者の門",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20,
+   "木材": 2
+  },
+  "labor": 15,
+  "min_weeks": 8,
+  "effects": {
+   "domain_extra.週収入": 0.08,
+   "clocks.谷の心": 1
+  },
+  "done_text": "降る者の門の小屋を建て増して、谷道を行き来する荷車と旅人が泊まれる旅籠にした。谷の女たちが切り盛りする",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "谷の学び舎": {
+  "name": "谷の子の読み書き",
+  "tier": 2,
+  "requires": "flag_白樺の谷を得た and '学校' in 完成",
+  "requires_text": "白樺の谷・領民の子に読み書き",
+  "permit": "当主",
+  "cost": {
+   "財貨": 8
+  },
+  "labor": 5,
+  "min_weeks": 12,
+  "effects": {
+   "domain.開発": 1,
+   "clocks.谷の心": 1
+  },
+  "done_text": "谷の教会の脇で、アンセルムの弟子が、谷の子どもに読み書きを教えはじめた",
+  "opposition": "なし",
+  "branch": "学びと治"
  }
 }

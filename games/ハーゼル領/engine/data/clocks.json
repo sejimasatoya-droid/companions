@@ -1020,5 +1020,28 @@
     "stop": true
    }
   }
+ },
+ "谷の心": {
+  "name": "白樺の谷の心",
+  "max": 6,
+  "p_season": 0.0,
+  "visible": true,
+  "thresholds": {
+   "3": {
+    "text": "白樺の谷の者たちが、ハーゼルの祭りに顔を出すようになった",
+    "stop": false,
+    "effects": {
+     "domain.民心": 1
+    }
+   },
+   "6": {
+    "text": "白樺の谷の長老ベルンハルトが、谷の者を代表して、ハーゼルの家に忠誠を誓った",
+    "stop": true,
+    "effects": {
+     "domain.民心": 2,
+     "domain.名誉": 2
+    }
+   }
+  }
  }
 }

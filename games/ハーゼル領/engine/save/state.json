@@ -1,5 +1,5 @@
 {
- "week": 503,
+ "week": 504,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -10,19 +10,19 @@
    "体力": 13,
    "武芸": 15,
    "知識": 16,
-   "弁舌": 10,
+   "弁舌": 11,
    "礼法": 12,
    "魔力": 24
   },
   "xp": {
-   "魔力": 277.6,
+   "魔力": 310.8,
    "体力": 39.0,
-   "弁舌": 33.8,
-   "知識": 60.5,
-   "武芸": 45.80000000000001,
+   "弁舌": 0.7999999999999972,
+   "知識": 62.125,
+   "武芸": 47.000000000000014,
    "礼法": 56.75
   },
-  "fatigue": 0.8,
+  "fatigue": 0.9,
   "pocket": 0,
   "routine": {
    "講義": 1,
@@ -107,18 +107,18 @@
    "815": "聖暦815年 花月（4月・春）第1週：マルクスの見張りの大失敗をやり直す",
    "821": "聖暦821年 花月（4月・春）第4週：白樺の谷の口の戦いをやり直す"
   },
-  "魔力の保留": 32
+  "魔力の保留": 0
  },
  "domain": {
-  "財貨": 87.6,
+  "財貨": 111.82,
   "負債": 86,
   "利率": 0.1,
   "食糧": 13.93,
   "人口": 1311,
-  "木材": 9,
-  "石材": 10.5,
-  "鉄": 14,
-  "民心": 70,
+  "木材": 11,
+  "石材": 12.5,
+  "鉄": 16,
+  "民心": 75,
   "治安": 97,
   "開発": 91,
   "衛生": 70,
@@ -176,7 +176,7 @@
   "亡命の侯の手": 1,
   "地下書庫の鍵": 2,
   "刻の司の噂": 1,
-  "谷の心": 1
+  "谷の心": 4
  },
  "flags": {
   "外出の許し": false,
@@ -688,42 +688,30 @@
   "マルティナの案": true,
   "マルティナとの縁_父が前向き": true,
   "クラウスが家令を追う": true,
-  "為替": true
+  "為替": true,
+  "谷の畑": true,
+  "谷の蔵": true
  },
  "harvest": "豊作",
  "projects_active": [
   {
-   "id": "谷の畑",
-   "labor": 27,
-   "weeks": 9,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
-   "id": "谷の蔵",
-   "labor": 27,
-   "weeks": 9,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
    "id": "谷の森の手入れ",
-   "labor": 18,
-   "weeks": 9,
+   "labor": 20,
+   "weeks": 10,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "開拓村",
-   "labor": 40,
-   "weeks": 8,
+   "labor": 45,
+   "weeks": 9,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "掟の書",
    "labor": 0,
-   "weeks": 8,
+   "weeks": 9,
    "people": 0,
    "hero_days_needed": true,
    "hero_days": 24
@@ -731,43 +719,43 @@
   {
    "id": "算術の学舎",
    "labor": 10,
-   "weeks": 8,
+   "weeks": 9,
    "people": 2,
    "hero_days_needed": true,
    "hero_days": 24
   },
   {
    "id": "谷の守り",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 4,
+   "weeks": 1,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "谷の旅籠",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 3,
+   "weeks": 1,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "高炉",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 4,
+   "weeks": 1,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "分業の工房",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 1,
+   "weeks": 1,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "灰汁の工場",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 1,
    "people": 3,
    "hero_days_needed": false
   }
@@ -868,7 +856,9 @@
   "畑の水路",
   "接ぎ木の果樹園",
   "木管の水道",
-  "為替"
+  "為替",
+  "谷の畑",
+  "谷の蔵"
  ],
  "npcs": {
   "レオポルト": {

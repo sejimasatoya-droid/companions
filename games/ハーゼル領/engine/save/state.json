@@ -605,7 +605,9 @@
   "密約の書状": true,
   "摂政が降った": true,
   "内乱の終わり": true,
-  "投石機_王都": true
+  "投石機_王都": true,
+  "学院へ行く": true,
+  "師に学ぶ": false
  },
  "harvest": "平年",
  "projects_active": [],

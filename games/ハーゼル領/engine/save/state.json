@@ -1605,6 +1605,28 @@
    "hidden": false,
    "effects": {},
    "repeat": false
+  },
+  {
+   "if": "月 == 6 and 週 == 1 and not flag_草月の帰村",
+   "text": "草月：徴募の兵四百を、草刈りと干し草のために村へ帰した",
+   "stop": false,
+   "hidden": false,
+   "effects": {
+    "flags.草月の帰村": true,
+    "war.sides.王太子.troops.兵": -400
+   },
+   "repeat": false
+  },
+  {
+   "if": "flag_草月の帰村 and (月 == 7 or flag_東の再動員)",
+   "text": "草月に帰した徴募の兵四百が、陣に戻った",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.草月の帰村": false,
+    "war.sides.王太子.troops.兵": 400
+   },
+   "repeat": false
   }
  ],
  "factions": {
@@ -2163,7 +2185,7 @@
      "兵": 1788
     },
     "兵糧": 61303,
-    "金": 389.1,
+    "金": 825.1,
     "士気": 7.72,
     "金の入り": 70,
     "給金": {
@@ -2195,6 +2217,11 @@
     "残り": 2
    }
   ],
-  "挑発の積み": 2
+  "挑発の積み": 2,
+  "王太子の借り": {
+   "商会": 250,
+   "利": "年一割",
+   "返す時": "王都に入ったら、王家の両替の利から"
+  }
  }
 }

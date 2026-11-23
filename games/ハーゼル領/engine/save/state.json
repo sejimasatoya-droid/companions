@@ -665,7 +665,11 @@
   "畑の水路": true,
   "白樺の谷を得た": true,
   "柳の渡しを得た": true,
-  "川下の草地を得た": true
+  "川下の草地を得た": true,
+  "検め_王の文": true,
+  "検め_院長の文": true,
+  "検め_ディートリヒ": true,
+  "検め_隠さない": true
  },
  "harvest": null,
  "projects_active": [

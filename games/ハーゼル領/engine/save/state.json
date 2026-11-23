@@ -1,5 +1,5 @@
 {
- "week": 495,
+ "week": 497,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 172.80000000000007,
+   "魔力": 222.80000000000007,
    "体力": 39.0,
    "弁舌": 25.799999999999997,
    "知識": 54.0,
    "武芸": 41.0,
    "礼法": 56.75
   },
-  "fatigue": 0.0,
+  "fatigue": 0.2,
   "pocket": 0,
   "routine": {
    "計画": 6
@@ -104,10 +104,10 @@
    "815": "聖暦815年 花月（4月・春）第1週：マルクスの見張りの大失敗をやり直す",
    "821": "聖暦821年 花月（4月・春）第4週：白樺の谷の口の戦いをやり直す"
   },
-  "魔力の保留": 132
+  "魔力の保留": 82
  },
  "domain": {
-  "財貨": 165.64,
+  "財貨": 197.88,
   "負債": 86,
   "利率": 0.1,
   "食糧": 10.36,
@@ -455,7 +455,7 @@
   "コンラートの改心": true,
   "施療所": true,
   "麦蔵の鍵はヨルン": true,
-  "帰郷中": true,
+  "帰郷中": false,
   "帰郷した819": true,
   "兵糧の隠し蔵": true,
   "風車の祝福": true,
@@ -551,7 +551,7 @@
   "夜の襲いを始めた": true,
   "全軍_号令": true,
   "アルトハイムへ発った": true,
-  "旅の途中": false,
+  "旅の途中": true,
   "和議_密約の疑い": true,
   "東の早馬": true,
   "和議_使者の不和": true,
@@ -679,7 +679,7 @@
   "聖人の先例の成し": true,
   "ペーターと字の稽古": true,
   "ヒルダと帰る": true,
-  "夏の帰郷": true,
+  "夏の帰郷": false,
   "ヨーゼフ_罰金": true,
   "渡しの倍をやめる": true,
   "マルティナの案": true,
@@ -689,52 +689,55 @@
  "projects_active": [
   {
    "id": "谷の畑",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "谷の蔵",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "谷の森の手入れ",
-   "labor": 2,
-   "weeks": 1,
+   "labor": 6,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "開拓村",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 10,
+   "weeks": 2,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "為替",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 0,
-   "hero_days_needed": true
+   "hero_days_needed": true,
+   "hero_days": 12
   },
   {
    "id": "掟の書",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 2,
    "people": 0,
-   "hero_days_needed": true
+   "hero_days_needed": true,
+   "hero_days": 12
   },
   {
    "id": "算術の学舎",
    "labor": 0,
-   "weeks": 0,
-   "people": 0,
-   "hero_days_needed": true
+   "weeks": 2,
+   "people": 2,
+   "hero_days_needed": true,
+   "hero_days": 12
   }
  ],
  "projects_done": [
@@ -1763,18 +1766,6 @@
     "clocks.品の名": 0
    },
    "repeat": true
-  },
-  {
-   "if": "通算週 >= 497 and flag_夏の帰郷",
-   "text": "夏の帰郷が終わり、学院へ戻る旅に出た",
-   "stop": true,
-   "hidden": false,
-   "effects": {
-    "flags.帰郷中": false,
-    "flags.旅の途中": true,
-    "flags.夏の帰郷": false
-   },
-   "repeat": false
   },
   {
    "if": "通算週 >= 499 and flag_旅の途中",

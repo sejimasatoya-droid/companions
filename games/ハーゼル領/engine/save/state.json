@@ -1892,6 +1892,14 @@
    "hidden": false,
    "effects": {},
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 524",
+   "text": "辺境伯から、フェリクスのことについての返書が届く（GM：中身は gm/秘密.md）",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

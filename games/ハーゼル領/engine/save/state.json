@@ -95,14 +95,14 @@
   }
  },
  "domain": {
-  "財貨": 104.13,
+  "財貨": 49.13,
   "負債": 0,
   "利率": 0.1,
   "食糧": 9.84,
   "人口": 1075,
   "木材": 1,
-  "石材": 3.5,
-  "鉄": 2,
+  "石材": 1.5,
+  "鉄": 1,
   "民心": 61,
   "治安": 78,
   "開発": 77,
@@ -545,7 +545,8 @@
   "夜の襲い": true,
   "瓶と帳簿を始めた": true,
   "全軍_狼煙": true,
-  "カスパルの棟梁": true
+  "カスパルの棟梁": true,
+  "溜め池の埋め合わせ": true
  },
  "harvest": null,
  "projects_active": [
@@ -609,6 +610,20 @@
   },
   {
    "id": "樽の工房",
+   "labor": 0,
+   "weeks": 0,
+   "people": 6,
+   "hero_days_needed": false
+  },
+  {
+   "id": "溜め池",
+   "labor": 0,
+   "weeks": 0,
+   "people": 20,
+   "hero_days_needed": false
+  },
+  {
+   "id": "金属活字",
    "labor": 0,
    "weeks": 0,
    "people": 6,
@@ -1597,6 +1612,16 @@
     "flags.帰郷中": false,
     "protagonist.routine.務め": 3,
     "protagonist.routine.計画": -3
+   },
+   "repeat": false
+  },
+  {
+   "if": "木材 >= 2 and 財貨 >= 20 and not flag_煉瓦窯を始めた",
+   "text": "木材が入った。煉瓦の窯を始める：project start 煉瓦窯 8",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.煉瓦窯を始めた": true
    },
    "repeat": false
   }

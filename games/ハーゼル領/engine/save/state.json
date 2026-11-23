@@ -685,7 +685,8 @@
   "夏の帰郷": true,
   "ヨーゼフ_罰金": true,
   "渡しの倍をやめる": true,
-  "マルティナの案": true
+  "マルティナの案": true,
+  "マルティナとの縁_父が前向き": true
  },
  "harvest": "豊作",
  "projects_active": [
@@ -1765,6 +1766,14 @@
    "effects": {
     "flags.旅の途中": false
    },
+   "repeat": false
+  },
+  {
+   "if": "年 == 822 and 月 == 10 and 週 == 2",
+   "text": "秋の家臣の集まりで、父がゴットフリートと、ライとマルティナの縁のことを話した（GM：ブレッケンの返事）",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
    "repeat": false
   }
  ],

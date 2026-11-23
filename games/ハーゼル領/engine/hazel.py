@@ -395,6 +395,19 @@ def econ_week(st, out):
             out.report("厳しい冬になりそうだ。森から獣の声が近い", stop=True)
             apply_effects(st, {"domain.食糧": -0.5, "clocks.黒の森の異変": 1}, out)
 
+    # 人口の増え方（821年 実月に足した）：季節の終わりに、年の伸びの 4 分の 1 ずつ
+    if wk == 4 and m in (3, 6, 9, 12):
+        done = set(st["projects_done"])
+        rate = 0.005 + max(0, dm["衛生"] - 50) / 2000 + (0.005 if dm["民心"] > 60 else 0) + (0.005 if dm["食糧"] > 6 else 0)
+        rate += 0.003 * sum(1 for k in ("施療所", "産婆の手洗い", "種痘") if k in done)
+        if dm.get("名誉", 0) >= 70 and dm["治安"] >= 70 and "市の開設" in done:
+            rate += 0.01  # よそから来て住みつく者
+        if dm["食糧"] < 2 or dm["民心"] < 30:
+            rate = min(rate, 0.0)
+        add = round(dm["人口"] * rate / 4)
+        if add:
+            dm["人口"] += add
+            out.report(f"季節の終わり：人口 +{add}（→ {dm['人口']}。年に {rate*100:.1f}% の伸び）")
     # 月末の固定費
     if wk == 4:
         cost = st["domain_extra"].get("月の固定費", 21.7)

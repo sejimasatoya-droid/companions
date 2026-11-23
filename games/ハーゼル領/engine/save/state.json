@@ -434,7 +434,7 @@
   "コンラートの改心": true,
   "施療所": true,
   "麦蔵の鍵はヨルン": true,
-  "帰郷中": false,
+  "帰郷中": true,
   "帰郷した819": true,
   "兵糧の隠し蔵": true,
   "風車の祝福": true,
@@ -1577,6 +1577,16 @@
    "effects": {
     "flags.冬の帰村": false,
     "war.sides.王太子.troops.兵": 400
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 426 and flag_帰郷中",
+   "text": "冬の帰郷の三週が終わり、城へ戻った",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.帰郷中": false
    },
    "repeat": false
   }

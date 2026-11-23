@@ -333,7 +333,7 @@ def econ_week(st, out):
 
     # 暦の決まった収支
     if (m, wk) == (3, 1):
-        dues = 25 * (2 if st["clocks"].get("カルディア国境の緊張", 0) >= 4 else 1)
+        dues = 25 * (2 if (not CLOCKS.get("カルディア国境の緊張", {}).get("retired") and st["clocks"].get("カルディア国境の緊張", 0) >= 4) or st["flags"].get("東の再動員") else 1)
         money(-dues, "辺境伯への軍役代納金")
         money(20 * pop_k, "冬越しの年貢の残り")
     # 季節ごとの石材と木材（石切り場・森の手入れ）

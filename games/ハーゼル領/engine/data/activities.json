@@ -140,5 +140,19 @@
   "rate": 1.2,
   "requires": "flag_学院に入った",
   "requires_text": "学院にいるとき（古城の稽古場）"
+ },
+ "目利き": {
+  "ability": "魔力",
+  "rate": 0.6,
+  "requires": "flag_学院に入った",
+  "requires_text": "学院にいるとき（町で、見識で古い品を見分ける。1 日 2.5 金貨）",
+  "income": 2.5
+ },
+ "算術を教える": {
+  "ability": "弁舌",
+  "rate": 1.0,
+  "requires": "flag_学院に入った",
+  "requires_text": "学院にいるとき（商人の子に位取りと帳簿を教える。1 日 1.5 金貨）",
+  "income": 1.5
  }
 }

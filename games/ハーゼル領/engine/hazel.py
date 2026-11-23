@@ -589,6 +589,8 @@ def hero_week(st, out):
             continue
         if act != "休む":
             active += days
+        if ad.get("income"):
+            st["domain"]["財貨"] = round(st["domain"]["財貨"] + ad["income"] * days, 2)
         ab = ad.get("ability")
         if ab:
             learn = 1.25 if h.get("cards", {}).get("発達と学習の心理", 0) >= 1 and ab in ("知識", "礼法") else 1.0

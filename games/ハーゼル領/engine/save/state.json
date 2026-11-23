@@ -1,5 +1,5 @@
 {
- "week": 513,
+ "week": 514,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 330.4,
+   "魔力": 337.59999999999997,
    "体力": 39.0,
-   "弁舌": 16.799999999999997,
-   "知識": 76.75,
-   "武芸": 55.400000000000034,
+   "弁舌": 18.799999999999997,
+   "知識": 78.375,
+   "武芸": 56.60000000000004,
    "礼法": 56.75
   },
-  "fatigue": 0.1,
+  "fatigue": 0.2,
   "pocket": 0,
   "routine": {
    "講義": 1,
@@ -110,14 +110,14 @@
   "魔力の保留": 0
  },
  "domain": {
-  "財貨": 95.17,
+  "財貨": 102.45,
   "負債": 0,
   "利率": 0.1,
   "食糧": 15.93,
   "人口": 1384,
   "木材": 5,
   "石材": 2.5,
-  "鉄": 14,
+  "鉄": 13,
   "民心": 77,
   "治安": 100,
   "開発": 98,
@@ -710,120 +710,127 @@
   {
    "id": "高炉",
    "labor": 40,
-   "weeks": 10,
+   "weeks": 11,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "分業の工房",
    "labor": 33,
-   "weeks": 10,
+   "weeks": 11,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "灰汁の工場",
    "labor": 21,
-   "weeks": 10,
+   "weeks": 11,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "下水",
-   "labor": 35,
-   "weeks": 7,
+   "labor": 40,
+   "weeks": 8,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "谷の学び舎",
    "labor": 6,
-   "weeks": 7,
+   "weeks": 8,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "郵便",
    "labor": 12,
-   "weeks": 7,
+   "weeks": 8,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "検地",
-   "labor": 28,
-   "weeks": 7,
+   "labor": 32,
+   "weeks": 8,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "魔石の工房",
    "labor": 15,
-   "weeks": 7,
+   "weeks": 8,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "馬の飼育",
-   "labor": 18,
-   "weeks": 6,
+   "labor": 21,
+   "weeks": 7,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "腕木の合図",
-   "labor": 18,
-   "weeks": 6,
+   "labor": 21,
+   "weeks": 7,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "種まき機",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 6,
+   "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "牛の選抜",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 6,
+   "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "温床",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 6,
+   "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "問屋の機",
+   "labor": 6,
+   "weeks": 2,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "石灰窯",
    "labor": 3,
    "weeks": 1,
    "people": 3,
    "hero_days_needed": false
   },
   {
-   "id": "石灰窯",
-   "labor": 0,
-   "weeks": 0,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
    "id": "里程石",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 3,
+   "weeks": 1,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "暖炉の改良",
+   "labor": 4,
+   "weeks": 1,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "火消し組",
    "labor": 0,
    "weeks": 0,
-   "people": 4,
+   "people": 3,
    "hero_days_needed": false
   }
  ],
@@ -2502,8 +2509,7 @@
   "ザルムの守り": 4
  },
  "計画の順番": [
-  "特許状",
-  "火消し組"
+  "特許状"
  ],
  "academy": {
   "単位": 13,
@@ -2563,7 +2569,7 @@
   "label": "advance 12",
   "when": "聖暦822年 草月（6月・夏）第4週"
  },
- "雇い人": 10,
+ "雇い人": 13,
  "雇い人_上限": 80,
  "計画_除く": [
   "石炭の坑",

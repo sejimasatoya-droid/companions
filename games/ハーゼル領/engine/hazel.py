@@ -555,6 +555,14 @@ def hero_week(st, out):
             h["xp"][ab] = h["xp"].get(ab, 0) + days * rate * learn
             cap = cap_body if ab in ("体力", "武芸") else cap_mind
             grow(st, h, ab, cap, out)
+    # 魔力の保留（821年 花月の取り決め）：月の初めに 50、師について学んでいる季節は季節の初めに 200 を解き放つ
+    y_, m_, wk_ = cal(st["week"])
+    if h.get("魔力の保留", 0) > 0 and wk_ == 1:
+        rel = 50 + (200 if m_ in (3, 6, 9, 12) and st["flags"].get("師に学ぶ") else 0)
+        rel = min(rel, h["魔力の保留"])
+        h["魔力の保留"] = round(h["魔力の保留"] - rel, 2)
+        h["xp"]["魔力"] = h["xp"].get("魔力", 0) + rel
+        append_md(GM_LOG, f"- {cal_str(st['week'])}：魔力の保留から {rel} を解き放った（残り {h['魔力の保留']}）")
     # 過ごし方に入っていない能力も、ほかの道でたまった経験点（見識の暮らしなど）で伸びる判定をする
     trained = {acts[a].get("ability") for a in rt if a in acts}
     for ab in h["abilities"]:

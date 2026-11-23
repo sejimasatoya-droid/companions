@@ -807,7 +807,7 @@ def status(st, gm=False):
     print("  能力 " + " / ".join(f"{k} {v}({mod(v):+d})" for k, v in h["abilities"].items()))
     print("  週の過ごし方 " + " / ".join(f"{k}{v}日" for k, v in h["routine"].items()))
     if h.get("special"):
-        print(f"  特殊能力 {h['special']}　魔力点 {h.get('魔力点')}/{h.get('魔力点上限')}　扱える時間 {TIME_STAGES[max(1, h['abilities']['魔力'] // 3)]}まで")
+        print(f"  特殊能力 {h['special']}　魔力点 {h.get('魔力点')}/{h.get('魔力点上限')}　扱える時間 {TIME_STAGES[min(9, max(1, h['abilities']['魔力'] // 3))]}まで")
     print(f"  系統魔法 {h.get('系統')}（{'洗礼済み' if h.get('洗礼済み') else '洗礼前：人前で使うと野良の疑い'}）")
     if st.get("engagement"):
         print(f"  婚約 {st['engagement']['相手']}（{st['engagement']['条件']}）")
@@ -1062,7 +1062,7 @@ def court(st, ours, theirs, our_mod=None, their_mod=0, our_voice=0, their_voice=
 
 
 # ---------------------------------------------------------------- 系統魔法
-TIER_REQ = {1: 0, 2: 9, 3: 13, 4: 16}
+TIER_REQ = {1: 0, 2: 9, 3: 13, 4: 16, 5: 20, 6: 24}
 
 
 def magic(st, spell, witnesses=0, bonus=0, note=""):
@@ -1107,14 +1107,14 @@ def magic(st, spell, witnesses=0, bonus=0, note=""):
 
 
 # ---------------------------------------------------------------- 時繰り（主人公の固有魔法）
-TIME_STAGES = {1: "数分", 2: "数時間", 3: "数日", 4: "数か月", 5: "数年", 6: "数十年"}
+TIME_STAGES = {1: "数分", 2: "数時間", 3: "数日", 4: "数か月", 5: "数年", 6: "数十年", 7: "百年", 8: "数百年", 9: "千年"}
 SIZES = {"小物": 1, "人": 2, "道具": 2, "動物": 2, "荷車": 4, "小屋": 4, "家": 8, "畑": 8}
 
 
 def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=""):
     h = st["protagonist"]
     mg = h["abilities"]["魔力"]
-    max_stage = max(1, mg // 3)
+    max_stage = min(9, max(1, mg // 3))
     if stage > max_stage:
         raise SystemExit(f"今の魔力 {mg} で扱えるのは {TIME_STAGES[max_stage]}（段階 {max_stage}）まで")
     if size not in SIZES:

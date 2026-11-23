@@ -3140,5 +3140,266 @@
   "done_text": "谷の教会の脇で、アンセルムの弟子が、谷の子どもに読み書きを教えはじめた",
   "opposition": "なし",
   "branch": "学びと治"
+ },
+ "種まき機": {
+  "name": "馬で引く種まき機",
+  "tier": 3,
+  "requires": "'鋸場' in 完成 and '鉄の炉' in 完成",
+  "requires_text": "水の鋸場・小さな炉で鉄を作る",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20,
+   "鉄": 2,
+   "木材": 2
+  },
+  "labor": 15,
+  "min_weeks": 10,
+  "effects": {
+   "domain.開発": 2,
+   "domain.食糧": 0.3,
+   "flags.種まき機": true
+  },
+  "done_text": "木の箱から、鉄の管を通して、決まった深さと間で種を落とす機を、馬に引かせた。手で撒くより種が三割少なく済み、鳥に食われない（食糧 +0.3、作柄の見通し +1）",
+  "opposition": "なし",
+  "branch": "農と食"
+ },
+ "鉄の犂へら": {
+  "name": "鉄の曲がった犂へら",
+  "tier": 4,
+  "requires": "'高炉' in 完成 and '重量犂' in 完成",
+  "requires_text": "水車の鞴の炉・重量有輪犂",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15,
+   "鉄": 3
+  },
+  "labor": 10,
+  "min_weeks": 8,
+  "effects": {
+   "domain.開発": 2
+  },
+  "done_text": "重量犂の土を返す板を、曲げた鋼にして、深さを変えられるようにした。重い粘土の畑でも、牛二頭で耕せる",
+  "opposition": "なし",
+  "branch": "農と食"
+ },
+ "牛の選抜": {
+  "name": "乳と肉の牛を選んでかけ合わせる",
+  "tier": 3,
+  "requires": "'乳牛' in 完成 and '羊の選抜' in 完成",
+  "requires_text": "牧草地を広げて乳牛を・羊の選抜交配",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15
+  },
+  "labor": 10,
+  "min_weeks": 24,
+  "effects": {
+   "domain_extra.週収入": 0.1,
+   "domain.食糧": 0.2
+  },
+  "done_text": "羊と同じやり方で、乳の多い牝牛と体の大きい牡牛だけをかけ合わせた。三代目から、乳も肉も目に見えて増える",
+  "opposition": "なし",
+  "branch": "農と食"
+ },
+ "温床": {
+  "name": "硝子の温床",
+  "tier": 3,
+  "requires": "'硝子窯' in 完成 and '堆肥' in 完成",
+  "requires_text": "館村の硝子窯・堆肥",
+  "permit": "当主",
+  "cost": {
+   "財貨": 12,
+   "木材": 1
+  },
+  "labor": 10,
+  "min_weeks": 6,
+  "effects": {
+   "domain.衛生": 1,
+   "domain_extra.週収入": 0.05
+  },
+  "done_text": "積んだ堆肥の熱の上に、硝子の窓をかぶせた苗床。冬でも青菜が育ち、春の苗が早く出る",
+  "opposition": "なし",
+  "branch": "農と食"
+ },
+ "話し合いの囲い込み": {
+  "name": "共有地と散らばった畑の交換",
+  "tier": 4,
+  "requires": "'検地' in 完成 and '民の声の箱' in 完成",
+  "requires_text": "畑の測り直し・民の声の箱",
+  "permit": "当主",
+  "cost": {
+   "財貨": 25
+  },
+  "labor": 40,
+  "min_weeks": 16,
+  "effects": {
+   "domain.開発": 3,
+   "domain_extra.週収入": 0.15,
+   "domain.民心": -1
+  },
+  "done_text": "細長く散らばった畑を、寄り合いで話し合って、家ごとにまとまった畑に交換した。共有地の放牧は、村の共済が持つ牧草地に移した。追い出される家は出さない（よその国の囲い込みとは違う）",
+  "opposition": "共有地で牛を飼ってきた貧しい家",
+  "branch": "農と食"
+ },
+ "問屋の機": {
+  "name": "冬の家の機織り（問屋のしくみ）",
+  "tier": 3,
+  "requires": "'毛織物工房' in 完成 and '紡ぎ車の改良' in 完成",
+  "requires_text": "毛織物の工房・足踏みの紡ぎ車",
+  "permit": "当主",
+  "cost": {
+   "財貨": 20
+  },
+  "labor": 10,
+  "min_weeks": 8,
+  "effects": {
+   "domain_extra.週収入": 0.2,
+   "domain.民心": 1
+  },
+  "done_text": "工房が羊毛と糸を村の家々に渡し、冬の夜に家で紡いで織ったものを、決まった値で買い取るしくみにした。畑の手が空く冬に、家ごとに稼ぎができる",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "石灰窯": {
+  "name": "石灰の窯",
+  "tier": 3,
+  "requires": "カード_石灰と骨粉 >= 3 and '煉瓦窯' in 完成",
+  "requires_text": "石灰と骨粉3・煉瓦の窯",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15,
+   "石材": 2
+  },
+  "labor": 15,
+  "min_weeks": 8,
+  "effects": {
+   "domain.開発": 1,
+   "flags.石灰窯": true
+  },
+  "done_text": "石灰石を焼いて、壁の漆喰と、畑の酸い土を直す石灰を作る窯を建てた（煉瓦の家と、土の直しが進む）",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "煉瓦の家": {
+  "name": "煉瓦と漆喰の家",
+  "tier": 4,
+  "requires": "'石灰窯' in 完成",
+  "requires_text": "石灰の窯",
+  "permit": "当主",
+  "cost": {
+   "財貨": 40,
+   "石材": 4
+  },
+  "labor": 60,
+  "min_weeks": 20,
+  "effects": {
+   "domain.衛生": 3,
+   "domain.治安": 2,
+   "domain.民心": 2
+  },
+  "done_text": "館村の家々を、藁屋根と木の壁から、煉瓦と漆喰と瓦屋根に建て替えはじめた。火事が広がらず、鼠が住みつかない",
+  "opposition": "なし",
+  "branch": "衛生と医"
+ },
+ "暖炉の改良": {
+  "name": "煙の出ない暖炉と煙突",
+  "tier": 3,
+  "requires": "'かまど' in 完成 and '煉瓦窯' in 完成",
+  "requires_text": "かまどの改良・煉瓦の窯",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15,
+   "石材": 2
+  },
+  "labor": 20,
+  "min_weeks": 8,
+  "effects": {
+   "domain.衛生": 2,
+   "domain.森の健全度": 2
+  },
+  "done_text": "炉の奥を斜めに狭め、煙突に煙の棚をつけた暖炉。薪が三割減り、家の中に煙がこもらない（冬の咳が減る）",
+  "opposition": "なし",
+  "branch": "衛生と医"
+ },
+ "火消し組": {
+  "name": "火消し組と手押しの水鉄砲",
+  "tier": 3,
+  "requires": "'木管の水道' in 完成",
+  "requires_text": "溜め池からの水道",
+  "permit": "当主",
+  "cost": {
+   "財貨": 15,
+   "鉄": 1
+  },
+  "labor": 10,
+  "min_weeks": 6,
+  "effects": {
+   "domain.治安": 2,
+   "flags.火消し": true
+  },
+  "done_text": "館村と谷の村に、桶と梯子と、鉄の筒の手押しの水鉄砲を置き、若い衆の火消し組を作った",
+  "opposition": "なし",
+  "branch": "学びと治"
+ },
+ "時計塔": {
+  "name": "館村の時計塔",
+  "tier": 4,
+  "requires": "flag_時計",
+  "requires_text": "刻を測る器",
+  "permit": "当主",
+  "cost": {
+   "財貨": 30,
+   "鉄": 2,
+   "石材": 3
+  },
+  "labor": 30,
+  "min_weeks": 12,
+  "effects": {
+   "domain.開発": 2,
+   "domain_extra.週収入": 0.05
+  },
+  "done_text": "館村の教会の脇に、歯車と振り子の時計の塔を建てた。市も工房も学舎も、同じ刻で動く",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "里程石": {
+  "name": "里程石と道しるべ",
+  "tier": 2,
+  "requires": "'道の整備' in 完成 and '度量衡' in 完成",
+  "requires_text": "街道の整備・升と物差し",
+  "permit": "当主",
+  "cost": {
+   "財貨": 8,
+   "石材": 2
+  },
+  "labor": 10,
+  "min_weeks": 6,
+  "effects": {
+   "domain_extra.週収入": 0.03,
+   "domain.治安": 1
+  },
+  "done_text": "街道に、館からの道のりを刻んだ石と、分かれ道の道しるべを立てた。荷車の賃が、道のりで決まるようになる",
+  "opposition": "なし",
+  "branch": "工と商"
+ },
+ "特許状": {
+  "name": "王家の特許状",
+  "tier": 4,
+  "requires": "flag_即位 and '為替' in 完成",
+  "requires_text": "国王の即位・商会との為替",
+  "permit": "当主",
+  "cost": {
+   "財貨": 30
+  },
+  "labor": 0,
+  "min_weeks": 12,
+  "effects": {
+   "domain_extra.週収入": 0.3,
+   "domain.注目度": 3,
+   "flags.特許状": true
+  },
+  "done_text": "ハーゼルの石鹸・紙・染め・瓶詰め・樽の作り方について、王家から十年の特許状を得た。王国の中で同じものを作る者は、ハーゼルに使い料を払う（週収入 +0.3。作り方が外へ広がるのは止められない）",
+  "opposition": "なし",
+  "branch": "工と商"
  }
 }

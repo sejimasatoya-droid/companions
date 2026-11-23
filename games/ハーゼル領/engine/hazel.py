@@ -373,7 +373,7 @@ def econ_week(st, out):
     if (m, wk) == (4, 4):
         money(20 * pop_k * (1.3 if "羊の選抜" in st["projects_done"] else 1.0), "羊毛の売り上げ")
     if (m, wk) == (6, 1):
-        r = d(20) + (1 if dm["開発"] >= 40 else 0) + (2 if st["flags"].get("溜め池") else 0) + (1 if st["flags"].get("畑の水路") else 0) + (1 if st["flags"].get("化学肥料") else 0) + {"凶作": -6, "豊作": 6}.get(st.get("world_harvest"), 0)
+        r = d(20) + (1 if dm["開発"] >= 40 else 0) + (2 if st["flags"].get("溜め池") else 0) + (1 if st["flags"].get("畑の水路") else 0) + (1 if st["flags"].get("化学肥料") else 0) + (1 if st["flags"].get("種まき機") else 0) + {"凶作": -6, "豊作": 6}.get(st.get("world_harvest"), 0)
         st["harvest"] = "凶作" if r <= 3 else ("豊作" if r >= 17 else "平年")
         hint = {"凶作": "麦の育ちが悪い。村々に不安が広がる", "平年": "麦はまずまずの育ち", "豊作": "麦の穂が重い。今年は豊作になりそうだ"}
         out.report(f"作柄の見通し：{hint[st['harvest']]}（🎲{r}）", stop=st["harvest"] == "凶作", log=True)

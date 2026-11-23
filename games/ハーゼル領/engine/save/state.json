@@ -1,5 +1,5 @@
 {
- "week": 516,
+ "week": 517,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 355.99999999999994,
+   "魔力": 363.19999999999993,
    "体力": 39.0,
-   "弁舌": 24.799999999999997,
-   "知識": 81.625,
-   "武芸": 59.00000000000004,
+   "弁舌": 26.799999999999997,
+   "知識": 83.25,
+   "武芸": 60.200000000000045,
    "礼法": 56.75
   },
-  "fatigue": 0.4,
+  "fatigue": 0.5,
   "pocket": 0,
   "routine": {
    "講義": 1,
@@ -97,7 +97,7 @@
    "化学": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 37,
+  "魔力点": 48,
   "魔力点上限": 48,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -110,7 +110,7 @@
   "魔力の保留": 0
  },
  "domain": {
-  "財貨": 94.06,
+  "財貨": 114.39,
   "負債": 0,
   "利率": 0.1,
   "食糧": 15.43,
@@ -710,120 +710,121 @@
   "ヴァイデンブルク_和に入れる": true,
   "郵便": true,
   "同盟と和": true,
-  "学院_秋の審きの延び": true
+  "学院_秋の審きの延び": true,
+  "腕木の合図": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "高炉",
    "labor": 40,
-   "weeks": 13,
+   "weeks": 14,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "下水",
-   "labor": 50,
-   "weeks": 10,
+   "labor": 55,
+   "weeks": 11,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "谷の学び舎",
    "labor": 6,
-   "weeks": 10,
+   "weeks": 11,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "検地",
    "labor": 32,
-   "weeks": 10,
+   "weeks": 11,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "魔石の工房",
    "labor": 15,
-   "weeks": 10,
+   "weeks": 11,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "馬の飼育",
    "labor": 21,
-   "weeks": 9,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
-   "id": "腕木の合図",
-   "labor": 21,
-   "weeks": 9,
+   "weeks": 10,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "種まき機",
-   "labor": 12,
-   "weeks": 4,
+   "labor": 15,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "牛の選抜",
    "labor": 12,
-   "weeks": 4,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "温床",
    "labor": 12,
-   "weeks": 4,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "問屋の機",
    "labor": 12,
-   "weeks": 4,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "石灰窯",
-   "labor": 9,
-   "weeks": 3,
+   "labor": 12,
+   "weeks": 4,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "里程石",
-   "labor": 9,
-   "weeks": 3,
+   "labor": 12,
+   "weeks": 4,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "暖炉の改良",
-   "labor": 12,
-   "weeks": 3,
+   "labor": 16,
+   "weeks": 4,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "火消し組",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "特許状",
    "labor": 0,
-   "weeks": 0,
+   "weeks": 1,
    "people": 0,
+   "hero_days_needed": false
+  },
+  {
+   "id": "品の検め",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
    "hero_days_needed": false
   }
  ],
@@ -936,7 +937,8 @@
   "骨粉の肥やし",
   "分業の工房",
   "灰汁の工場",
-  "郵便"
+  "郵便",
+  "腕木の合図"
  ],
  "npcs": {
   "レオポルト": {
@@ -2521,15 +2523,16 @@
    "名": "見識で起こす、アルトハイムの町と学院の地下の地図",
    "読んだところ": [
     "東の溝の幹（溝口から川の吐き口まで）",
-    "学院の丘へ向かう幹（鐘楼の下の鉄格子まで）"
+    "学院の丘へ向かう幹（鐘楼の下の鉄格子まで）",
+    "町の西の溝（皮なめしの町の下の崩れ）"
    ],
    "残り": [
-    "町の西の溝",
     "市場の下の溝の交わり"
    ],
    "証": [
     "溝の石の帝国の番号の写し",
-    "東の幹と丘の幹の番号の表（碁盤の目の写し）"
+    "東の幹と丘の幹の番号の表（碁盤の目の写し）",
+    "西の溝の崩れの場所（番号「西・十四／南・二十」）と、下町の井戸の汚れの筋"
    ]
   }
  },

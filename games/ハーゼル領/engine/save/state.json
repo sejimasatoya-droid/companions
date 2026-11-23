@@ -1,5 +1,5 @@
 {
- "week": 507,
+ "week": 509,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 314.4,
+   "魔力": 316.79999999999995,
    "体力": 39.0,
-   "弁舌": 6.799999999999997,
-   "知識": 67.0,
-   "武芸": 50.60000000000002,
+   "弁舌": 10.799999999999997,
+   "知識": 70.25,
+   "武芸": 53.00000000000003,
    "礼法": 56.75
   },
-  "fatigue": 1.2,
+  "fatigue": 1.4,
   "pocket": 0,
   "routine": {
    "講義": 1,
@@ -110,7 +110,7 @@
   "魔力の保留": 0
  },
  "domain": {
-  "財貨": 262.5,
+  "財貨": 340.93,
   "負債": 0,
   "利率": 0.1,
   "食糧": 15.93,
@@ -121,7 +121,7 @@
   "民心": 76,
   "治安": 100,
   "開発": 91,
-  "衛生": 70,
+  "衛生": 72,
   "森の健全度": 60,
   "主家の覚え": 94,
   "注目度": 87,
@@ -164,7 +164,7 @@
   "恵みの子の名": 8,
   "品の名": 6,
   "灰の書庫": 8,
-  "司教の巻き返し": 4,
+  "司教の巻き返し": 5,
   "山の氏族の争い": 0,
   "イゾルデの恨み": 4,
   "内乱の行き詰まり": 6,
@@ -693,120 +693,115 @@
   "谷の蔵": true,
   "谷の森": true,
   "計画をどんどん": true,
-  "雇い人_自動": true
+  "雇い人_自動": true,
+  "強い酒の消毒": true,
+  "マルティナと婚約の約束": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "開拓村",
    "labor": 50,
-   "weeks": 12,
+   "weeks": 14,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "算術の学舎",
    "labor": 10,
-   "weeks": 12,
+   "weeks": 14,
    "people": 2,
    "hero_days_needed": true,
    "hero_days": 24
   },
   {
    "id": "谷の守り",
-   "labor": 16,
-   "weeks": 4,
+   "labor": 20,
+   "weeks": 6,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "谷の旅籠",
+   "labor": 15,
+   "weeks": 6,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "高炉",
+   "labor": 24,
+   "weeks": 6,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "分業の工房",
+   "labor": 21,
+   "weeks": 6,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "灰汁の工場",
+   "labor": 15,
+   "weeks": 6,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "骨粉の肥やし",
    "labor": 12,
    "weeks": 4,
    "people": 3,
    "hero_days_needed": false
   },
   {
-   "id": "高炉",
-   "labor": 16,
-   "weeks": 4,
-   "people": 4,
-   "hero_days_needed": false
-  },
-  {
-   "id": "分業の工房",
-   "labor": 13,
-   "weeks": 4,
-   "people": 4,
-   "hero_days_needed": false
-  },
-  {
-   "id": "灰汁の工場",
-   "labor": 9,
-   "weeks": 4,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
-   "id": "骨粉の肥やし",
-   "labor": 6,
-   "weeks": 2,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
-   "id": "強い酒の消毒",
-   "labor": 6,
-   "weeks": 2,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
    "id": "下水",
-   "labor": 5,
-   "weeks": 1,
+   "labor": 15,
+   "weeks": 3,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "谷の学び舎",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 6,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "郵便",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "検地",
-   "labor": 4,
-   "weeks": 1,
+   "labor": 12,
+   "weeks": 3,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "魔石の工房",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "馬の飼育",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 6,
+   "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "腕木の合図",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 6,
+   "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   }
@@ -911,7 +906,8 @@
   "谷の畑",
   "谷の蔵",
   "谷の森の手入れ",
-  "掟の書"
+  "掟の書",
+  "強い酒の消毒"
  ],
  "npcs": {
   "レオポルト": {
@@ -1842,14 +1838,6 @@
     "clocks.品の名": 0
    },
    "repeat": true
-  },
-  {
-   "if": "年 == 822 and 月 == 10 and 週 == 2",
-   "text": "秋の家臣の集まりで、父がゴットフリートと、ライとマルティナの縁のことを話した（GM：ブレッケンの返事）",
-   "stop": true,
-   "hidden": false,
-   "effects": {},
-   "repeat": false
   }
  ],
  "factions": {
@@ -1872,7 +1860,7 @@
    "兵力": 1,
    "安定": 2,
    "野心": 3,
-   "態度": 5
+   "態度": 7
   },
   "ザルム": {
    "財力": 3,
@@ -2354,7 +2342,7 @@
   "粉屋への不満": 372,
   "イェルク": 480,
   "古い硬貨": 141,
-  "森猪": 269,
+  "森猪": 509,
   "使者": 284,
   "迷子": 505,
   "妹の熱": 472
@@ -2507,7 +2495,7 @@
   "label": "advance 12",
   "when": "聖暦822年 草月（6月・夏）第4週"
  },
- "雇い人": 22,
+ "雇い人": 9,
  "雇い人_上限": 80,
  "計画_除く": [
   "石炭の坑",

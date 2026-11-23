@@ -403,7 +403,7 @@ def econ_week(st, out):
     if (m, wk) == (12, 1):
         if d(20) <= 3:
             out.report("厳しい冬になりそうだ。森から獣の声が近い", stop=True)
-            apply_effects(st, {"domain.食糧": -0.5, "clocks.黒の森の異変": 1}, out)
+            apply_effects(st, {"domain.食糧": -0.5}, out)
 
     # 人口の増え方（821年 実月に足した）：季節の終わりに、年の伸びの 4 分の 1 ずつ
     if wk == 4 and m in (3, 6, 9, 12):

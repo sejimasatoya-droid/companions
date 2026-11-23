@@ -1,5 +1,5 @@
 {
- "week": 423,
+ "week": 424,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 17
   },
   "xp": {
-   "魔力": 1286,
-   "体力": 47.0,
+   "魔力": 1296,
+   "体力": 48.5,
    "弁舌": 4.0,
-   "知識": 61.75,
-   "武芸": 83.0,
+   "知識": 63.0,
+   "武芸": 84.0,
    "礼法": 47.25
   },
-  "fatigue": 1.0,
+  "fatigue": 1.1,
   "pocket": 0,
   "routine": {
    "計画": 3,
@@ -95,7 +95,7 @@
   }
  },
  "domain": {
-  "財貨": 21.13,
+  "財貨": 37.09,
   "負債": 0,
   "利率": 0.1,
   "食糧": 9.84,
@@ -546,114 +546,101 @@
   "瓶と帳簿を始めた": true,
   "全軍_狼煙": true,
   "カスパルの棟梁": true,
-  "溜め池の埋め合わせ": true
+  "溜め池の埋め合わせ": true,
+  "符丁の手紙": true,
+  "降る者の門": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "種の選抜",
    "labor": 20,
-   "weeks": 44,
+   "weeks": 45,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "秋の大市",
    "labor": 12,
-   "weeks": 8,
+   "weeks": 9,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "冬の外套",
    "labor": 30,
-   "weeks": 8,
+   "weeks": 9,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "鋸場",
    "labor": 27,
-   "weeks": 8,
+   "weeks": 9,
    "people": 4,
    "hero_days_needed": false
   },
   {
-   "id": "符丁の手紙",
-   "labor": 0,
-   "weeks": 8,
-   "people": 0,
-   "hero_days_needed": true,
-   "hero_days": 0
-  },
-  {
-   "id": "降る者の門",
-   "labor": 6,
-   "weeks": 3,
-   "people": 2,
-   "hero_days_needed": false
-  },
-  {
    "id": "瓶詰め",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "複式簿記",
    "labor": 0,
-   "weeks": 2,
+   "weeks": 3,
    "people": 0,
    "hero_days_needed": true,
-   "hero_days": 0
+   "hero_days": 3
   },
   {
    "id": "樽の工房",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 6,
+   "weeks": 1,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "溜め池",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 20,
+   "weeks": 1,
    "people": 20,
    "hero_days_needed": false
   },
   {
    "id": "金属活字",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 6,
+   "weeks": 1,
    "people": 6,
    "hero_days_needed": false
   },
   {
    "id": "氷室",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 13,
+   "weeks": 1,
    "people": 13,
    "hero_days_needed": false
   },
   {
    "id": "川の堤",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 19,
+   "weeks": 1,
    "people": 19,
    "hero_days_needed": false
   },
   {
    "id": "炭焼き",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 5,
+   "weeks": 1,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "囮の陣",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 3,
+   "weeks": 1,
    "people": 3,
    "hero_days_needed": false
   }
@@ -720,7 +707,9 @@
   "投げ文",
   "夜の襲い",
   "冬の手仕事",
-  "鷲の飼い葉"
+  "鷲の飼い葉",
+  "符丁の手紙",
+  "降る者の門"
  ],
  "npcs": {
   "レオポルト": {
@@ -2159,13 +2148,13 @@
     "敵": true,
     "旗": "摂政",
     "troops": {
-     "騎士": 274,
-     "南の諸侯の兵": 850,
-     "傭兵": 1054
+     "騎士": 272,
+     "南の諸侯の兵": 842,
+     "傭兵": 1044
     },
-    "兵糧": 13567,
-    "金": 2963.8,
-    "士気": 3.74,
+    "兵糧": 14289,
+    "金": 2955.7,
+    "士気": 3.78,
     "金の入り": 150,
     "給金": {
      "傭兵": 0.15
@@ -2205,9 +2194,9 @@
      "騎士": 150,
      "兵": 1435
     },
-    "兵糧": 58046,
-    "金": 625.9,
-    "士気": 6.37,
+    "兵糧": 58411,
+    "金": 608.5,
+    "士気": 6.38,
     "金の入り": 70,
     "給金": {
      "兵": 0.04,
@@ -2232,7 +2221,9 @@
     "旗": "全軍_地図",
     "費用": 15,
     "週": 10,
-    "文": "北部の道と谷を描いた地図が、軍議の間に掛かった（北部での戦いの判定 +1、ザルム狩り +1）"
+    "文": "北部の道と谷を描いた地図が、軍議の間に掛かった（北部での戦いの判定 +1、ザルム狩り +1）",
+    "始めた": true,
+    "残り": 10
    },
    {
     "名": "全軍の襲撃隊",

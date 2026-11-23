@@ -358,6 +358,9 @@ def econ_week(st, out):
         if st["flags"].get("鋸場"):
             dm["木材"] = round(dm.get("木材", 0) + 1, 2)
             out.report(f"水の鋸場で、季節の板がとれた（木材 {dm['木材']}）")
+        if st["flags"].get("谷の森"):
+            dm["木材"] = round(dm.get("木材", 0) + 1, 2)
+            out.report(f"白樺の谷の森の択伐で、季節の木材がとれた（木材 {dm['木材']}）")
         if st["flags"].get("煉瓦窯"):
             dm["石材"] = round(dm.get("石材", 0) + 1, 2)
             out.report(f"煉瓦の窯から、季節の煉瓦が出た（石材 {dm['石材']}）")

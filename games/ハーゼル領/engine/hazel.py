@@ -600,6 +600,24 @@ def hero_week(st, out):
             h["xp"][ab] = h["xp"].get(ab, 0) + days * rate * learn
             cap = cap_body if ab in ("体力", "武芸") else cap_mind
             grow(st, h, ab, cap, out)
+    # 時繰りの稼ぎ（821年 屠月〜822年 芽月）：古酒・熟成チーズ・辺境伯家の宝の直し。週に魔力点を使い、金が入る
+    tk = st.get("時繰りの稼ぎ")
+    if tk and tk.get("残り週", 0) > 0 and not st["flags"].get("帰郷中"):
+        use = 14 if h["魔力点"] >= 24 else (8 if h["魔力点"] >= 16 else 0)
+        if use:
+            h["魔力点"] -= use
+            h["xp"]["魔力"] = h["xp"].get("魔力", 0) + use // 2
+            gain = round(40 * use / 14, 1)
+            st["domain"]["財貨"] = round(st["domain"]["財貨"] + gain, 2)
+            tk["稼ぎ"] = round(tk.get("稼ぎ", 0) + gain, 1)
+            tk["残り週"] -= 1
+            if cal(st["week"])[2] == 4:
+                r = d(6) + d(6) + tk.get("怪しさ", 0)
+                tk["怪しさ"] = tk.get("怪しさ", 0) + 1
+                if r >= 13:
+                    apply_effects(st, {"domain.注目度": 3, "clocks.恵みの子の名": 1}, out)
+                    out.report("［稼ぎ］アルトハイムの酒商人のあいだで、『ハーゼルの古酒は年が合わない』という噂が出はじめた", stop=True, log=True)
+                append_md(GM_LOG, f"- {cal_str(st['week'])}：（時繰りの稼ぎ）怪しまれるか 🎲{r}（13 以上で噂）。ここまでの稼ぎ {tk['稼ぎ']}")
     # 魔力の保留（821年 花月の取り決め）：月の初めに 50、師について学んでいる季節は季節の初めに 200 を解き放つ
     y_, m_, wk_ = cal(st["week"])
     if h.get("魔力の保留", 0) > 0 and wk_ == 1:

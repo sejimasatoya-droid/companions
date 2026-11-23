@@ -1,5 +1,5 @@
 {
- "week": 472,
+ "week": 473,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -12,22 +12,23 @@
    "知識": 16,
    "弁舌": 9,
    "礼法": 12,
-   "魔力": 21
+   "魔力": 22
   },
   "xp": {
-   "魔力": 309.59999999999997,
+   "魔力": 44.19999999999999,
    "体力": 39.0,
-   "弁舌": 11.0,
-   "知識": 13.75,
+   "弁舌": 12.0,
+   "知識": 15.375,
    "武芸": 40.0,
    "礼法": 56.75
   },
-  "fatigue": 1.7,
+  "fatigue": 0.3,
   "pocket": 0,
   "routine": {
    "講義": 1,
-   "算術を教える": 2,
-   "目利き": 3
+   "算術を教える": 1,
+   "目利き": 1,
+   "休む": 3
   },
   "items": [
    "木彫りの馬（父が彫った。前脚を父に教わって自分で直した）",
@@ -63,7 +64,7 @@
    "兵站と補給": 3,
    "地図と測量": 3,
    "荷車の砦": 3,
-   "堀と土塁": 2,
+   "堀と土塁": 3,
    "焦土と兵糧攻め": 2,
    "火薬": 2,
    "心理戦と士気": 4,
@@ -96,8 +97,8 @@
    "化学": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 12,
-  "魔力点上限": 42,
+  "魔力点": 37,
+  "魔力点上限": 44,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
   "洗礼済み": true,
@@ -109,7 +110,7 @@
   "魔力の保留": 782
  },
  "domain": {
-  "財貨": 240.14,
+  "財貨": 259.15,
   "負債": 0,
   "利率": 0.1,
   "食糧": 10.66,
@@ -652,77 +653,65 @@
   "学院で眼鏡": true,
   "眼鏡の商い": true,
   "リーナの熱の手当て": true,
-  "リーナの熱が下がった": true
+  "リーナの熱が下がった": true,
+  "多重の守り": true,
+  "石炭の在りか": true
  },
  "harvest": null,
  "projects_active": [
   {
-   "id": "多重の守り",
-   "labor": 80,
-   "weeks": 15,
-   "people": 10,
-   "hero_days_needed": false
-  },
-  {
    "id": "接ぎ木の果樹園",
    "labor": 21,
-   "weeks": 7,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
-   "id": "石炭を探す",
-   "labor": 15,
-   "weeks": 7,
+   "weeks": 8,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "商館",
-   "labor": 28,
-   "weeks": 7,
+   "labor": 32,
+   "weeks": 8,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "度量衡",
-   "labor": 4,
-   "weeks": 2,
+   "labor": 6,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "硫酸",
-   "labor": 4,
-   "weeks": 2,
+   "labor": 6,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "縫い合わせ",
-   "labor": 2,
-   "weeks": 2,
+   "labor": 3,
+   "weeks": 3,
    "people": 1,
    "hero_days_needed": false
   },
   {
    "id": "鯉の池",
-   "labor": 4,
-   "weeks": 2,
+   "labor": 6,
+   "weeks": 3,
    "people": 2,
    "hero_days_needed": false
   },
   {
    "id": "畑の水路",
-   "labor": 8,
-   "weeks": 2,
+   "labor": 12,
+   "weeks": 3,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "干し草の圧し",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   }
@@ -811,7 +800,9 @@
   "寡婦の家",
   "紡ぎ車の改良",
   "人の帳面",
-  "染め物"
+  "染め物",
+  "多重の守り",
+  "石炭を探す"
  ],
  "npcs": {
   "レオポルト": {

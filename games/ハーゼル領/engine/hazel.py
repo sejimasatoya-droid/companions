@@ -994,9 +994,10 @@ def page_month(st, out):
     if wk != 2:
         return
     used = pg.setdefault("使った務め", {})
-    tasks = [t for t in defs("page_tasks") if cond(st, t.get("if")) and st["week"] - used.get(t["id"], -999) >= t.get("cd", 36)]
+    tasks = [t for t in defs("page_tasks") if cond(st, t.get("if")) and st["week"] - used.get(t["id"], -999) >= t.get("cd", 36)
+             and not (t.get("once") and t["id"] in used)]
     if not tasks:
-        tasks = [t for t in defs("page_tasks") if cond(st, t.get("if"))]
+        return  # 出せる務めがない週は、何も起きない（同じ務めを繰り返さない）
     t = random.choices(tasks, weights=[x.get("w", 1) for x in tasks])[0]
     used[t["id"]] = st["week"]
     pg["今の務め"] = t["id"]

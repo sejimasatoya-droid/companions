@@ -387,7 +387,7 @@ def econ_week(st, out):
         money(20 * (dm["森の健全度"] / 70) * policy_effects(st)["winter"], "薪・炭・放牧料")
         money(round(15 * random.uniform(0.3, 1.7), 1), "魔石の税")
     if (m, wk) == (3, 2):
-        if d(20) <= 2:
+        if d(20) <= 2 and not st["flags"].get("川の堤"):
             out.report("春の雪解けでハーゼル川が氾濫した。ミルデ村の畑が水をかぶる", stop=True)
             apply_effects(st, {"domain.食糧": -0.5, "domain.民心": -3}, out)
     if (m, wk) == (12, 1):

@@ -1,5 +1,5 @@
 {
- "week": 509,
+ "week": 511,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,20 +15,20 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 316.79999999999995,
+   "魔力": 318.59999999999997,
    "体力": 39.0,
-   "弁舌": 10.799999999999997,
-   "知識": 70.25,
-   "武芸": 53.00000000000003,
+   "弁舌": 13.799999999999997,
+   "知識": 73.5,
+   "武芸": 54.20000000000003,
    "礼法": 56.75
   },
-  "fatigue": 1.4,
+  "fatigue": 0.1,
   "pocket": 0,
   "routine": {
    "講義": 1,
-   "算術を教える": 2,
-   "目利き": 2,
-   "武芸の稽古場": 1
+   "算術を教える": 1,
+   "目利き": 1,
+   "休む": 3
   },
   "items": [
    "木彫りの馬（父が彫った。前脚を父に教わって自分で直した）",
@@ -110,27 +110,27 @@
   "魔力の保留": 0
  },
  "domain": {
-  "財貨": 340.93,
+  "財貨": 356.61,
   "負債": 0,
   "利率": 0.1,
   "食糧": 15.93,
-  "人口": 1324,
+  "人口": 1384,
   "木材": 8,
   "石材": 8.5,
   "鉄": 16,
-  "民心": 76,
+  "民心": 77,
   "治安": 100,
-  "開発": 91,
+  "開発": 95,
   "衛生": 72,
   "森の健全度": 60,
   "主家の覚え": 94,
   "注目度": 87,
-  "名誉": 84,
+  "名誉": 86,
   "石炭": 0
  },
  "domain_extra": {
   "月の固定費": 22.5,
-  "週収入": 14.98,
+  "週収入": 15.06,
   "イベント率": 0.12,
   "借金期限": [
    820,
@@ -176,7 +176,7 @@
   "亡命の侯の手": 1,
   "地下書庫の鍵": 2,
   "刻の司の噂": 1,
-  "谷の心": 4
+  "谷の心": 6
  },
  "flags": {
   "外出の許し": false,
@@ -695,113 +695,86 @@
   "計画をどんどん": true,
   "雇い人_自動": true,
   "強い酒の消毒": true,
-  "マルティナと婚約の約束": true
+  "マルティナと婚約の約束": true,
+  "算術の学舎": true,
+  "谷の守り": true
  },
  "harvest": null,
  "projects_active": [
   {
-   "id": "開拓村",
-   "labor": 50,
-   "weeks": 14,
-   "people": 5,
-   "hero_days_needed": false
-  },
-  {
-   "id": "算術の学舎",
-   "labor": 10,
-   "weeks": 14,
-   "people": 2,
-   "hero_days_needed": true,
-   "hero_days": 24
-  },
-  {
-   "id": "谷の守り",
-   "labor": 20,
-   "weeks": 6,
-   "people": 4,
-   "hero_days_needed": false
-  },
-  {
-   "id": "谷の旅籠",
-   "labor": 15,
-   "weeks": 6,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
    "id": "高炉",
-   "labor": 24,
-   "weeks": 6,
+   "labor": 32,
+   "weeks": 8,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "分業の工房",
-   "labor": 21,
-   "weeks": 6,
+   "labor": 29,
+   "weeks": 8,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "灰汁の工場",
+   "labor": 21,
+   "weeks": 8,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "骨粉の肥やし",
    "labor": 15,
    "weeks": 6,
    "people": 3,
    "hero_days_needed": false
   },
   {
-   "id": "骨粉の肥やし",
-   "labor": 12,
-   "weeks": 4,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
    "id": "下水",
-   "labor": 15,
-   "weeks": 3,
+   "labor": 25,
+   "weeks": 5,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "谷の学び舎",
    "labor": 6,
-   "weeks": 3,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "郵便",
-   "labor": 9,
-   "weeks": 3,
+   "labor": 12,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "検地",
-   "labor": 12,
-   "weeks": 3,
+   "labor": 20,
+   "weeks": 5,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "魔石の工房",
-   "labor": 9,
-   "weeks": 3,
+   "labor": 15,
+   "weeks": 5,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "馬の飼育",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 12,
+   "weeks": 4,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "腕木の合図",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 12,
+   "weeks": 4,
    "people": 3,
    "hero_days_needed": false
   }
@@ -907,7 +880,11 @@
   "谷の蔵",
   "谷の森の手入れ",
   "掟の書",
-  "強い酒の消毒"
+  "強い酒の消毒",
+  "開拓村",
+  "算術の学舎",
+  "谷の守り",
+  "谷の旅籠"
  ],
  "npcs": {
   "レオポルト": {
@@ -2496,7 +2473,7 @@
   "label": "advance 12",
   "when": "聖暦822年 草月（6月・夏）第4週"
  },
- "雇い人": 9,
+ "雇い人": 3,
  "雇い人_上限": 80,
  "計画_除く": [
   "石炭の坑",

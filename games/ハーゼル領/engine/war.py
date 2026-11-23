@@ -110,6 +110,16 @@ def war_week(st, out, cond, apply_effects, append_md, gm_log, cal_str):
         pr["troops"]["兵"] = max(0, pr["troops"].get("兵", 0) - (loss // div))
         out.report(f"［戦］{txt}（🎲{r}+{lead}−守り{guard}＝{tot}）", stop=False, log=True)
         append_md(gm_log, f"- {y_m_w}：（戦の台帳）ザルム狩り {tot}：ザルムの蔵の入り {inc['週'] if inc else '-'}/週、摂政の兵糧 {reg['兵糧']}、ザルムの守り {W.get('ザルムの守り', 0)}、味方の損害 {loss}")
+    # 挑発の策：焼きながら誘い、摂政の軍が出てくるのを待つ。毎月の第 4 週に、摂政が出てくるかを振る
+    if st["flags"].get("挑発の策") and not st["flags"].get("摂政の出撃") and W.get("mode") == "対峙" and wk == 4 and "摂政" in W["sides"]:
+        reg = W["sides"]["摂政"]
+        r = random.randint(1, 6) + random.randint(1, 6)
+        mod = (2 if weeks_left(reg) < 6 else 0) + (1 if W.get("ザルムの守り", 0) >= 2 else 0) + (1 if reg["士気"] < 4 else 0) + W.get("挑発の積み", 0)
+        W["挑発の積み"] = W.get("挑発の積み", 0) + 1
+        append_md(gm_log, f"- {y_m_w}：（戦の台帳）挑発：摂政が出てくるか 🎲{r}+{mod}＝{r+mod}（10 以上で出る）")
+        if r + mod >= 10:
+            st["flags"]["摂政の出撃"] = True
+            out.report("［戦］摂政の軍が、焼かれ続ける麦の道を守るため、ザルム川を越えて北へ出てきた", stop=True, log=True)
     for name, s in W["sides"].items():
         t = total(s)
         # 金のある側は、兵糧が細れば、高値で麦を買い足す（摂政の打ち返し）。8 週に一度まで

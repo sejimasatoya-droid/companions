@@ -109,14 +109,14 @@
   "魔力の保留": 832
  },
  "domain": {
-  "財貨": 511.04,
+  "財貨": 428.04,
   "負債": 0,
   "利率": 0.1,
   "食糧": 11.16,
   "人口": 1125,
-  "木材": 2,
-  "石材": 2.5,
-  "鉄": 12,
+  "木材": 1,
+  "石材": 1.5,
+  "鉄": 10,
   "民心": 69,
   "治安": 88,
   "開発": 86,
@@ -681,6 +681,48 @@
    "labor": 20,
    "weeks": 5,
    "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "度量衡",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "硫酸",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "縫い合わせ",
+   "labor": 0,
+   "weeks": 0,
+   "people": 1,
+   "hero_days_needed": false
+  },
+  {
+   "id": "鯉の池",
+   "labor": 0,
+   "weeks": 0,
+   "people": 2,
+   "hero_days_needed": false
+  },
+  {
+   "id": "畑の水路",
+   "labor": 0,
+   "weeks": 0,
+   "people": 4,
+   "hero_days_needed": false
+  },
+  {
+   "id": "干し草の圧し",
+   "labor": 0,
+   "weeks": 0,
+   "people": 3,
    "hero_days_needed": false
   }
  ],

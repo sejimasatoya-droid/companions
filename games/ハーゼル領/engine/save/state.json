@@ -1,5 +1,5 @@
 {
- "week": 514,
+ "week": 515,
  "protagonist": {
   "name": "ライ",
   "born": [
@@ -15,14 +15,14 @@
    "魔力": 24
   },
   "xp": {
-   "魔力": 337.59999999999997,
+   "魔力": 338.79999999999995,
    "体力": 39.0,
-   "弁舌": 20.799999999999997,
-   "知識": 78.375,
-   "武芸": 56.60000000000004,
+   "弁舌": 22.799999999999997,
+   "知識": 80.0,
+   "武芸": 57.80000000000004,
    "礼法": 56.75
   },
-  "fatigue": 0.2,
+  "fatigue": 0.3,
   "pocket": 0,
   "routine": {
    "講義": 1,
@@ -97,7 +97,7 @@
    "化学": 2
   },
   "special": "時繰り（ときくり）：物や人の時間を進める・巻き戻す固有魔法",
-  "魔力点": 45,
+  "魔力点": 48,
   "魔力点上限": 48,
   "前世": "日本の大学の心理学部生（20歳前後）。病気で亡くなった",
   "系統": "見識",
@@ -110,7 +110,7 @@
   "魔力の保留": 0
  },
  "domain": {
-  "財貨": 102.45,
+  "財貨": 99.48,
   "負債": 0,
   "利率": 0.1,
   "食糧": 15.93,
@@ -118,8 +118,8 @@
   "木材": 5,
   "石材": 2.5,
   "鉄": 13,
-  "民心": 77,
-  "治安": 100,
+  "民心": 76,
+  "治安": 99,
   "開発": 98,
   "衛生": 72,
   "森の健全度": 60,
@@ -130,7 +130,7 @@
  },
  "domain_extra": {
   "月の固定費": 22.5,
-  "週収入": 15.36,
+  "週収入": 15.91,
   "イベント率": 0.12,
   "借金期限": [
    820,
@@ -177,7 +177,7 @@
   "地下書庫の鍵": 2,
   "刻の司の噂": 1,
   "谷の心": 6,
-  "同盟の給金": 2
+  "同盟の給金": 3
  },
  "flags": {
   "外出の許し": false,
@@ -705,133 +705,121 @@
   "化学肥料": true,
   "ザントハーフェン案_受けた": true,
   "傭兵の陣に噂": true,
-  "商会_ヴァイデンブルクの肩代わり": true
+  "商会_ヴァイデンブルクの肩代わり": true,
+  "分業": true,
+  "ヴァイデンブルク_和に入れる": true
  },
  "harvest": null,
  "projects_active": [
   {
    "id": "高炉",
    "labor": 40,
-   "weeks": 11,
+   "weeks": 12,
    "people": 4,
-   "hero_days_needed": false
-  },
-  {
-   "id": "分業の工房",
-   "labor": 33,
-   "weeks": 11,
-   "people": 4,
-   "hero_days_needed": false
-  },
-  {
-   "id": "灰汁の工場",
-   "labor": 21,
-   "weeks": 11,
-   "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "下水",
-   "labor": 40,
-   "weeks": 8,
+   "labor": 45,
+   "weeks": 9,
    "people": 5,
    "hero_days_needed": false
   },
   {
    "id": "谷の学び舎",
    "labor": 6,
-   "weeks": 8,
+   "weeks": 9,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "郵便",
    "labor": 12,
-   "weeks": 8,
+   "weeks": 9,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "検地",
    "labor": 32,
-   "weeks": 8,
+   "weeks": 9,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "魔石の工房",
    "labor": 15,
-   "weeks": 8,
+   "weeks": 9,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "馬の飼育",
    "labor": 21,
-   "weeks": 7,
+   "weeks": 8,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "腕木の合図",
    "labor": 21,
-   "weeks": 7,
+   "weeks": 8,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "種まき機",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "牛の選抜",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "温床",
-   "labor": 6,
-   "weeks": 2,
+   "labor": 9,
+   "weeks": 3,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "問屋の機",
+   "labor": 9,
+   "weeks": 3,
+   "people": 3,
+   "hero_days_needed": false
+  },
+  {
+   "id": "石灰窯",
    "labor": 6,
    "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   },
   {
-   "id": "石灰窯",
-   "labor": 3,
-   "weeks": 1,
-   "people": 3,
-   "hero_days_needed": false
-  },
-  {
    "id": "里程石",
-   "labor": 3,
-   "weeks": 1,
+   "labor": 6,
+   "weeks": 2,
    "people": 3,
    "hero_days_needed": false
   },
   {
    "id": "暖炉の改良",
-   "labor": 4,
-   "weeks": 1,
+   "labor": 8,
+   "weeks": 2,
    "people": 4,
    "hero_days_needed": false
   },
   {
    "id": "火消し組",
-   "labor": 0,
-   "weeks": 0,
+   "labor": 3,
+   "weeks": 1,
    "people": 3,
    "hero_days_needed": false
   }
@@ -942,7 +930,9 @@
   "算術の学舎",
   "谷の守り",
   "谷の旅籠",
-  "骨粉の肥やし"
+  "骨粉の肥やし",
+  "分業の工房",
+  "灰汁の工場"
  ],
  "npcs": {
   "レオポルト": {
@@ -1876,16 +1866,6 @@
    "repeat": true
   },
   {
-   "if": "通算週 >= 515 and flag_商会_同盟に為替を出さない and not flag_同盟の傭兵が離れた and not flag_同盟と和",
-   "text": "（同盟の傭兵の給金が、また遅れた）",
-   "stop": false,
-   "hidden": true,
-   "effects": {
-    "clocks.同盟の給金": 1
-   },
-   "repeat": false
-  },
-  {
    "if": "通算週 >= 517 and flag_商会_同盟に為替を出さない and not flag_同盟の傭兵が離れた and not flag_同盟と和",
    "text": "（同盟の傭兵の給金が、また遅れた）",
    "stop": false,
@@ -1908,14 +1888,6 @@
   {
    "if": "通算週 >= 516 and not flag_同盟と和",
    "text": "同盟の議会が、ザントハーフェンの和の案を議する（GM：議会の判定。ヴァイデンブルクが決め手）",
-   "stop": true,
-   "hidden": false,
-   "effects": {},
-   "repeat": false
-  },
-  {
-   "if": "通算週 >= 515",
-   "text": "ヴァイデンブルクのオルトから、商会の肩代わりの申し出への返事が届く（GM：オルトの判定。オスカーと会う前）",
    "stop": true,
    "hidden": false,
    "effects": {},
@@ -2579,7 +2551,7 @@
   "label": "advance 12",
   "when": "聖暦822年 草月（6月・夏）第4週"
  },
- "雇い人": 13,
+ "雇い人": 3,
  "雇い人_上限": 80,
  "計画_除く": [
   "石炭の坑",

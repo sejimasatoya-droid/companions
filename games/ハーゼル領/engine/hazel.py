@@ -433,20 +433,29 @@ def econ_week(st, out):
 
 
 # ---------------------------------------------------------------- 計画
+def need_xp(v):
+    """次の 1 に要る経験点（821年 花月に改め）：（値 − 5）² ＋ 10。サイコロは振らない。年齢の上限もない"""
+    return max(10, (v - 5) ** 2 + 10)
+
+
 def grow(st, h, ab, cap, out):
-    """上限に届いていても経験点は捨てずにためる。上限が上がったら、たまった分で続けて判定する"""
-    while h["abilities"][ab] < cap:
+    """経験点がたまったら、必ず 1 上がる。cap は使わない（年齢の上限はなくした）"""
+    while h["xp"].get(ab, 0) >= need_xp(h["abilities"][ab]):
         v = h["abilities"][ab]
-        need = max(8, v * v // 2)
-        if h["xp"].get(ab, 0) < need:
-            break
-        r = d(20)
-        if r >= v:
-            h["abilities"][ab] += 1
-            h["xp"][ab] -= need
-            out.report(f"主人公の{ab}が伸びた：{v} → {v+1}（🎲{r}）", log=True)
-        else:
-            h["xp"][ab] -= need // 2
+        h["xp"][ab] -= need_xp(v)
+        h["abilities"][ab] = v + 1
+        out.report(f"主人公の{ab}が伸びた：{v} → {v+1}", log=True)
+
+
+def gain_xp(st, ab, res):
+    """場面の判定に成功すると、その能力に経験点が入る（成功 +2、大成功 +5）"""
+    h = st["protagonist"]
+    if ab not in h["abilities"]:
+        return
+    add = 5 if res == "大成功" else 2 if res in ("成功",) or (isinstance(res, str) and res.startswith("成功")) else 0
+    if add:
+        h["xp"][ab] = h["xp"].get(ab, 0) + add
+        print(f"  経験点：{ab} +{add}")
 
 
 def labor_available(st):
@@ -544,8 +553,6 @@ def hero_week(st, out):
                     rate = ri["rate"]
                     break
             h["xp"][ab] = h["xp"].get(ab, 0) + days * rate * learn
-            v = h["abilities"][ab]
-            need = max(8, v * v // 2)
             cap = cap_body if ab in ("体力", "武芸") else cap_mind
             grow(st, h, ab, cap, out)
     # 過ごし方に入っていない能力も、ほかの道でたまった経験点（見識の暮らしなど）で伸びる判定をする
@@ -866,6 +873,7 @@ def check(st, ability, dc, bonus=0, note="", calm=False):
     extra = f" {bonus:+d}" if bonus else ""
     extra += f" 疲労{pen}" if pen else ""
     print(f"🎲 {ability}判定{('（'+note+'）') if note else ''}：2d6[{a1},{a2}]={r} {mod(v):+d}{extra} ＝ {total} vs {dc} → {res}")
+    gain_xp(st, ability, res)
     return res
 
 
@@ -901,6 +909,8 @@ def persuade(st, name, dc, match=0, loss=0, status_=None, proof=False, bonus=0):
         r_["警戒"] = min(5, r_["警戒"] + 1)
     shown = " ".join(f"{k}{v:+d}" for k, v in parts if v and k != "出目")
     print(f"🗣 {name}への説得：2d6[{a1},{a2}]={r} {shown} ＝ {total} vs {dc} → {res}")
+    if res.startswith("成功"):
+        gain_xp(st, "弁舌", "大成功" if r == 12 else "成功")
     save_state(st)
 
 

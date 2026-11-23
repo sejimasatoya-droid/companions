@@ -1902,6 +1902,14 @@
    "hidden": false,
    "effects": {},
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 522",
+   "text": "辺境伯から、休み戦を延ばすことについての返書が届く（GM：中身は gm/秘密.md）",
+   "stop": true,
+   "hidden": false,
+   "effects": {},
+   "repeat": false
   }
  ],
  "factions": {

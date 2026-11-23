@@ -418,6 +418,9 @@ def econ_week(st, out):
         if add:
             dm["人口"] += add
             out.report(f"季節の終わり：人口 +{add}（→ {dm['人口']}。年に {rate*100:.1f}% の伸び）")
+    # 雇い人の給金（822年 実月〜）：一人 週 0.25
+    if st.get("雇い人"):
+        dm["財貨"] = round(dm["財貨"] - 0.25 * st["雇い人"], 2)
     # 月末の固定費
     if wk == 4:
         cost = st["domain_extra"].get("月の固定費", 21.7)
@@ -483,7 +486,7 @@ def gain_xp(st, ab, res):
 
 def labor_available(st):
     y, m, wk = cal(st["week"])
-    return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP * policy_effects(st)["labor"] - st["military"].get("徴募兵", 0)) + st.get("雇い人", 0)
+    return round(SPARE_LABOR[SEASON_OF[m]] * st["domain"]["人口"] / BASE_POP * policy_effects(st)["labor"] - st["military"].get("徴募兵", 0)) + int(st.get("雇い人", 0)) + st.get("雇い人", 0)
 
 
 def projects_week(st, out):

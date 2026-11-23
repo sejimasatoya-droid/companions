@@ -1074,18 +1074,22 @@ def magic(st, spell, witnesses=0, bonus=0, note=""):
     mg = h["abilities"]["魔力"]
     if mg < TIER_REQ[sp["tier"]]:
         raise SystemExit(f"「{spell}」には魔力 {TIER_REQ[sp['tier']]} が要る（今 {mg}）")
-    if h["魔力点"] < sp["cost"]:
-        raise SystemExit(f"魔力点が足りない（必要 {sp['cost']}、残り {h['魔力点']}）")
     dc = sp["dc"]
+    mastery = min(3, max(0, (mg - TIER_REQ[sp["tier"]]) // 3))  # 呪文の熟達（821年 草月）
+    cost = max(1, sp["cost"] - mastery)
+    if h["魔力点"] < cost:
+        raise SystemExit(f"魔力点が足りない（必要 {cost}、残り {h['魔力点']}）")
     pen = fatigue_pen(h["fatigue"])
     a1, a2, r = roll2d6()
     total = r + mod(mg) + bonus + pen
-    h["魔力点"] -= sp["cost"]
+    h["魔力点"] -= cost
     h["xp"]["魔力"] = h["xp"].get("魔力", 0) + sp["tier"] * 2
     res = grade(r, total, dc)
-    print(f"✦ {school}「{spell}」{('（'+note+'）') if note else ''}：2d6[{a1},{a2}]={r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc} → {res}　魔力点 −{sp['cost']}（残り {h['魔力点']}/{h['魔力点上限']}）")
+    print(f"✦ {school}「{spell}」{('（'+note+'）') if note else ''}：2d6[{a1},{a2}]={r} {mod(mg):+d}{(' %+d' % bonus) if bonus else ''}{(' 疲労%d' % pen) if pen else ''} ＝ {total} vs {dc} → {res}　魔力点 −{cost}（残り {h['魔力点']}/{h['魔力点上限']}）" + (f"　熟達 {mastery}" if mastery else ""))
     if res in ("成功", "大成功", "代償つき"):
         print(f"  効果：{sp['effect']}" + ("（ぼんやりとしか見えない）" if res == "代償つき" else ""))
+        for i, mt in enumerate(sp.get("熟達", [])[:mastery], 1):
+            print(f"  熟達 {i}：{mt}")
     elif res == "大失敗":
         h["fatigue"] += 1
         print("  反動：見えたものは偽りか、見えすぎて頭が割れるように痛む（疲労 +1。GM が誤った情報を一つ与えてもよい）")
@@ -1120,6 +1124,8 @@ def jikuri(st, direction, stage, size, living=False, witnesses=0, bonus=0, note=
     if size not in SIZES:
         raise SystemExit(f"大きさは {'・'.join(SIZES)} のどれか")
     cost = stage * SIZES[size] * (2 if living else 1)
+    j_mastery = min(3, max(0, (mg - stage * 3) // 3))  # 時繰りの熟達：段階に要る魔力を 3 上回るごとに費用 −2 割
+    cost = max(1, math.ceil(cost * (1 - 0.2 * j_mastery)))
     if h["魔力点"] < cost:
         raise SystemExit(f"魔力点が足りない（必要 {cost}、残り {h['魔力点']}）")
     dc = 5 + stage + (1 if living else 0) + (1 if SIZES[size] >= 4 else 0)

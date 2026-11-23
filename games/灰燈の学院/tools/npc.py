@@ -3,7 +3,7 @@
   python3 tools/npc.py 才 3      … 才ある者・三年生（学院で二年過ごしたぶん伸ばす）
   才の段：凡（得意1・普通2・苦手3）／才（得意2・普通2・苦手2）／天才（得意3・普通2・苦手1）
   学年 n の者は、(n-1) 年ぶん伸ばす。一年に、各分野の印 6 つ、各能力の印 3 つとして数える
-  （得意：印ごとに +1d10 ／ 普通：印ごとに 1d100 > 値なら +1d10 ／ 苦手：伸びない。能力は普通の伸び方）
+  （得意：印ごとに +1d3 ／ 普通：印ごとに 1d100 > 値なら +1d3 ／ 苦手：伸びない。能力は普通の伸び方）
 """
 import random, sys
 F = ['熱導', '動導', '光導', '癒導', '刻導', '識導']
@@ -14,7 +14,7 @@ d = lambda n: random.randint(1, n)
 def grow_normal(v, marks):
     for _ in range(marks):
         if d(100) > v:
-            v += d(10)
+            v += d(3)
     return v
 
 def make(tier='才', grade=1):
@@ -28,7 +28,7 @@ def make(tier='才', grade=1):
         v = base[f]
         m = 6 * years
         if apt[f] == '得意':
-            v += sum(d(10) for _ in range(m))
+            v += sum(d(3) for _ in range(m))
         elif apt[f] == '普通':
             v = grow_normal(v, m)
         val[f] = v

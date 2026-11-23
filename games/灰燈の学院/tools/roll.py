@@ -3,6 +3,7 @@
   python3 tools/roll.py 1d100            … 1d100 を振る
   python3 tools/roll.py check 55 [難]    … 目標 55 の下方ロール。難＝簡単|普通|至難（レギュラー|ハード|イクストリーム）
   python3 tools/roll.py 1d10+5           … 足し算つき
+  python3 tools/roll.py vs 84 89         … 対抗（左が仕掛ける側、右が守る側）
 """
 import random, re, sys
 
@@ -13,6 +14,26 @@ def dice(expr):
     n, s, k = int(m.group(1) or 1), int(m.group(2)), int(m.group(3) or 0)
     rs = [random.randint(1, s) for _ in range(n)]
     return rs, sum(rs) + k, k
+
+RANK = {"大失敗": 0, "失敗": 1, "紙一重": 2, "成功": 3, "会心": 4}
+
+def level(target):
+    r = random.randint(1, 100)
+    if r >= 96: return r, "大失敗"
+    if r <= max(1, target // 5): return r, "会心"
+    if r <= target: return r, "成功"
+    if r <= target + 10: return r, "紙一重"
+    return r, "失敗"
+
+def vs(a, b):
+    ra, la = level(a); rb, lb = level(b)
+    if RANK[la] != RANK[lb]:
+        win = "仕掛ける側" if RANK[la] > RANK[lb] else "守る側"
+    elif a != b:
+        win = "仕掛ける側" if a > b else "守る側"
+    else:
+        win = "守る側"
+    print(f"🎲 仕掛ける側 1d100 = {ra}（値 {a}）→ {la} ／ 守る側 1d100 = {rb}（値 {b}）→ {lb}　⇒ {win}の勝ち")
 
 def check(target, tier="簡単"):
     div = {"簡単": 1, "レギュラー": 1, "普通": 2, "ハード": 2, "至難": 5, "イクストリーム": 5}[tier]
@@ -34,7 +55,9 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     if not a:
         print(__doc__); sys.exit()
-    if a[0] == "check":
+    if a[0] == "vs":
+        vs(int(a[1]), int(a[2]))
+    elif a[0] == "check":
         check(int(a[1]), a[2] if len(a) > 2 else "簡単")
     else:
         rs, tot, k = dice(a[0])

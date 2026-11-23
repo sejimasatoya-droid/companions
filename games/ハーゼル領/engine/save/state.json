@@ -532,7 +532,7 @@
   "夜の襲いを始めた": true,
   "全軍_号令": true,
   "アルトハイムへ発った": true,
-  "旅の途中": false,
+  "旅の途中": true,
   "和議_密約の疑い": true,
   "東の早馬": true,
   "和議_使者の不和": true,
@@ -590,7 +590,9 @@
   "草月の帰村": false,
   "全軍_東の狼煙": true,
   "投石機": true,
-  "女王の願いを呑む": true
+  "女王の願いを呑む": true,
+  "王都へ発った": true,
+  "王都への行軍": true
  },
  "harvest": "平年",
  "projects_active": [],
@@ -1595,6 +1597,26 @@
     "clocks.東の休み戦": 1
    },
    "repeat": false
+  },
+  {
+   "if": "通算週 >= 452 and flag_王都への行軍",
+   "text": "王太子の軍が、王都の見える丘に着いた（GM：西の門の場面）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.王都の前": true
+   },
+   "repeat": false
+  },
+  {
+   "if": "通算週 >= 450 and flag_王都への行軍 and not flag_冬営の横",
+   "text": "行軍の途中、ザルム川の南の摂政の冬営の横を通る（GM：冬営の軍がどう出るか）",
+   "stop": true,
+   "hidden": false,
+   "effects": {
+    "flags.冬営の横": true
+   },
+   "repeat": false
   }
  ],
  "factions": {
@@ -2097,7 +2119,7 @@
  "world_harvest": "平年",
  "war": {
   "on": true,
-  "mode": "対峙",
+  "mode": "行軍",
   "sides": {
    "摂政": {
     "呼び名": "摂政の軍（ザルムブルク）",
@@ -2151,7 +2173,7 @@
     "旗": "王太子",
     "troops": {
      "騎士": 134,
-     "兵": 1822
+     "兵": 1522
     },
     "兵糧": 62961,
     "金": 797.1,

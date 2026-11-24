@@ -6,7 +6,7 @@
 - 遊び方の決まり：`system.md`
 - 世界：`世界.md`
 - 学院の行事表：`行事表.md`
-- 主人公：`人物/エルス.md`
+- 主人公：`人物/エルス.md`（旧版の遊びは `旧版/`）
 - いまの状況：`state.md` ／ 出来事：`log.md`
 - GM だけが見るもの：`gm/`（人物のシート、秘密）。プレイヤーには見せない
 - さいころ：`python3 tools/roll.py check 82 普通`、`python3 tools/roll.py vs 84 89`

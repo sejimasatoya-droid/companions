@@ -463,7 +463,13 @@ def main(a):
         if ms["pos"]:
             print(report_pos(m, ms))
     elif cmd == "svg":
-        print(svg(m, ms, gm="--gm" in a))
+        s = svg(m, ms, gm="--gm" in a)
+        if "--gm" in a:
+            print(s)
+        else:
+            PUBDIR.mkdir(exist_ok=True)
+            (PUBDIR / f"{m.name}.svg").write_text(s, encoding="utf-8")
+            print("書き出した：", PUBDIR / f"{m.name}.svg")
         return
     elif cmd == "where":
         print(report_pos(m, ms))

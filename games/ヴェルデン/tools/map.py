@@ -230,8 +230,10 @@ def svg(m, ms, gm=False):
     W = 680
     H = oy + m.h * cs + 66
     kinds_road = m.meta.get("road_char", "=") if m.name == "周辺" else None
-    out = [f'<svg width="100%" viewBox="0 0 {W} {H}" role="img"><title>{m.name}の地図</title>'
-           f'<desc>見えたところだけを塗ったマス目の地図</desc>']
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img">'
+           f'<title>{m.name}の地図</title><desc>見えたところだけを塗ったマス目の地図</desc>'
+           '<style>text{font-family:sans-serif}.ts{font-size:12px;fill:#5F5E5A}.th{font-size:14px;font-weight:500}</style>'
+           f'<rect x="0" y="0" width="{W}" height="{H}" fill="#FFFFFF"/>']
     for x in range(0, m.w, 5):
         out.append(f'<text class="ts" x="{ox + x * cs + cs / 2}" y="{oy - 8}" text-anchor="middle">{x}</text>')
     for y in range(0, m.h, 5):

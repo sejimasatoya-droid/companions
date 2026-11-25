@@ -209,6 +209,103 @@ def tstr(m, t):
     return (f"{h}時間" if h else "") + (f"{mm}分" if mm else "") or "0分"
 
 
+COLORS = {
+    "wall": "#5F5E5A", "floor": "#F1EFE8", "rubble": "#D3D1C7", "water": "#85B7EB", "door": "#BA7517",
+    "locked": "#854F0B", "stairs": "#7F77DD", "event": "#EF9F27", "done": "#C0DD97", "pc": "#E24B4A",
+    "road": "#FAC775", "path": "#FAEEDA", "forest": "#97C459", "deep": "#3B6D11", "hill": "#C0DD97",
+    "mount": "#888780", "peak": "#444441", "swamp": "#5DCAA5", "bridge": "#BA7517", "house": "#B4B2A9",
+    "gate": "#7F77DD", "chasm": "#2C2C2A",
+}
+KIND = {"#": "wall", ".": "floor", ",": "rubble", "~": "water", "+": "door", "=": "locked", '"': "wall",
+        "<": "stairs", ">": "stairs", "t": "floor", "!": "chasm", "n": "house", "N": "gate", "S": "gate",
+        "X": "gate", ":": "path", "f": "forest", "F": "deep", "h": "hill", "^": "mount", "%": "peak",
+        "s": "swamp", "b": "bridge"}
+
+
+def svg(m, ms, gm=False):
+    """瀬島に見せる絵の地図（SVG）。見えたマスだけ塗る。"""
+    pos = tuple(ms["pos"]) if ms["pos"] else None
+    cs = min(16, 600 // m.w)
+    ox, oy = 40, 28
+    W = 680
+    H = oy + m.h * cs + 66
+    kinds_road = m.meta.get("road_char", "=") if m.name == "周辺" else None
+    out = [f'<svg width="100%" viewBox="0 0 {W} {H}" role="img"><title>{m.name}の地図</title>'
+           f'<desc>見えたところだけを塗ったマス目の地図</desc>']
+    for x in range(0, m.w, 5):
+        out.append(f'<text class="ts" x="{ox + x * cs + cs / 2}" y="{oy - 8}" text-anchor="middle">{x}</text>')
+    for y in range(0, m.h, 5):
+        out.append(f'<text class="ts" x="{ox - 8}" y="{oy + y * cs + cs / 2}" text-anchor="end" dominant-baseline="central">{y}</text>')
+    labels = []
+    cells = {}
+    for y in range(m.h):
+        for x in range(m.w):
+            k = key(x, y)
+            if not gm and k not in ms["seen"]:
+                continue
+            c = m.ch(x, y)
+            if c in m.events:
+                known = ms["visits"].get(k) or m.meta.get("events_known") == "yes"
+                kind = "done" if (k in ms["cleared"] or ms["visits"].get(k)) else "event"
+                if m.meta.get("events_known") == "yes" and not ms["visits"].get(k):
+                    kind = "event"
+                labels.append((x, y, c if (known or gm) else "?"))
+            elif c == "=" and m.name == "周辺":
+                kind = "road"
+            elif c == "." and m.name == "周辺":
+                kind = "hill" if False else "path"
+                kind = "floor"
+            else:
+                kind = KIND.get(c, "wall")
+            if k in ms["opened"]:
+                kind = "floor"
+            cells[(x, y)] = COLORS[kind]
+            if c in "<>":
+                labels.append((x, y, "↑" if c == "<" else "↓"))
+    for y in range(m.h):
+        x = 0
+        while x < m.w:
+            col = cells.get((x, y))
+            if not col:
+                x += 1
+                continue
+            x2 = x
+            while cells.get((x2 + 1, y)) == col:
+                x2 += 1
+            out.append(f'<rect x="{ox + x * cs}" y="{oy + y * cs}" width="{(x2 - x + 1) * cs}" height="{cs}" fill="{col}"/>')
+            x = x2 + 1
+    gl = []
+    for x in range(m.w + 1):
+        gl.append(f"M{ox + x * cs} {oy}V{oy + m.h * cs}")
+    for y in range(m.h + 1):
+        gl.append(f"M{ox} {oy + y * cs}H{ox + m.w * cs}")
+    out.append(f'<path d="{"".join(gl)}" stroke="#888780" stroke-width="0.3" fill="none" opacity="0.5"/>')
+    for x, y, t in labels:
+        fill = "#FFFFFF" if t in "↑↓" else "#412402"
+        out.append(f'<text class="th" x="{ox + x * cs + cs / 2}" y="{oy + y * cs + cs / 2}" text-anchor="middle" dominant-baseline="central" style="fill:{fill};font-size:11px">{t}</text>')
+    if pos:
+        px, py = pos
+        out.append(f'<circle cx="{ox + px * cs + cs / 2}" cy="{oy + py * cs + cs / 2}" r="{cs / 2 - 2}" fill="{COLORS["pc"]}" stroke="#FFFFFF" stroke-width="1.5"/>')
+    ly = oy + m.h * cs + 22
+    if m.name == "周辺":
+        items = [("pc", "いまの位置"), ("road", "街道"), ("path", "小道"), ("floor", "平原"), ("hill", "丘"), ("forest", "森"),
+                 ("deep", "深い森"), ("mount", "山"), ("peak", "峰（通れない）"), ("water", "川"), ("bridge", "橋"), ("swamp", "沼"), ("event", "場所")]
+    elif m.name == "ヴェルデン":
+        items = [("pc", "いまの位置"), ("floor", "通り"), ("house", "家並み"), ("wall", "城壁"), ("gate", "門"), ("event", "場所")]
+    else:
+        items = [("pc", "いまの位置"), ("floor", "床"), ("wall", "壁"), ("door", "扉"), ("locked", "鍵のかかった扉"),
+                 ("rubble", "瓦礫"), ("water", "水"), ("stairs", "階段"), ("chasm", "裂け目"), ("event", "? 調べていない所"), ("done", "調べた所")]
+    x0 = 40
+    for i, (kind, lab) in enumerate(items):
+        col, row = i % 6, i // 6
+        lx, lyy = x0 + col * 104, ly + row * 24
+        shape = (f'<circle cx="{lx + 6}" cy="{lyy}" r="6" fill="{COLORS[kind]}"/>' if kind == "pc"
+                 else f'<rect x="{lx}" y="{lyy - 6}" width="12" height="12" fill="{COLORS[kind]}" stroke="#2C2C2A" stroke-width="0.3"/>')
+        out.append(shape + f'<text class="ts" x="{lx + 18}" y="{lyy}" dominant-baseline="central">{lab}</text>')
+    out.append("</svg>")
+    return "\n".join(out)
+
+
 def report_pos(m, ms):
     x, y = ms["pos"]
     c = m.ch(x, y)
@@ -305,7 +402,7 @@ def main(a):
             st["current"] = None
         save_state(st); print("消した：", a[1]); return
     name = st.get("current")
-    if cmd in ("view", "public") and len(a) > 1 and not a[1].startswith("--"):
+    if cmd in ("view", "public", "svg") and len(a) > 1 and not a[1].startswith("--"):
         name = a[1]
     if not name:
         sys.exit("まだどの地図にも入っていない（enter で入る）")
@@ -365,6 +462,9 @@ def main(a):
             print("場所：" + "　".join(evs))
         if ms["pos"]:
             print(report_pos(m, ms))
+    elif cmd == "svg":
+        print(svg(m, ms, gm="--gm" in a))
+        return
     elif cmd == "where":
         print(report_pos(m, ms))
     elif cmd in ("open", "close", "clear"):

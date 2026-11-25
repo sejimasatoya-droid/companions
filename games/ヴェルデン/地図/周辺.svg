@@ -1,0 +1,106 @@
+<svg width="100%" viewBox="0 0 680 478" role="img"><title>周辺の地図</title><desc>見えたところだけを塗ったマス目の地図</desc>
+<text class="ts" x="48.0" y="20" text-anchor="middle">0</text>
+<text class="ts" x="128.0" y="20" text-anchor="middle">5</text>
+<text class="ts" x="208.0" y="20" text-anchor="middle">10</text>
+<text class="ts" x="288.0" y="20" text-anchor="middle">15</text>
+<text class="ts" x="368.0" y="20" text-anchor="middle">20</text>
+<text class="ts" x="448.0" y="20" text-anchor="middle">25</text>
+<text class="ts" x="528.0" y="20" text-anchor="middle">30</text>
+<text class="ts" x="608.0" y="20" text-anchor="middle">35</text>
+<text class="ts" x="32" y="36.0" text-anchor="end" dominant-baseline="central">0</text>
+<text class="ts" x="32" y="116.0" text-anchor="end" dominant-baseline="central">5</text>
+<text class="ts" x="32" y="196.0" text-anchor="end" dominant-baseline="central">10</text>
+<text class="ts" x="32" y="276.0" text-anchor="end" dominant-baseline="central">15</text>
+<text class="ts" x="32" y="356.0" text-anchor="end" dominant-baseline="central">20</text>
+<rect x="232" y="76" width="16" height="16" fill="#F1EFE8"/>
+<rect x="248" y="76" width="16" height="16" fill="#C0DD97"/>
+<rect x="264" y="76" width="16" height="16" fill="#888780"/>
+<rect x="280" y="76" width="16" height="16" fill="#C0DD97"/>
+<rect x="296" y="76" width="16" height="16" fill="#888780"/>
+<rect x="232" y="92" width="16" height="16" fill="#F1EFE8"/>
+<rect x="248" y="92" width="16" height="16" fill="#C0DD97"/>
+<rect x="264" y="92" width="16" height="16" fill="#888780"/>
+<rect x="280" y="92" width="16" height="16" fill="#C0DD97"/>
+<rect x="296" y="92" width="16" height="16" fill="#F1EFE8"/>
+<rect x="232" y="108" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="108" width="16" height="16" fill="#C0DD97"/>
+<rect x="280" y="108" width="32" height="16" fill="#F1EFE8"/>
+<rect x="232" y="124" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="124" width="16" height="16" fill="#FAC775"/>
+<rect x="280" y="124" width="32" height="16" fill="#F1EFE8"/>
+<rect x="232" y="140" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="140" width="16" height="16" fill="#FAC775"/>
+<rect x="280" y="140" width="32" height="16" fill="#F1EFE8"/>
+<rect x="232" y="156" width="16" height="16" fill="#C0DD97"/>
+<rect x="248" y="156" width="16" height="16" fill="#F1EFE8"/>
+<rect x="264" y="156" width="16" height="16" fill="#FAC775"/>
+<rect x="280" y="156" width="32" height="16" fill="#F1EFE8"/>
+<rect x="232" y="172" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="172" width="16" height="16" fill="#FAC775"/>
+<rect x="280" y="172" width="32" height="16" fill="#F1EFE8"/>
+<rect x="232" y="188" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="188" width="16" height="16" fill="#FAC775"/>
+<rect x="280" y="188" width="64" height="16" fill="#F1EFE8"/>
+<rect x="232" y="204" width="80" height="16" fill="#FAC775"/>
+<rect x="312" y="204" width="64" height="16" fill="#F1EFE8"/>
+<rect x="232" y="220" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="220" width="48" height="16" fill="#FAC775"/>
+<rect x="312" y="220" width="64" height="16" fill="#F1EFE8"/>
+<rect x="232" y="236" width="48" height="16" fill="#F1EFE8"/>
+<rect x="280" y="236" width="16" height="16" fill="#FAC775"/>
+<rect x="296" y="236" width="16" height="16" fill="#C0DD97"/>
+<rect x="312" y="236" width="16" height="16" fill="#FAEEDA"/>
+<rect x="328" y="236" width="16" height="16" fill="#C0DD97"/>
+<rect x="344" y="236" width="32" height="16" fill="#FAEEDA"/>
+<rect x="232" y="252" width="64" height="16" fill="#F1EFE8"/>
+<rect x="296" y="252" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="252" width="48" height="16" fill="#F1EFE8"/>
+<rect x="360" y="252" width="16" height="16" fill="#FAEEDA"/>
+<rect x="264" y="268" width="32" height="16" fill="#F1EFE8"/>
+<rect x="296" y="268" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="268" width="48" height="16" fill="#F1EFE8"/>
+<rect x="360" y="268" width="16" height="16" fill="#FAEEDA"/>
+<rect x="264" y="284" width="32" height="16" fill="#F1EFE8"/>
+<rect x="296" y="284" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="284" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="300" width="32" height="16" fill="#F1EFE8"/>
+<rect x="296" y="300" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="300" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="316" width="32" height="16" fill="#F1EFE8"/>
+<rect x="296" y="316" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="316" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="332" width="32" height="16" fill="#F1EFE8"/>
+<rect x="296" y="332" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="332" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="348" width="32" height="16" fill="#F1EFE8"/>
+<rect x="296" y="348" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="348" width="32" height="16" fill="#F1EFE8"/>
+<rect x="264" y="364" width="32" height="16" fill="#F1EFE8"/>
+<rect x="296" y="364" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="364" width="32" height="16" fill="#F1EFE8"/>
+<rect x="280" y="380" width="16" height="16" fill="#F1EFE8"/>
+<rect x="296" y="380" width="16" height="16" fill="#FAC775"/>
+<rect x="312" y="380" width="16" height="16" fill="#F1EFE8"/>
+<rect x="280" y="396" width="16" height="16" fill="#F1EFE8"/>
+<rect x="296" y="396" width="16" height="16" fill="#EF9F27"/>
+<rect x="312" y="396" width="16" height="16" fill="#F1EFE8"/>
+<path d="M40 28V412M56 28V412M72 28V412M88 28V412M104 28V412M120 28V412M136 28V412M152 28V412M168 28V412M184 28V412M200 28V412M216 28V412M232 28V412M248 28V412M264 28V412M280 28V412M296 28V412M312 28V412M328 28V412M344 28V412M360 28V412M376 28V412M392 28V412M408 28V412M424 28V412M440 28V412M456 28V412M472 28V412M488 28V412M504 28V412M520 28V412M536 28V412M552 28V412M568 28V412M584 28V412M600 28V412M616 28V412M40 28H616M40 44H616M40 60H616M40 76H616M40 92H616M40 108H616M40 124H616M40 140H616M40 156H616M40 172H616M40 188H616M40 204H616M40 220H616M40 236H616M40 252H616M40 268H616M40 284H616M40 300H616M40 316H616M40 332H616M40 348H616M40 364H616M40 380H616M40 396H616M40 412H616" stroke="#888780" stroke-width="0.3" fill="none" opacity="0.5"/>
+<text class="th" x="272.0" y="116.0" text-anchor="middle" dominant-baseline="central" style="fill:#412402;font-size:11px">H</text>
+<text class="th" x="304.0" y="244.0" text-anchor="middle" dominant-baseline="central" style="fill:#412402;font-size:11px">V</text>
+<text class="th" x="336.0" y="244.0" text-anchor="middle" dominant-baseline="central" style="fill:#412402;font-size:11px">R</text>
+<text class="th" x="304.0" y="404.0" text-anchor="middle" dominant-baseline="central" style="fill:#412402;font-size:11px">?</text>
+<circle cx="272.0" cy="148.0" r="6.0" fill="#E24B4A" stroke="#FFFFFF" stroke-width="1.5"/>
+<circle cx="46" cy="434" r="6" fill="#E24B4A"/><text class="ts" x="58" y="434" dominant-baseline="central">いまの位置</text>
+<rect x="144" y="428" width="12" height="12" fill="#FAC775" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="162" y="434" dominant-baseline="central">街道</text>
+<rect x="248" y="428" width="12" height="12" fill="#FAEEDA" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="266" y="434" dominant-baseline="central">小道</text>
+<rect x="352" y="428" width="12" height="12" fill="#F1EFE8" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="370" y="434" dominant-baseline="central">平原</text>
+<rect x="456" y="428" width="12" height="12" fill="#C0DD97" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="474" y="434" dominant-baseline="central">丘</text>
+<rect x="560" y="428" width="12" height="12" fill="#97C459" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="578" y="434" dominant-baseline="central">森</text>
+<rect x="40" y="452" width="12" height="12" fill="#3B6D11" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="58" y="458" dominant-baseline="central">深い森</text>
+<rect x="144" y="452" width="12" height="12" fill="#888780" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="162" y="458" dominant-baseline="central">山</text>
+<rect x="248" y="452" width="12" height="12" fill="#444441" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="266" y="458" dominant-baseline="central">峰（通れない）</text>
+<rect x="352" y="452" width="12" height="12" fill="#85B7EB" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="370" y="458" dominant-baseline="central">川</text>
+<rect x="456" y="452" width="12" height="12" fill="#BA7517" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="474" y="458" dominant-baseline="central">橋</text>
+<rect x="560" y="452" width="12" height="12" fill="#5DCAA5" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="578" y="458" dominant-baseline="central">沼</text>
+<rect x="40" y="476" width="12" height="12" fill="#EF9F27" stroke="#2C2C2A" stroke-width="0.3"/><text class="ts" x="58" y="482" dominant-baseline="central">場所</text>
+</svg>

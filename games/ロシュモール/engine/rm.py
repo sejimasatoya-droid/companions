@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """ロシュモール年代記のエンジン。数値・乱数・時間・出来事の山札・人物の企てを扱う。
 
-  python3 engine/rm.py new <出自> <得意>       新しく始める（出自：跡取り／代官／塩商の子、得意：体／技／知／話／心）
+  python3 engine/rm.py new <出自> [字]          新しく始める（出自：跡取り／代官／塩商の子。力の字は、無ければランダム）
+  python3 engine/rm.py power show|use <点> [人前]|set <欄> <値>   一字の力
   python3 engine/rm.py status [--gm]          今の状況（--gm で企て・山札・隠しクロックも）
   python3 engine/rm.py advance [N]            N 週進める（巻き込みなど止まる出来事で止まる。既定 1）
   python3 engine/rm.py undo                   最後の advance の前に戻す
@@ -496,8 +497,11 @@ def rumor_month(st, out):
 
 
 # ---------------------------------------------------------------- 主人公の週・計画
+POWER_STEPS = [0, 30, 80, 160, 280]  # 段 2〜5 に上がるのに要る、ためた経験（段 5 まで、毎週使っておよそ 1 年半）
+
+
 def hero_week(st, out):
-    """主人公が強くなるのは「得意」の一分野だけ。ほかは伸びが半分で、12 で止まる"""
+    """能力はみんな凡人並み（13 で止まる）。主人公の強さは、一字の「力」だけ"""
     h = st["hero"]
     acts = load("activities")
     rt = h.get("過ごし方", {})
@@ -505,16 +509,20 @@ def hero_week(st, out):
         ab = acts.get(a, {}).get("能力")
         if not ab:
             continue
-        tokui = ab == h.get("得意")
-        cap = 18 if tokui else 12
         h["経験"][ab] = h["経験"].get(ab, 0) + days
-        need = max(6, (h["能力"][ab] - 6) * 3) * (1 if tokui else 2)
-        if h["経験"][ab] >= need and h["能力"][ab] < cap:
+        need = max(6, (h["能力"][ab] - 6) * 3)
+        if h["能力"][ab] >= 13:
+            h["経験"][ab] = 0
+        elif h["経験"][ab] >= need:
             h["経験"][ab] -= need
             h["能力"][ab] += 1
             out.report(f"主人公の{ab}が伸びた：{h['能力'][ab] - 1} → {h['能力'][ab]}", stop=False)
-        elif h["能力"][ab] >= cap:
-            h["経験"][ab] = 0
+    pw = h.get("力")
+    if pw:
+        pw["上限"] = 4 + 2 * pw["段"]
+        pw["点"] = min(pw["上限"], pw["点"] + pw["上限"] // 2 + rt.get("休む", 0))
+        if cal(st["week"])[2] == 4 and pw.get("怪しさ", 0) > 0:
+            pw["怪しさ"] -= 1
     active = sum(v for k, v in rt.items() if k != "休む")
     h["疲れ"] = round(max(0, h["疲れ"] + 0.12 * active - 0.5 - 0.4 * rt.get("休む", 0)), 2)
     if h["疲れ"] >= 3:
@@ -522,6 +530,50 @@ def hero_week(st, out):
         st["flags"]["疲れを知らせた"] = True
     else:
         st["flags"]["疲れを知らせた"] = False
+
+
+def power_cmd(st, args):
+    """一字の力。show／use <点> [人前]／set <欄> <値>"""
+    pw = st["hero"].get("力")
+    op = args[0] if args else "show"
+    if op == "show":
+        print(f"力「{pw['字']}」（{pw['読み']}）{('— ' + pw['名']) if pw.get('名') else ''}　段 {pw['段']}/5　"
+              f"力の点 {pw['点']}/{pw['上限']}　経験 {pw['経験']}（次の段まで {POWER_STEPS[pw['段']] - pw['経験'] if pw['段'] < 5 else '―'}）　怪しさ {pw.get('怪しさ', 0)}")
+        for k in ("できること", "伸びた先", "代価", "知られると", "決めごと"):
+            if pw.get(k):
+                print(f"  {k}：{pw[k]}")
+        return
+    if op == "use":
+        n = int(args[1])
+        public = "人前" in args[2:]
+        if n > pw["点"]:
+            print(f"力の点が足りない（{pw['点']}）。無理に使うなら、GM が代価を重くする")
+            return
+        pw["点"] -= n
+        pw["経験"] += n
+        out = Out(st)
+        print(f"力「{pw['字']}」を使った（−{n}、残り {pw['点']}/{pw['上限']}）。代価：{pw['代価']}")
+        while pw["段"] < 5 and pw["経験"] >= POWER_STEPS[pw["段"]]:
+            pw["段"] += 1
+            pw["上限"] = 4 + 2 * pw["段"]
+            out.report(f"力「{pw['字']}」が段 {pw['段']} に上がった", stop=False)
+            out.note(f"GM：段が上がった。できることを一つ広げて、power set できること で書き直す（伸びた先：{pw['伸びた先']}）")
+        if public or n >= 4:
+            r1, r2 = d(6), d(6)
+            s = r1 + r2 + pw.get("怪しさ", 0) + (3 if public else 0) + n // 2
+            print(f"  気づかれるか 🎲{r1}+{r2}＋怪しさ{pw.get('怪しさ', 0)}{'＋人前3' if public else ''}＋{n // 2} ＝ {s}（13 以上で噂）")
+            if public:
+                pw["怪しさ"] = pw.get("怪しさ", 0) + 1
+            if s >= 13:
+                apply(st, {"clocks.力の噂": 1}, out)
+                out.report(f"主人公の力「{pw['字']}」を、誰かが見た。噂が広がりはじめる（知られると：{pw['知られると']}）", stop=True)
+        for l in out.lines:
+            print(l)
+        append_md(LOG, f"- {cal_str(st['week'])}：力「{pw['字']}」を使った（{n} 点{'、人前で' if public else ''}）")
+    elif op == "set":
+        pw[args[1]] = parse_val(args[2]) if args[1] in ("段", "点", "経験", "怪しさ") else args[2]
+        print(f"力の{args[1]} → {args[2]}")
+    save(st)
 
 
 def projects_week(st, out):
@@ -582,8 +634,11 @@ def undo():
 def status(st, gm):
     h, t = st["hero"], st["town"]
     print(f"■ {cal_str(st['week'])}")
-    print(f"主人公：{h.get('名', '（未定）')}（{h.get('出自', '')}・{h.get('年齢', '?')}歳・得意 {h.get('得意', '?')}） 疲れ {h['疲れ']}")
+    print(f"主人公：{h.get('名', '（未定）')}（{h.get('出自', '')}・{h.get('年齢', '?')}歳） 疲れ {h['疲れ']}")
     print("  能力：" + "  ".join(f"{a} {h['能力'][a]}({mod(h['能力'][a]):+d})" for a in ABIL))
+    pw = h.get("力")
+    if pw:
+        print(f"  力：「{pw['字']}」{('（' + pw['名'] + '）') if pw.get('名') else ''} 段 {pw['段']}/5　力の点 {pw['点']}/{pw['上限']}　怪しさ {pw.get('怪しさ', 0)}")
     if h.get("過ごし方"):
         print("  過ごし方：" + "、".join(f"{k}{v}" for k, v in h["過ごし方"].items()))
     print(f"町：金庫 {t['銀']} 銀　蔵 {t['蔵']} 週分　人口 {t['人口']}　治安 {t['治安']}　町の声 {t['町の声']}　公の覚え {t['公の覚え']}")
@@ -615,19 +670,22 @@ def status(st, gm):
 
 
 # ---------------------------------------------------------------- 始める
-def new(origin, tokui):
+def new(origin, ji=None):
     st = load("initial_state")
     org = load("origins")
     if origin not in org:
         sys.exit("出自は " + "／".join(org) + " のどれか")
-    if tokui not in ABIL:
-        sys.exit("得意は " + "／".join(ABIL) + " のどれか（強くなれるのは、この一分野だけ）")
     o = org[origin]
     st["hero"]["出自"] = origin
-    st["hero"]["得意"] = tokui
     for k, v in o["能力"].items():
         st["hero"]["能力"][k] += v
-    st["hero"]["能力"][tokui] = 14
+    pool = load("kanji")
+    if ji:
+        kj = next((x for x in pool if x["字"] == ji), None) or {"字": ji, "読み": "", "できること": "", "伸びた先": "",
+                                                              "代価": "", "知られると": ""}
+    else:
+        kj = random.choice(pool)
+    st["hero"]["力"] = dict(kj, 段=1, 経験=0, 点=6, 上限=6, 怪しさ=0, 名="", 決めごと="")
     apply(st, o.get("effects"))
     for n, v in o.get("人物", {}).items():
         for k, x in v.items():
@@ -639,6 +697,8 @@ def new(origin, tokui):
         f.write("# 記録\n\n")
     append_md(LOG, f"- {cal_str(0)}：{o['始まり']}")
     print(f"始めた：{origin}。{o['始まり']}")
+    print(f"力の字：「{kj['字']}」（{kj.get('読み', '')}）。表の芽：{kj.get('できること', '（GM とプレイヤーで決める）')}")
+    print("→ 字から、プレイヤーと一緒に力の形を決め、power set 名／できること／代価／決めごと で書く")
     print("名前・年齢・見た目・ひとこと（譲れないこと）を決めたら、set hero.名 … などで入れる")
 
 
@@ -653,7 +713,7 @@ def sim(weeks, seeds):
         random.seed(seed)
         st = load("initial_state")
         st["daily"] = load("daily")
-        st["hero"]["得意"] = "話"
+        st["hero"]["力"] = dict(random.choice(load("kanji")), 段=1, 経験=0, 点=6, 上限=6, 怪しさ=0)
         texts = collections.Counter()
         for _ in range(weeks):
             out = Out(st)
@@ -705,9 +765,7 @@ def main():
         sim(int(a[1]) if len(a) > 1 else 96, int(a[2]) if len(a) > 2 else 20)
         return
     if cmd == "new":
-        if len(a) < 3:
-            sys.exit("python3 engine/rm.py new <出自> <得意>（得意：体／技／知／話／心）")
-        new(a[1], a[2])
+        new(a[1], a[2] if len(a) > 2 else None)
         return
     if cmd == "undo":
         undo()
@@ -773,6 +831,8 @@ def main():
         st["npcs"][a[1]].setdefault("記憶", []).append(f"{cal_str(st['week'])}：{a[2]}")
         save(st)
         print(f"{a[1]}が覚えた：{a[2]}")
+    elif cmd == "power":
+        power_cmd(st, a[1:])
     elif cmd == "scheme":
         scheme_cmd(st, a[1:])
     elif cmd == "thread":

@@ -77,7 +77,7 @@ games/ の下には、キャラとの雑談ではなく、Claude が GM を務�
 ### ロシュモール年代記（games/ロシュモール/）
 ユーザーが「ロシュモールを始めよう」「ロシュモールの続き」等と言ったら：
 - README.md・system.md・state.md・log.md の最後のほうを読み、`python3 engine/rm.py status --gm` で現状を見る（games/ロシュモール/ で実行）。人物は場面に出る者のシートだけ読む（npcs/index.md で一覧）
-- セーブ（engine/save/state.json）が無ければ、はじめの回。system.md §12 に沿って主人公を作り、`engine/rm.py new <出自> <得意>` で始める
+- セーブ（engine/save/state.json）が無ければ、はじめの回。system.md §12 に沿って主人公を作り、`engine/rm.py new <出自>` で始める（しるしの字がランダムに決まる）
 - 進め方・判定・企てと巻き込み・人物の演じ方は system.md に従う。数値・乱数・時間・山札はエンジンで処理し、頭の中で計算しない
 - 新しい人物は `python3 engine/trait.py` で特徴を引いて作る（system.md §9）
 - gm/ の中身と、人物シートの「秘密」はプレイヤーに見せない

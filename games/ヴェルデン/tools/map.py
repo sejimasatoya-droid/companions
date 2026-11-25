@@ -200,6 +200,15 @@ def render(m, ms, gm=False):
     return "\n".join(out), leg, evs
 
 
+def tstr(m, t):
+    mins = m.meta.get("minutes")
+    if not mins:
+        return f"{t}{m.unit}"
+    total = t * int(mins)
+    h, mm = divmod(total, 60)
+    return (f"{h}時間" if h else "") + (f"{mm}分" if mm else "") or "0分"
+
+
 def report_pos(m, ms):
     x, y = ms["pos"]
     c = m.ch(x, y)
@@ -214,14 +223,14 @@ def report_pos(m, ms):
             lab += "（開いている）"
         around.append(f"{DIRNAME[d]}:{lab}")
     here = m.info(c)["label"] if c not in m.events else m.events[c]
-    return f"[{m.name}] ({x},{y}) {here}｜まわり " + " / ".join(around) + f"｜歩いた {ms['time']}{m.unit}"
+    return f"[{m.name}] ({x},{y}) {here}｜まわり " + " / ".join(around) + f"｜歩いた {tstr(m, ms['time'])}"
 
 
 def tick(m, ms, cost, log):
     before = ms["time"]
     ms["time"] += cost
     if m.check_every and before // m.check_every != ms["time"] // m.check_every:
-        log.append(f"  ＊ {ms['time']}{m.unit}：遭遇・時の判定をする頃（{m.check_every}{m.unit}ごと）")
+        log.append(f"  ＊ {tstr(m, ms['time'])}：遭遇・時の判定をする頃（{tstr(m, m.check_every)}ごと）")
 
 
 def step_into(m, ms, nx, ny, log, quiet_known=False):
@@ -385,7 +394,7 @@ def main(a):
         if evs:
             body += ["", "場所：", *[f"- {e}" for e in evs]]
         if ms["pos"]:
-            body += ["", f"いまの位置：({ms['pos'][0]},{ms['pos'][1]})　歩いた {ms['time']}{m.unit}"]
+            body += ["", f"いまの位置：({ms['pos'][0]},{ms['pos'][1]})　歩いた {tstr(m, ms['time'])}"]
         (PUBDIR / f"{m.name}.md").write_text("\n".join(body) + "\n", encoding="utf-8")
         print("書き出した：", PUBDIR / f"{m.name}.md")
     save_state(st)

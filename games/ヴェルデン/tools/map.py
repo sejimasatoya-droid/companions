@@ -354,7 +354,7 @@ def step_into(m, ms, nx, ny, log, quiet_known=False):
             stop = True
         else:
             log.append(f"  → ({nx},{ny}) 既訪【{c}】{m.events[c].split('｜')[0]}（{ms['visits'][k]}回目。省略してよい）")
-    elif i["stop"] and first:
+    elif i["stop"] and first and k not in ms["cleared"]:
         log.append(f"  → ({nx},{ny}) {i['label']}（初めて。止まる）")
         stop = True
     elif i["stop"] and k not in ms["cleared"]:

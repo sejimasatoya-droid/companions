@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ロシュモール年代記のエンジン。数値・乱数・時間・出来事の山札・人物の企てを扱う。
 
-  python3 engine/rm.py new <出自>              新しく始める（出自：跡取り／代官／塩商の子）
+  python3 engine/rm.py new <出自> <得意>       新しく始める（出自：跡取り／代官／塩商の子、得意：体／技／知／話／心）
   python3 engine/rm.py status [--gm]          今の状況（--gm で企て・山札・隠しクロックも）
   python3 engine/rm.py advance [N]            N 週進める（巻き込みなど止まる出来事で止まる。既定 1）
   python3 engine/rm.py undo                   最後の advance の前に戻す
@@ -432,7 +432,7 @@ def deck_week(st, out):
             c = next(c for c in load("cards") if c["id"] == cid)
             if cond(st, c.get("if")) and not set(c.get("tags", [])) & set(st["tags_closed"]):
                 st["cards_used"].append(cid)
-                out.report(f"《出来事》{c['text']}", stop=c.get("stop", True), visible=c.get("visible", True))
+                out.report(f"《出来事・{c.get('層', '町')}》{c['text']}", stop=c.get("stop", True), visible=c.get("visible", True))
                 apply(st, c.get("effects"), out)
                 if c.get("seed"):
                     out.note("種：" + c["seed"])
@@ -446,7 +446,7 @@ def deck_week(st, out):
 
 def show_stage(st, th, i, out):
     s = th["段"][i]
-    out.report(f"《{th['名']} {i + 1}/{len(th['段'])}》{s['text']}", stop=s.get("stop", bool(s.get("seed"))),
+    out.report(f"《{th['名']} {i + 1}/{len(th['段'])}・{th.get('層', '町')}》{s['text']}", stop=s.get("stop", bool(s.get("seed"))),
                visible=s.get("visible", True))
     apply(st, s.get("effects"), out)
     if s.get("seed"):
@@ -497,6 +497,7 @@ def rumor_month(st, out):
 
 # ---------------------------------------------------------------- 主人公の週・計画
 def hero_week(st, out):
+    """主人公が強くなるのは「得意」の一分野だけ。ほかは伸びが半分で、12 で止まる"""
     h = st["hero"]
     acts = load("activities")
     rt = h.get("過ごし方", {})
@@ -504,12 +505,16 @@ def hero_week(st, out):
         ab = acts.get(a, {}).get("能力")
         if not ab:
             continue
+        tokui = ab == h.get("得意")
+        cap = 18 if tokui else 12
         h["経験"][ab] = h["経験"].get(ab, 0) + days
-        need = max(6, (h["能力"][ab] - 6) * 3)
-        if h["経験"][ab] >= need and h["能力"][ab] < 18:
+        need = max(6, (h["能力"][ab] - 6) * 3) * (1 if tokui else 2)
+        if h["経験"][ab] >= need and h["能力"][ab] < cap:
             h["経験"][ab] -= need
             h["能力"][ab] += 1
             out.report(f"主人公の{ab}が伸びた：{h['能力'][ab] - 1} → {h['能力'][ab]}", stop=False)
+        elif h["能力"][ab] >= cap:
+            h["経験"][ab] = 0
     active = sum(v for k, v in rt.items() if k != "休む")
     h["疲れ"] = round(max(0, h["疲れ"] + 0.12 * active - 0.5 - 0.4 * rt.get("休む", 0)), 2)
     if h["疲れ"] >= 3:
@@ -577,7 +582,7 @@ def undo():
 def status(st, gm):
     h, t = st["hero"], st["town"]
     print(f"■ {cal_str(st['week'])}")
-    print(f"主人公：{h.get('名', '（未定）')}（{h.get('出自', '')}・{h.get('年齢', '?')}歳） 疲れ {h['疲れ']}")
+    print(f"主人公：{h.get('名', '（未定）')}（{h.get('出自', '')}・{h.get('年齢', '?')}歳・得意 {h.get('得意', '?')}） 疲れ {h['疲れ']}")
     print("  能力：" + "  ".join(f"{a} {h['能力'][a]}({mod(h['能力'][a]):+d})" for a in ABIL))
     if h.get("過ごし方"):
         print("  過ごし方：" + "、".join(f"{k}{v}" for k, v in h["過ごし方"].items()))
@@ -610,15 +615,19 @@ def status(st, gm):
 
 
 # ---------------------------------------------------------------- 始める
-def new(origin):
+def new(origin, tokui):
     st = load("initial_state")
     org = load("origins")
     if origin not in org:
         sys.exit("出自は " + "／".join(org) + " のどれか")
+    if tokui not in ABIL:
+        sys.exit("得意は " + "／".join(ABIL) + " のどれか（強くなれるのは、この一分野だけ）")
     o = org[origin]
     st["hero"]["出自"] = origin
+    st["hero"]["得意"] = tokui
     for k, v in o["能力"].items():
-        st["hero"]["能力"][k] = v
+        st["hero"]["能力"][k] += v
+    st["hero"]["能力"][tokui] = 14
     apply(st, o.get("effects"))
     for n, v in o.get("人物", {}).items():
         for k, x in v.items():
@@ -644,6 +653,7 @@ def sim(weeks, seeds):
         random.seed(seed)
         st = load("initial_state")
         st["daily"] = load("daily")
+        st["hero"]["得意"] = "話"
         texts = collections.Counter()
         for _ in range(weeks):
             out = Out(st)
@@ -653,12 +663,15 @@ def sim(weeks, seeds):
             for l in out.lines:
                 if l.startswith("    →"):
                     continue
-                kind = "巻き込み" if "〉企て" in l else "筋" if "《" in l and "》" in l and "出来事" not in l else \
-                    "札" if "《出来事》" in l else "日常" if l.strip("・ ■").startswith("〔") and "〔暦〕" not in l and "ざわめき" not in l else \
+                kind = "巻き込み" if "〉企て" in l else "筋" if "《" in l and "》" in l and "《出来事" not in l else \
+                    "札" if "《出来事" in l else "日常" if l.strip("・ ■").startswith("〔") and "〔暦〕" not in l and "ざわめき" not in l else \
                     "ざわめき" if "ざわめき" in l else "節目" if "【" in l else "暦" if "〔暦〕" in l else "その他"
                 tot[kind] += 1
                 if "■" in l:
                     tot["止まる"] += 1
+                m_ = re.search(r"・(個人|町|公国|世界)》", l)
+                if m_:
+                    tot["層：" + m_.group(1)] += 1
                 if kind not in ("暦", "その他"):
                     key = re.sub(r"[0-9.]+", "", l)
                     texts[key] += 1
@@ -692,7 +705,9 @@ def main():
         sim(int(a[1]) if len(a) > 1 else 96, int(a[2]) if len(a) > 2 else 20)
         return
     if cmd == "new":
-        new(a[1])
+        if len(a) < 3:
+            sys.exit("python3 engine/rm.py new <出自> <得意>（得意：体／技／知／話／心）")
+        new(a[1], a[2])
         return
     if cmd == "undo":
         undo()

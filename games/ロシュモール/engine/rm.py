@@ -267,7 +267,7 @@ def scheme_week(st, out):
     cands = []
     for n, r in st["npcs"].items():
         sc = r.get("企て")
-        if not sc or r.get("不在"):
+        if not sc or r.get("不在") or sc.get("休み"):
             continue
         df = sc.get("def") or sdefs.get(sc["id"])
         if not df or st["week"] - sc.get("前の週", -99) < df.get("間", 3):

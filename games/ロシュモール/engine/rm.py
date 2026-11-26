@@ -18,6 +18,7 @@
   python3 engine/rm.py thread close <id>|tag <タグ>   筋を閉じる／そのタグの札をすべて山から抜く
   python3 engine/rm.py daily add <人物> "<文>"  日常の一手を足す
   python3 engine/rm.py project add "<名>" <週> [銀]   計画を始める
+  python3 engine/rm.py chapter show|new "<名>" "<一行の要約（閉じる章）>"   章の区切り（system.md §13 の見直しをしてから）
 """
 import json, os, random, shutil, sys, glob, re
 
@@ -587,6 +588,54 @@ def projects_week(st, out):
 
 
 # ---------------------------------------------------------------- 進める
+# ---------------------------------------------------------------- 章（system.md §13）
+CH_MIN, CH_MAX = 10, 20  # 章の長さの目安（週）
+
+
+def chapter_week(st, out):
+    """章が長くなったら、区切りの頃合いを GM に知らせる（止める）"""
+    ch = st.get("章")
+    if not ch:
+        return
+    n = st["week"] - ch["始まり"]
+    y, m, w = cal(st["week"])
+    if n >= CH_MAX and not ch.get("知らせた"):
+        ch["知らせた"] = True
+        out.report(f"〔章〕第{ch['番']}章「{ch['名']}」が {n} 週になった。区切りの頃合い。§13 の見直しをして chapter new", stop=True, log=False)
+    elif n >= CH_MIN and w == 1 and m in (3, 6, 9, 12) and not ch.get("季節に知らせた"):
+        ch["季節に知らせた"] = True
+        out.note(f"〔章〕第{ch['番']}章は {n} 週目。季節の変わり目。大きな筋が一つ片づいていれば、章を閉じてよい（§13）")
+
+
+def chapter_cmd(st, a):
+    ch = st.get("章")
+    if not a or a[0] == "show":
+        for c in st.get("章の記録", []):
+            print(f"第{c['番']}章「{c['名']}」 {cal_str(c['始まり'])} 〜 {cal_str(c['終わり'])}：{c.get('要約', '')}")
+        if ch:
+            print(f"いま：第{ch['番']}章「{ch['名']}」 {cal_str(ch['始まり'])} から {st['week'] - ch['始まり']} 週")
+        return
+    if a[0] == "new":
+        name, summ = a[1], a[2] if len(a) > 2 else ""
+        if ch:
+            ch = dict(ch, 終わり=st["week"] - 1, 要約=summ)
+            for k in ("知らせた", "季節に知らせた"):
+                ch.pop(k, None)
+            st.setdefault("章の記録", []).append(ch)
+        num = (ch["番"] + 1) if ch else 1
+        st["章"] = {"番": num, "名": name, "始まり": st["week"]}
+        out = Out(st)
+        build_deck(st, out)  # 見直しで足した筋・札を山に入れる
+        for l in out.lines:
+            print(l)
+        append_md(LOG, f"\n## 第{num}章「{name}」（{cal_str(st['week'])}から）\n")
+        save(st)
+        empty = [n for n, r in st["npcs"].items() if not r.get("企て") and not r.get("不在")]
+        print(f"第{num}章「{name}」を始めた。山札を切り直した")
+        if empty:
+            print("  企てのない人：" + "、".join(empty) + "（§13：見直しで決めるか、休ませる理由を章.md の GM 欄に書く）")
+
+
 def advance(st, n):
     snap(st)
     for _ in range(n):
@@ -601,6 +650,7 @@ def advance(st, n):
         rumor_month(st, out)
         projects_week(st, out)
         hero_week(st, out)
+        chapter_week(st, out)
         for l in out.lines:
             print(l)
         if out.hidden:
@@ -633,7 +683,8 @@ def undo():
 # ---------------------------------------------------------------- 表示
 def status(st, gm):
     h, t = st["hero"], st["town"]
-    print(f"■ {cal_str(st['week'])}")
+    ch = st.get("章")
+    print(f"■ {cal_str(st['week'])}" + (f"　第{ch['番']}章「{ch['名']}」{st['week'] - ch['始まり'] + 1}週目" if ch else ""))
     print(f"主人公：{h.get('名', '（未定）')}（{h.get('出自', '')}・{h.get('年齢', '?')}歳） 疲れ {h['疲れ']}")
     print("  能力：" + "  ".join(f"{a} {h['能力'][a]}({mod(h['能力'][a]):+d})" for a in ABIL))
     pw = h.get("力")
@@ -850,6 +901,8 @@ def main():
         st["daily"].setdefault(a[2], []).append(a[3])
         save(st)
         print(f"{a[2]}の日常の一手を足した")
+    elif cmd == "chapter":
+        chapter_cmd(st, a[1:])
     elif cmd == "project":
         name, weeks = a[2], int(a[3])
         cost = float(a[4]) if len(a) > 4 else 0

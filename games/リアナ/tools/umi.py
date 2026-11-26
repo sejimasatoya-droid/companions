@@ -13,6 +13,7 @@
     python tools/umi.py market                  … 相場を見る
     python tools/umi.py buy 胡椒 10 / sell 胡椒 10
     python tools/umi.py supply 水 30 / supply 食料 30
+    python tools/umi.py ration 2/3              … 水と食料を切りつめる（1 / 2/3 / 1/2）
     python tools/umi.py hire 10 / fire 3        … 水夫を雇う・暇を出す
     python tools/umi.py pay                     … たまった給金を払う
     python tools/umi.py repair [点]             … 船体を直す
@@ -286,7 +287,10 @@ def daily_needs(st, sea, x, y, wind):
     """一日ぶんの水と食料、士気、病。止まる理由を返す。"""
     stop = []
     crew = st["crew"]
-    need = crew / 30
+    ration = st.get("ration", 1.0)
+    need = crew / 30 * ration
+    if ration < 1 and random.random() < (1 - ration) * 1.5:
+        st["morale"] -= 1
     rain = wind["str"] in ("嵐",) or (wind["str"] != "凪" and random.random() < 0.08)
     if rain and st["port"] is None:
         gain = random.randint(1, 6)
@@ -552,7 +556,7 @@ def one_day(sea, st, heading=None, path=None):
                 del st["cargo"]["木材"]
     # 少ない
     for k in ("water", "food"):
-        days = st[k] / max(1, st["crew"] / 30)
+        days = st[k] / max(0.1, st["crew"] / 30 * st.get("ration", 1.0))
         if 0 < days <= 5 and "少ない" not in stop and st["port"] is None:
             say(f"  {'水' if k == 'water' else '食料'}が残り {days:.0f} 日ぶん")
             stop.append("少ない")
@@ -878,7 +882,7 @@ def show_status(sea, st):
     say(f"船：{sh['name']}（{sh['type']}）船体 {sh['hull']}/{spec['hull']}　砲 {sh.get('guns', spec['guns'])}"
         + ("　帆柱が折れている" if sh.get("mast_broken") else ""))
     say(f"水夫 {st['crew']} 人（定員 {spec['crew']}・最低 {spec['min']}）　士気 {st['morale']}　病人 {st.get('sick', 0)}")
-    days = st["crew"] / 30 if st["crew"] else 1
+    days = (st["crew"] / 30 if st["crew"] else 1) * st.get("ration", 1.0)
     say(f"水 {st['water']:.0f} 樽（{st['water'] / days:.0f} 日）　食料 {st['food']:.0f} 樽（{st['food'] / days:.0f} 日）"
         f"　積荷 {cargo_used(st)}/{spec['hold']}")
     if st["cargo"]:
@@ -1061,6 +1065,12 @@ def run(cmd, a, sea, st):
         st["crew"] += n
         say(f"{n} 人を雇った。支度金 −{cost}（残り {st['gold']}）。水夫 {st['crew']}")
         say("[GM] 雇える人数は港の大きさと名声しだい（ルール.md「水夫を雇う」）。多すぎたら set で戻す")
+    elif cmd == "ration":
+        r = {"1": 1.0, "2/3": 2 / 3, "1/2": 0.5}.get(a[0])
+        if r is None:
+            sys.exit("ration 1 / 2/3 / 1/2")
+        st["ration"] = r
+        say(f"水と食料を {a[0]} にする（士気は少しずつ下がる：一日あたり {(1 - r) * 1.5:.0%} の見込みで −1）")
     elif cmd == "fire":
         n = int(a[0])
         st["crew"] -= n

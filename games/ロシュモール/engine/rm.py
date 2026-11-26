@@ -501,7 +501,7 @@ POWER_STEPS = [0, 30, 80, 160, 280]  # 段 2〜5 に上がるのに要る、た�
 
 
 def hero_week(st, out):
-    """能力はみんな凡人並み（13 で止まる）。主人公の強さは、一字の「力」だけ"""
+    """能力は 18 で止まる（311年 長夜月、プレイヤーの希望で 13 の上限をなくした）"""
     h = st["hero"]
     acts = load("activities")
     rt = h.get("過ごし方", {})
@@ -511,7 +511,7 @@ def hero_week(st, out):
             continue
         h["経験"][ab] = h["経験"].get(ab, 0) + days
         need = max(6, (h["能力"][ab] - 6) * 3)
-        if h["能力"][ab] >= 13:
+        if h["能力"][ab] >= 18:
             h["経験"][ab] = 0
         elif h["経験"][ab] >= need:
             h["経験"][ab] -= need

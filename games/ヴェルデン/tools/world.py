@@ -90,7 +90,9 @@ def main(a):
         advance(c, n, out)
         print(line(c)); print("\n".join(out)); save(d)
     elif cmd == "set":
-        by[a[1]][a[2]] = a[3]; save(d); print(line(by[a[1]]))
+        v = a[3]
+        if v.lstrip("-").isdigit(): v = int(v)
+        by[a[1]][a[2]] = v; save(d); print(line(by[a[1]]))
     elif cmd == "day":
         n = int(a[1]) if len(a) > 1 else 1
         for _ in range(n):

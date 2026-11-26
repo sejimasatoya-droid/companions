@@ -20,6 +20,7 @@
   記録
     python tools/umi.py init                    … 遊び始めの状態を作る（一度だけ）
     python tools/umi.py map                     … 瀬島の海図（海図/海図.md）を書き出す
+                                                （海図/海図.svg の絵は、どのコマンドのあとでも自動で書き直す）
     python tools/umi.py gmmap                   … 隠れたところも全部（GM だけが見る）
     python tools/umi.py clocks                  … 時計（GM だけが見る）
     python tools/umi.py set 士気 60             … 状態の値を手で直す（GM の裁定。判断記録に理由を書く）
@@ -42,6 +43,7 @@ MARKET = ROOT / "gm" / "相場.json"
 CLOCKS = ROOT / "gm" / "時計.json"
 STATE = ROOT / "状態.json"
 PUBMAP = ROOT / "海図" / "海図.md"
+PUBSVG = ROOT / "海図" / "海図.svg"
 LOG = ROOT / "gm" / "出目.log"
 NPCF = ROOT / "gm" / "NPC.json"
 
@@ -554,6 +556,9 @@ def one_day(sea, st, heading=None, path=None):
         if 0 < days <= 5 and "少ない" not in stop and st["port"] is None:
             say(f"  {'水' if k == 'water' else '食料'}が残り {days:.0f} 日ぶん")
             stop.append("少ない")
+    tr = st.setdefault("track", [])
+    if not tr or tr[-1] != st["pos"]:
+        tr.append(list(st["pos"]))
     officer_casualty(st, crew_before)
     # 人：航海の 5 日ごとの仕掛けと甲板、月末の舞台裏
     if st["port"] is None and st["days_at_sea"] > 0 and st["days_at_sea"] % 5 == 0:
@@ -803,6 +808,67 @@ def write_public(sea, st):
     say(f"書き出した：{PUBMAP.relative_to(ROOT)}")
 
 
+def write_svg(sea, st):
+    """瀬島の海図を絵にする。道具を動かすたびに書き直す（見えたところだけ）。"""
+    C = 12
+    top = 44
+    W, H = sea.w * C, sea.h * C + top + 30
+    known = set(map(tuple, st["known"]))
+    col = {"~": "#2f6f9f", ".": "#4a8fbf", ":": "#7fb6d6", "m": "#5f8f5a", "#": "#d8c89a"}
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
+         f'font-family="Yu Gothic, Meiryo, sans-serif">',
+         f'<rect width="{W}" height="{H}" fill="#1b1f24"/>']
+    # 見出し
+    days = max(1, st["crew"]) / 30
+    wind = st.get("wind")
+    head = (f"{date_str(st)}　{st['ship']['name']}　" + (f"{st['port']} の港" if st["port"] else f"({st['pos'][0]},{st['pos'][1]})")
+            + f"　水 {st['water'] / days:.0f}日・食料 {st['food'] / days:.0f}日　士気 {st['morale']}　船体 {st['ship']['hull']}/{ship_spec(st)['hull']}"
+            + (f"　{wind_str(wind)}" if wind and not st["port"] else ""))
+    o.append(f'<text x="10" y="28" font-size="18" fill="#f2e6c8">{head}</text>')
+    o.append(f'<g transform="translate(0,{top})">')
+    # 霧（まだ描いていない海）
+    o.append(f'<rect width="{sea.w * C}" height="{sea.h * C}" fill="#2a2e33"/>')
+    for (x, y) in known:
+        c = sea.cell(x, y)
+        o.append(f'<rect x="{x * C}" y="{y * C}" width="{C}" height="{C}" fill="{col.get(c, "#2f6f9f")}"/>')
+        if c == ":":
+            o.append(f'<circle cx="{x * C + 6}" cy="{y * C + 6}" r="1.6" fill="#e8f4fa"/>')
+    # 目盛り
+    for x in range(0, sea.w, 10):
+        o.append(f'<line x1="{x * C}" y1="0" x2="{x * C}" y2="{sea.h * C}" stroke="#ffffff" stroke-opacity="0.08"/>')
+        o.append(f'<text x="{x * C + 2}" y="{sea.h * C + 16}" font-size="11" fill="#9aa3ad">{x}</text>')
+    for y in range(0, sea.h, 10):
+        o.append(f'<line x1="0" y1="{y * C}" x2="{sea.w * C}" y2="{y * C}" stroke="#ffffff" stroke-opacity="0.08"/>')
+        o.append(f'<text x="2" y="{y * C + 11}" font-size="11" fill="#9aa3ad">{y}</text>')
+    # 航跡
+    tr = st.get("track", [])
+    if len(tr) > 1:
+        pts = " ".join(f"{x * C + 6},{y * C + 6}" for x, y in tr)
+        o.append(f'<polyline points="{pts}" fill="none" stroke="#ffd166" stroke-width="2" stroke-dasharray="4 3" stroke-opacity="0.85"/>')
+    # 発見
+    for f in sea.finds:
+        if f["name"] in st["found"]:
+            x, y = f["x"] * C + 6, f["y"] * C + 6
+            o.append(f'<text x="{x}" y="{y + 5}" font-size="14" text-anchor="middle" fill="#ffe680">★</text>')
+            o.append(f'<text x="{x + 8}" y="{y + 16}" font-size="10" fill="#ffe680">{f["name"]}</text>')
+    # 港
+    for p in sea.ports:
+        if p["name"] in st["ports_known"]:
+            x, y = p["x"] * C + 6, p["y"] * C + 6
+            visited = p["name"] in st["visited"]
+            o.append(f'<circle cx="{x}" cy="{y}" r="4.5" fill="{"#e63946" if visited else "#1b1f24"}" stroke="#e63946" stroke-width="2"/>')
+            o.append(f'<text x="{x + 7}" y="{y - 5}" font-size="12" fill="#ffffff" stroke="#1b1f24" stroke-width="3" paint-order="stroke">{p["name"]}</text>')
+    # 船
+    x, y = st["pos"][0] * C + 6, st["pos"][1] * C + 6
+    o.append(f'<circle cx="{x}" cy="{y}" r="9" fill="none" stroke="#ffd166" stroke-width="2"/>')
+    o.append(f'<path d="M{x - 5},{y + 2} L{x + 5},{y + 2} L{x + 3},{y + 5} L{x - 3},{y + 5} Z M{x},{y + 2} L{x},{y - 6} L{x + 4},{y} Z" fill="#ffd166"/>')
+    o.append('</g>')
+    o.append(f'<text x="10" y="{H - 8}" font-size="11" fill="#9aa3ad">灰色＝まだ誰も描いていない海　赤丸＝港（塗りは入ったことのある港）　★＝見つけたもの　点線＝この船の航跡</text>')
+    o.append('</svg>')
+    PUBSVG.parent.mkdir(exist_ok=True)
+    PUBSVG.write_text("\n".join(o), encoding="utf-8")
+
+
 def show_status(sea, st):
     spec = ship_spec(st)
     sh = st["ship"]
@@ -841,6 +907,10 @@ def main():
         run(cmd, args[1:], sea, st)
     finally:
         save(STATE, st)
+        try:
+            write_svg(sea, st)
+        except Exception as e:  # 絵が描けなくても遊びは止めない
+            print(f"（海図の絵が書けなかった：{e}）")
         flush_log(args)
 
 

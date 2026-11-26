@@ -23,6 +23,9 @@
     python tools/umi.py gmmap                   … 隠れたところも全部（GM だけが見る）
     python tools/umi.py clocks                  … 時計（GM だけが見る）
     python tools/umi.py set 士気 60             … 状態の値を手で直す（GM の裁定。判断記録に理由を書く）
+    python tools/umi.py who                     … 人物の生死・居場所・人物どうしの思い（GM だけが見る）
+    python tools/umi.py npc 名 dead / npc 名 where 港 … 士官が死んだ・船を降りた（GM）
+    python tools/umi.py rel 甲 乙 -3            … 甲から乙への思いを動かす（GM）
     python tools/umi.py find 名前               … 発見物を「見つけた」にする（上陸して調べて成功したとき）
     python tools/umi.py report                  … リアナの地理院で、見つけたものを報告する
 
@@ -40,6 +43,7 @@ CLOCKS = ROOT / "gm" / "時計.json"
 STATE = ROOT / "状態.json"
 PUBMAP = ROOT / "海図" / "海図.md"
 LOG = ROOT / "gm" / "出目.log"
+NPCF = ROOT / "gm" / "NPC.json"
 
 DIRS = [("北", 0, -1), ("北東", 1, -1), ("東", 1, 0), ("南東", 1, 1),
         ("南", 0, 1), ("南西", -1, 1), ("西", -1, 0), ("北西", -1, -1)]
@@ -411,6 +415,7 @@ def land_hint(sea, x, y):
 def one_day(sea, st, heading=None, path=None):
     """一日進める。止まる理由のリストを返す。"""
     x, y = st["pos"]
+    crew_before = st["crew"]
     wind = make_wind(sea, x, y, st)
     st["wind"] = wind
     advance_date(st)
@@ -549,6 +554,16 @@ def one_day(sea, st, heading=None, path=None):
         if 0 < days <= 5 and "少ない" not in stop and st["port"] is None:
             say(f"  {'水' if k == 'water' else '食料'}が残り {days:.0f} 日ぶん")
             stop.append("少ない")
+    officer_casualty(st, crew_before)
+    # 人：航海の 5 日ごとの仕掛けと甲板、月末の舞台裏
+    if st["port"] is None and st["days_at_sea"] > 0 and st["days_at_sea"] % 5 == 0:
+        acted = initiative_round(on_ship(), "船の上")
+        ev = deck_event() if random.random() < 0.6 else None
+        if acted or ev:
+            say("  （船の上で、何かが起きている）")
+            stop.append("船の上")
+    if st["date"]["d"] == 30:
+        backstage(st)
     tick_clocks(st)
     tick_market(1)
     return stop
@@ -652,6 +667,71 @@ def adjacent_port(sea, st):
         if p and p["name"] in st["ports_known"]:
             return p
     return None
+
+
+# ---------------------------------------------------------------- 人
+def npcs():
+    return load(NPCF, {"people": {}, "relations": [], "crew_mood": {}})
+
+
+def initiative_round(names, label):
+    """仕掛け手番。2d6＋能動 ≧ 10 で仕掛ける。仕掛けた者の名を返す。"""
+    nd = npcs()
+    acted = []
+    for n in names:
+        pp = nd["people"][n]
+        a, b = roll()
+        t = a + b + pp["能動"]
+        mark = "仕掛ける" if t >= 10 else "様子を見る"
+        say(f"[GM] 仕掛け〔{label}〕{n}：2d6[{a},{b}]+能動{pp['能動']} = {t} / 10 → {mark}")
+        if t >= 10:
+            acted.append(n)
+    if acted:
+        say(f"[GM] → {'・'.join(acted)} が帳面の未着手から一つ実行する（gm/NPCの動かし方.md 三）")
+    return acted
+
+
+def on_ship():
+    return [n for n, p in npcs()["people"].items() if p["alive"] and p["where"] == "船"]
+
+
+def deck_event():
+    nd = npcs()
+    ship = on_ship()
+    if len(ship) < 2:
+        return None
+    rel = {(a, b): v for a, b, v in nd["relations"]}
+    pairs = []
+    for i, x in enumerate(ship):
+        for y in ship[i + 1:]:
+            v1, v2 = rel.get((x, y), 0), rel.get((y, x), 0)
+            pairs.append((x, y, v1, v2, abs(v1) + abs(v2) + 10))
+    tot = sum(p[4] for p in pairs)
+    r = random.uniform(0, tot)
+    for x, y, v1, v2, w in pairs:
+        r -= w
+        if r <= 0:
+            break
+    kind = "ぶつかる" if (v1 + v2) / 2 < 0 else "結びつく"
+    k = random.randint(1, 6)
+    say(f"[GM] 甲板の出来事：{x} と {y}（思い {v1:+d}／{v2:+d}）→「{kind}」の {k}（gm/NPCの動かし方.md 四）")
+    return (x, y, kind, k)
+
+
+def backstage(st):
+    names = [n for n, p in npcs()["people"].items() if p["alive"] and p["where"] != "船"]
+    acted = initiative_round(names, "舞台裏")
+    if acted:
+        say("[GM] 舞台裏で動いた者は、何をしたかを一行決めて帳面に書く（主人公は知らない）")
+
+
+def officer_casualty(st, before):
+    lost = before - st["crew"]
+    if lost <= 0 or before <= 0:
+        return
+    for n in on_ship():
+        if random.random() < min(1.0, lost / before):
+            say(f"[GM] 士官が巻きこまれたかも：{n}。dice.py fate <体> 1 を振る（gm/NPCの動かし方.md 八）")
 
 
 # ---------------------------------------------------------------- 時計
@@ -878,6 +958,8 @@ def run(cmd, a, sea, st):
             say(f"★ はじめての港：{p['name']}（{p['nation']}）")
             say(f"[GM] gm/港.md の「{p['name']}」を読む")
         say(f"{p['name']} に入った。士気 +10")
+        here = [n for n, q in npcs()["people"].items() if q["alive"] and q["where"] == p["name"]]
+        initiative_round(on_ship() + here, f"入港・{p['name']}")
         if p["name"] in pd["ports"]:
             show_market(p["name"])
     elif cmd == "market":
@@ -972,6 +1054,40 @@ def run(cmd, a, sea, st):
         else:
             sys.exit("その値は set できない")
         say(f"set {k} = {v}")
+    elif cmd == "npc":
+        nd = npcs()
+        name = a[0]
+        if name not in nd["people"]:
+            sys.exit("その名の人物は gm/NPC.json にいない（足すなら、遊ぶ前か、場面に三度出てから）")
+        pp = nd["people"][name]
+        if a[1] == "dead":
+            pp["alive"] = False
+            for o in st.get("officers", []):
+                if o["name"].startswith(name.split("・")[0]):
+                    o["alive"] = False
+        elif a[1] == "where":
+            pp["where"] = a[2]
+        elif a[1] in ("能動", "押し"):
+            pp[a[1]] = int(a[2])
+        save(NPCF, nd)
+        say(f"[GM] {name}：{pp}")
+    elif cmd == "rel":
+        nd = npcs()
+        x, y, dv = a[0], a[1], int(a[2])
+        for r in nd["relations"]:
+            if r[0] == x and r[1] == y:
+                r[2] = max(-50, min(50, r[2] + dv))
+                break
+        else:
+            nd["relations"].append([x, y, max(-50, min(50, dv))])
+        save(NPCF, nd)
+        say(f"[GM] {x} → {y} の思い {dv:+d}")
+    elif cmd == "who":
+        nd = npcs()
+        for n, q in nd["people"].items():
+            print(f"{n}：{'生' if q['alive'] else '死'}・{q['where']}・能動{q['能動']}・押し{q['押し']}")
+        for x, y, v in nd["relations"]:
+            print(f"  {x} → {y}：{v:+d}")
     elif cmd == "find":
         name = a[0]
         if not any(f["name"] == name for f in sea.finds):

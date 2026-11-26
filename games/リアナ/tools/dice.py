@@ -8,6 +8,7 @@
   python tools/dice.py board 30 2 45 1    … 切り込み一合：味方30人・白兵2、敵45人・白兵1
   python tools/dice.py flee 6 2 5 1       … 離脱：こちら速さ6・航海2、あちら速さ5・航海1
   python tools/dice.py fate 1 2           … 船長の生死：体1、危うさ2（切り込みの負け・沈没・処刑など）
+  python tools/dice.py initiative 2       … 仕掛け手番：能動性2（10以上で仕掛ける。ふだんは umi.py が振る）
   python tools/dice.py opinion 1 20       … 意見の強さ：押しの強さ1、船長への信頼20（−50〜50）
   python tools/dice.py policy 6           … 方針表の行を選ぶ（1〜6）。gm/方針表.md を見る
   python tools/dice.py pick 6             … 1〜6 から一つ
@@ -158,6 +159,10 @@ def main():
         out = flee(*n[:4])
     elif c == "fate":
         out = fate(n[0], n[1])
+    elif c == "initiative":
+        a, b = d()
+        t = a + b + n[0]
+        out = f"仕掛け 2d6[{a},{b}]+能動{n[0]} = {t} / 10 → {'仕掛ける（帳面の未着手から一つ実行）' if t >= 10 else '様子を見る'}"
     elif c == "opinion":
         out = opinion(n[0], n[1])
     elif c in ("policy", "pick"):

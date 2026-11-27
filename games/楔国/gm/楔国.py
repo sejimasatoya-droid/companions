@@ -151,6 +151,7 @@ def initial():
         "ノルヴァ": {
             "国庫": 12.0, "債務": 180.0, "兵力": 12.0, "要塞": 5.0, "近代化": 25.0,
             "安定": 48.0, "主権": 100.0, "領土": 100.0,
+            "分野": dict(SECT0),
             "傾き": {"グラウ": 5.0, "セレス": 0.0, "ラドミール": 5.0, "オルネア": 0.0},
             "鉱山": {"段階": 0, "利権": {}, "月": 0},
             "保障": {}, "同盟": None, "通過": None, "占領": None, "内乱": 0,
@@ -204,8 +205,41 @@ def cred(st, g):
     return clip(nv["保障"][g] + 0.5 * bal - 0.3 * peace + 0.1 * G["関係"] / 100)
 
 
+# ---------------------------------------------------------------- 近代化の分野（812年春、瀬島の希望で分野ごとの効き目を入れた）
+SECT0 = {"工業": 22.0, "鉄道": 18.0, "教育": 30.0, "術式": 25.0, "行政": 30.0}
+
+
+def sect_step(nv, k):
+    """始めの値から +5 ごとに 1。"""
+    return (nv.get("分野", SECT0)[k] - SECT0[k]) / 5
+
+
+def sect_avg(nv):
+    if "分野" in nv:
+        nv["近代化"] = sum(nv["分野"].values()) / len(nv["分野"])
+    return nv["近代化"]
+
+
+def income_of(nv, royalty=0.0):
+    """入り（M／4週）。鉄道・工業 +0.1、行政 +0.15（+5ごと）。工業は鉱山の取り分を +10%（+5ごと）。"""
+    return (4.0 + nv["近代化"] * 0.02
+            + 0.10 * sect_step(nv, "鉄道") + 0.10 * sect_step(nv, "工業") + 0.15 * sect_step(nv, "行政")
+            + royalty * (1 + 0.10 * sect_step(nv, "工業")))
+
+
+def army_cost_factor(nv):
+    """術式 +5 ごとに兵力の値段 −5%（最大 −40%）。"""
+    return max(0.6, 1 - 0.05 * sect_step(nv, "術式"))
+
+
+def sect_cost_factor(nv, k):
+    """教育 +5 ごとに、教育以外の分野の値段 −3%（最大 −30%）。"""
+    return 1.0 if k == "教育" else max(0.7, 1 - 0.03 * sect_step(nv, "教育"))
+
+
 def defense(nv):
-    return clip((nv["兵力"] * 0.6 + nv["要塞"] * 0.5 + 10) / 100)
+    """守り。鉄道 +5 ごとに +.01（兵を早く運べる）。"""
+    return clip((nv["兵力"] * 0.6 + nv["要塞"] * 0.5 + 10) / 100 + 0.01 * max(0.0, sect_step(nv, "鉄道")))
 
 
 def stage_of(st, p):
@@ -751,18 +785,25 @@ class Strategy:
         royalty = 0
         if mine["段階"] == 3:
             royalty = 1.0 if len(mine["利権"]) == 1 else 1.2
-        income = 4.0 + nv["近代化"] * 0.02 + royalty
+        income = income_of(nv, royalty)
         exp = 3.6 + nv["債務"] * 0.004
         surplus = income - exp + 0.4  # 予算のやりくりの余地
         share = {"何もしない": (.4, 0, .3), "グラウ寄り": (.3, .1, .4), "均衡": (.45, .25, .3)}[self.kind]
         if surplus > 0:
-            nv["兵力"] += surplus * share[0] / 2 * (1 - nv["兵力"] / 60)
+            nv["兵力"] += surplus * share[0] / 2 / army_cost_factor(nv) * (1 - nv["兵力"] / 60)
             nv["要塞"] += surplus * share[1] / 3 * (1 - nv["要塞"] / 50)
-            nv["近代化"] += surplus * share[2] / 6 * (1 - nv["近代化"] / 90)
+            if "分野" in nv:
+                # 分野の振り分けは打ち方ごと（均衡は鉄道と行政、ほかは平らに）
+                pick = ["鉄道", "行政", "工業"] if self.kind == "均衡" else list(nv["分野"])
+                for k in pick:
+                    nv["分野"][k] += surplus * share[2] / len(pick) / 6 * 5 / sect_cost_factor(nv, k) * (1 - nv["近代化"] / 90)
+                sect_avg(nv)
+            else:
+                nv["近代化"] += surplus * share[2] / 6 * (1 - nv["近代化"] / 90)
         else:
             nv["債務"] -= surplus
         # 安定
-        target = 50 + 0.2 * (nv["近代化"] - 25) - 0.25 * (100 - nv["主権"]) + (5 if mine["段階"] == 3 else 0)
+        target = 50 + 0.2 * (nv["近代化"] - 25) + max(0.0, sect_step(nv, "教育")) - 0.25 * (100 - nv["主権"]) + (5 if mine["段階"] == 3 else 0)
         nv["安定"] += 0.12 * (target - nv["安定"]) + rng.gauss(0, 1.5)
         nv["主権"] = min(100, nv["主権"] + 0.04)
         nv["安定"] = clip(nv["安定"], 0, 100)

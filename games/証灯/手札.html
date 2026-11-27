@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>証灯の夜 手札</title>
+<style>
+  :root {
+    --bg:#eceae4; --paper:#faf8f3; --ink:#24221f; --sub:#76706a; --line:#d3cec4;
+    --back:#3b4252; --back2:#525b70; --white:#f3efe2; --red:#b8402f; --sway:#c79a2a; --mono:#5f6b7a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#17181b; --paper:#222327; --ink:#e9e6df; --sub:#a09a92; --line:#3a3a40;
+      --back:#4a5368; --back2:#5f6a84; --white:#e9e3cf; --red:#e0735f; --sway:#e2b94e; --mono:#9fb0c4; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Mincho ProN","Yu Mincho","YuMincho",serif; line-height:1.6; }
+  .wrap { max-width:1080px; margin:0 auto; padding:24px 16px 60px; }
+  header { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px; }
+  h1 { margin:0; font-size:26px; letter-spacing:.1em; }
+  .now { margin-left:auto; padding:3px 14px; border:1px solid var(--line); border-radius:999px; background:var(--paper); font-size:15px; }
+  h2 { font-size:17px; letter-spacing:.15em; margin:28px 0 10px; border-bottom:1px solid var(--line); padding-bottom:4px; }
+  .note { color:var(--sub); font-size:13px; margin:0 0 10px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; }
+  .card { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px 14px;
+    box-shadow:0 1px 2px rgba(0,0,0,.08); font-size:14px; display:flex; flex-direction:column; gap:6px; }
+  .card .top { display:flex; gap:8px; align-items:center; }
+  .card .id { font-family:ui-monospace,Consolas,monospace; font-size:12px; color:var(--sub); }
+  .card .kind { font-size:11px; padding:0 7px; border-radius:999px; border:1px solid var(--line); color:var(--sub); }
+  .card .kind.obj { border-color:var(--mono); color:var(--mono); }
+  .card .ttl { font-weight:700; font-size:15px; }
+  .card.public { border-left:4px solid var(--mono); }
+  .places { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px; }
+  .place { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+  .place .nm { font-weight:700; letter-spacing:.1em; }
+  .place .own { font-size:12px; color:var(--sub); }
+  .backs { display:flex; gap:5px; margin-top:8px; flex-wrap:wrap; min-height:44px; }
+  .bk { width:30px; height:42px; border-radius:5px; background:
+      repeating-linear-gradient(45deg,var(--back) 0 4px,var(--back2) 4px 8px); border:1px solid var(--back); }
+  .empty { font-size:12px; color:var(--sub); align-self:center; }
+  .hands { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; }
+  .oath { display:flex; gap:10px; align-items:flex-start; padding:8px 0; border-bottom:1px dashed var(--line); font-size:14px; }
+  .flame { flex:none; width:14px; height:20px; border-radius:50% 50% 45% 45%; margin-top:3px; border:1px solid var(--line); }
+  .flame.white { background:var(--white); box-shadow:0 0 6px var(--white); }
+  .flame.red { background:var(--red); box-shadow:0 0 6px var(--red); }
+  .flame.sway { background:linear-gradient(var(--white),var(--sway)); }
+  .flame.none { background:transparent; border-style:dashed; }
+  .who { flex:none; width:5.5em; font-weight:700; }
+  table.log { border-collapse:collapse; font-size:14px; }
+  table.log td { padding:2px 12px 2px 0; vertical-align:top; }
+  table.log td:first-child { font-family:ui-monospace,Consolas,monospace; color:var(--sub); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>証灯の夜</h1><span class="note">霧の都市 錫原</span><span class="now" id="now"></span></header>
+
+  <h2>公開の場</h2>
+  <p class="note">審問官ラザが告げたこと。皆が見ている。</p>
+  <div class="grid" id="public"></div>
+
+  <h2>審問灯の記録</h2>
+  <div id="oaths"></div>
+
+  <h2>調べられる場所</h2>
+  <p class="note">伏せてあるカードの枚数。引かれたカードは引いた者の手札になり、場所から消える。〔自分の場所〕は持ち主が調べられない。</p>
+  <div class="places" id="places"></div>
+
+  <h2>容疑者の手札（枚数だけ）</h2>
+  <p class="note">中身は持ち主にしか見えない。調査でも誓いでも探れない。</p>
+  <div class="hands" id="hands"></div>
+
+  <h2>瀬島の手札</h2>
+  <p class="note">記憶のカードは渡せない。物のカードは密談で渡せる。</p>
+  <div class="grid" id="mine"></div>
+</div>
+<script>
+// ===== ここから下のデータを、幕が進むたびに書き換える =====
+const NOW = "終幕　セナ捕縛・真の結末";
+
+const PUBLIC = [
+  { id:"公1", ttl:"灯守長オルドの死", body:"灯室で、後頭部を打たれて死んでいた。そばに真鍮の油差し。床に油がこぼれていた。大灯は消えていた。" },
+  { id:"公2", ttl:"見つけた者", body:"衛士セナ。零時四十分の鐘のころ。" },
+  { id:"公3", ttl:"破られた一葉", body:"書庫の灯籍簿から、第四十一葉が一枚破り取られていた。" },
+  { id:"公4", ttl:"運河の扉", body:"閂が外れ、扉が少し開いていた。" },
+  { id:"公5", ttl:"ラザの見立て", body:"亡くなってから見つかるまで、長くても二時間ほど。" },
+  { id:"公6", ttl:"門番帳", body:"<table class='log'><tr><td>21:00</td><td>セナ 着任</td></tr><tr><td>22:30</td><td>ゲルト 入</td></tr><tr><td>22:50</td><td>ゲルト 出</td></tr><tr><td>23:30</td><td>ミレイ 出（祭りへ）</td></tr><tr><td>23:45</td><td>異常なし</td></tr><tr><td>0:00</td><td>巡回 異常なし</td></tr><tr><td>0:20</td><td>巡回 運河の扉 施錠を確かむ</td></tr><tr><td>0:40</td><td>遺体を見つく。警鐘</td></tr></table>予定：0:00ごろ イーヴァ 硝子納品（入の記録なし）" },
+  { id:"公7", ttl:"第二審問で見せられた札", body:"セナ：H3（写字生の清書から39〜42葉が抜けている）<br>ミレイ：T1（床の油はこぼれて一時間以上）、H2（女将：写字生は23:30に帰り、灯りはずっとついていた）<br>ゲルト：T3（鋲靴の油の跡、階段へ二筋）、S1（42葉に油の指跡）、M3（兎の面と泥の靴）<br>イーヴァ：G2（火鉢に灯籍簿の罫の紙と証灯院の封蝋）、P3（兎の面の娘が23:40〜0:30橋のたもとで小瓶を売っていた）<br>瀬島：G1（門番帳、23:45以降の書き込みに油の指跡）。H1（写し）はラザに渡した" },
+];
+
+// color: white / red / sway / none（誓わない・断った）
+const OATHS = [
+  { who:"セナ", color:"white", text:"灯に誓って、私は零時四十分の鐘のころ、運河の扉が開いているのを見た" },
+  { who:"ミレイ", color:"white", text:"灯に誓って、私は二十三時十五分の鐘のあと、灯室で、先生が生きているのを見た" },
+  { who:"ゲルト", color:"white", text:"灯に誓って、私は二十二時五十分の鐘に灯室を出るとき、オルドが生きているのを見た" },
+  { who:"イーヴァ", color:"none", text:"（誓わない）" },
+  { who:"瀬島", color:"none", text:"（誓わない）" },
+  { who:"ミレイ", color:"white", text:"〔セナの求め〕灯に誓って、私は二十二時半から五十分の鐘の間に、灯室で言い争う声を聞いた" },
+  { who:"ミレイ", color:"none", text:"（求めない）" },
+  { who:"セナ", color:"none", text:"〔ゲルトの求め〕灯に誓って、私は二十三時半の鐘のあと、塔に入る者を見た ――断った" },
+  { who:"ゲルト", color:"white", text:"〔イーヴァの求め〕灯に誓って、私は二十二時五十分の鐘のあと、灯室の窓に灯を見た" },
+  { who:"セナ", color:"none", text:"〔瀬島の求め〕灯に誓って、私は零時二十分の鐘のころ、運河の扉に閂がかかっているのを見た ――断った" },
+  { who:"──", color:"none", text:"第二審問" },
+  { who:"セナ", color:"white", text:"灯に誓って、私は二十二時五十分の鐘に、ゲルト殿が怒った顔で表門を出るのを見た" },
+  { who:"ミレイ", color:"white", text:"灯に誓って、私は零時の鐘を、橋のたもとで聞いた" },
+  { who:"ゲルト", color:"white", text:"灯に誓って、私は二十三時四十五分の鐘のころ、塔の灯が赤く光って消えるのを見た" },
+  { who:"イーヴァ", color:"white", text:"灯に誓って、私は二十三時五十分の鐘のころ、空の門番所を見た" },
+  { who:"瀬島", color:"white", text:"灯に誓って、私は二十三時半の鐘のころ、宿で女将を見た" },
+  { who:"四人", color:"none", text:"（誓いの求めはなし）" },
+  { who:"セナ", color:"none", text:"〔瀬島の求め〕灯に誓って、私は四十五分の鐘のあと、一階の廊下で、運河の扉を見た ――断った" },
+];
+
+const PLACES = [
+  { nm:"灯室", n:0 }, { nm:"書庫", n:2 }, { nm:"ミレイの部屋", n:1, own:"ミレイ" },
+  { nm:"門番所", n:0, own:"セナ" }, { nm:"運河の扉", n:2 }, { nm:"広場", n:1 },
+  { nm:"ゲルトの商館", n:2, own:"ゲルト" }, { nm:"イーヴァの工房", n:2, own:"イーヴァ" },
+  { nm:"瀬島の下宿", n:0, own:"瀬島" },
+];
+
+const HANDS = [
+  { who:"セナ", n:7 }, { who:"ミレイ", n:8 }, { who:"ゲルト", n:7 }, { who:"イーヴァ", n:6 }, { who:"瀬島", n:9 },
+];
+
+const MINE = [
+  { id:"瀬1", kind:"物", ttl:"呼び出しの手紙", body:"「今夜二十三時の鐘に、運河の扉へ。面をつけて来なさい。門番には知られぬように」（オルドの字）" },
+  { id:"瀬2", kind:"物", ttl:"烏の面", body:"紐の片方がちぎれている。いつ切れたかは分からない。" },
+  { id:"瀬3", kind:"記憶", ttl:"灯室での話", body:"23:00〜23:15。大灯は白く燃えていた。茶を一杯。「四十一葉の写しは君が持っていてくれ。私に何かあったらラザに。明日、大灯の前で話さねばならないことがある」" },
+  { id:"瀬4", kind:"記憶", ttl:"閂の音", body:"23:15の鐘のあと、運河の扉の外で、閂が内側から下ろされる音を聞いた。" },
+  { id:"瀬5", kind:"記憶", ttl:"女将の目", body:"23:30の鐘のころ、下宿に帰ったところを女将に見られた。その後は部屋にいた。" },
+  { id:"瀬6", kind:"記憶", ttl:"第四十一葉の中身", body:"十一年前 トーマ・ヴェイル（衛士）赤・投獄 ○<br>九年前 ハンス・ロウ（油商）赤・商いを止める ○<br>五年前 ニーナ・ベル（洗濯女）赤・町を追放 ○<br><span style='color:var(--sub)'>写しの実物は下宿の行李の底（〔私物〕）</span>" },
+  { id:"H1", kind:"物", ttl:"第四十一葉の写し（ラザに渡した）", body:"第二審問で審問官ラザに渡した。下宿の行李から引き取ったもの。瀬島の字で写した第四十一葉。三件の名と、余白の○まで写してある。" },
+  { id:"U2", kind:"物", ttl:"運河の扉・外の石段", body:"乾きかけの足跡が一筋。運河の道から扉まで来て、戻っている。踵の小さい、柔らかい底の靴（鋲靴ではない）。" },
+  { id:"G1", kind:"物", ttl:"門番帳の実物（門番所）", body:"23:45・0:00・0:20 の三つの書き込みだけ、油で黒ずんだ指の跡が紙ににじんでいる。23:30までの書き込みはきれい。0:40の書き込みは急いだ字で、これも油の跡。" },
+  { id:"T4", kind:"物", ttl:"盆の茶碗（灯室）", body:"茶碗が二つ。一つは飲み干され、縁に黒い墨の指の跡。もう一つ（オルドの分）は半分残って冷えている。" },
+];
+// ===== データここまで =====
+
+const $ = id => document.getElementById(id);
+$("now").textContent = NOW;
+$("public").innerHTML = PUBLIC.map(c => `<div class="card public"><div class="top"><span class="id">${c.id}</span><span class="ttl">${c.ttl}</span></div><div>${c.body}</div></div>`).join("");
+$("oaths").innerHTML = OATHS.map(o => `<div class="oath"><span class="flame ${o.color}"></span><span class="who">${o.who}</span><span>${o.text}</span></div>`).join("");
+$("places").innerHTML = PLACES.map(p => `<div class="place"><div class="nm">${p.nm}</div>${p.own?`<div class="own">〔${p.own}の場所〕</div>`:`<div class="own">&nbsp;</div>`}<div class="backs">${p.n?Array.from({length:p.n},()=>'<span class="bk"></span>').join(""):'<span class="empty">もうない</span>'}</div></div>`).join("");
+$("hands").innerHTML = HANDS.map(h => `<div class="place"><div class="nm">${h.who}</div><div class="backs">${Array.from({length:h.n},()=>'<span class="bk"></span>').join("")}</div></div>`).join("");
+$("mine").innerHTML = MINE.map(c => `<div class="card"><div class="top"><span class="id">${c.id}</span><span class="kind ${c.kind==='物'?'obj':''}">${c.kind}</span></div><div class="ttl">${c.ttl}</div><div>${c.body}</div></div>`).join("");
+</script>
+</body>
+</html>

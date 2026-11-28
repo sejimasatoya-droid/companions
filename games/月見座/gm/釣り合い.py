@@ -5,6 +5,10 @@ MASKS = ["翁", "小面", "般若", "天狗", "狐", "素面", "素面"]
 ODAI = ["平常", "平常", "公開札", "二人札", "逆さ札", "黙り札"]
 MAX_ACT = 5
 KOOMOTE_HALF = False  # True にすると「半分に数える」案
+# 第二版（第一回のあとの直し）。False で第一版
+V2 = True
+SHOW_RATE = 0.25   # 一幕に一人が見せ合いの相手を作る確率
+RUNOFF = True      # 最多の並びは決選（並んだ者のほかが、並んだ者の中から一人を書く）。それでも並べば全員
 
 def tally(alive, votes, mask_of, extra):
     cnt = {p: 0 for p in alive}
@@ -30,6 +34,10 @@ def play(rng, focal_know=None, params=None):
     mask_of = {p: {deal[p]} for p in players}
     tengu_used = {p: False for p in players}
     odai = ODAI[:]; rng.shuffle(odai)
+    if V2:  # 二人札は第三幕より前に引かない（引いたら山の底へ）
+        while '二人札' in odai[:2]:
+            i = odai.index('二人札'); odai.append(odai.pop(i))
+    got_katami = set()
     alive = players[:]
     known = set()  # 退場で明かされた面の持ち主（形見の行き先は伏せ）
     focal = 0
@@ -39,6 +47,13 @@ def play(rng, focal_know=None, params=None):
         od = odai[act] if len(alive) > 2 else "平常"
         reverse = od == "逆さ札"
         votes, extra = {}, {}
+        pact = {}
+        if V2 and len(alive) > 2:  # 箱の見せ合い：その幕、互いの名を書いた札は数えない
+            free = alive[:]; rng.shuffle(free)
+            while len(free) >= 2:
+                a = free.pop()
+                if rng.random() < SHOW_RATE:
+                    b = free.pop(); pact[a] = b; pact[b] = a
         if len(alive) == 2:
             a, b = alive
             for p, o in ((a, b), (b, a)):
@@ -93,6 +108,8 @@ def play(rng, focal_know=None, params=None):
                         for q in alive:
                             if q != s and q != p and rng.random() < 0.35:
                                 votes[q] = s
+                if pact.get(p) == votes[p]:  # 見せ合った相手には書かない
+                    votes[p] = rng.choice([q for q in alive if q not in (p, pact[p])] or [p])
                 if "天狗" in mask_of[p] and not tengu_used[p] and rng.random() < 0.4:
                     tengu_used[p] = True
                     extra[p] = rng.choice([q for q in alive if q not in (p, votes[p])] or [None])
@@ -103,6 +120,18 @@ def play(rng, focal_know=None, params=None):
             else:
                 m = max(cnt.values())
                 out = [] if m == 0 else [p for p in alive if cnt[p] == m]
+                if V2 and RUNOFF and len(out) >= 2 and len(out) < len(alive):
+                    tied = out
+                    tgt = rng.choice(tied)
+                    rv = {}
+                    for q in alive:
+                        if q in tied:
+                            rv[q] = q  # 並んだ者は自分を書く（数えない）
+                        else:
+                            rv[q] = tgt if rng.random() < herd else rng.choice(tied)
+                    c2 = tally(tied, rv, mask_of, {})
+                    m2 = max(c2.values())
+                    out = [q for q in tied if c2[q] == m2] if m2 > 0 else tied
                 if od == "二人札" and out and len(out) == 1:
                     rest = [cnt[p] for p in alive if p not in out]
                     m2 = max(rest) if rest else 0
@@ -112,16 +141,22 @@ def play(rng, focal_know=None, params=None):
         drag = []
         for p in out:
             if "般若" in mask_of[p]:
-                cands = [v for v, t in votes.items() if t == p and v != p and v not in out]
+                writers = [v for v, t in votes.items() if t == p and v != p]
+                cands = [v for v in writers if v not in out]
+                if V2 and len(writers) != 1:
+                    cands = []
                 if cands:
                     drag.append(rng.choice(cands))
         out = list(dict.fromkeys(out + drag))
         survivors = [p for p in alive if p not in out]
         # 形見：退場者が残りの一人に面を渡す（.7）
         for p in out:
-            if survivors and rng.random() < 0.7:
-                r = rng.choice(survivors)
+            pool = [q for q in survivors if not (V2 and q in got_katami)]
+            if pool and rng.random() < 0.7:
+                r = rng.choice(pool)
+                got_katami.add(r)
                 mask_of[r] |= mask_of[p] - {"素面"}
+        if focal in out: P['_focal_out'] = act + 1
         alive = survivors
         P.setdefault('_exits', []).append(len(out))
     if len(alive) >= 3:
@@ -135,6 +170,8 @@ def stats(n=40000, seed=7, **kw):
     win = collections.Counter(); tot = collections.Counter(); foc = 0
     global why, ex
     why = collections.Counter(); ex = collections.Counter()
+    global fo
+    fo = collections.Counter()
     for _ in range(n):
         P = dict(kw.get("params", {}))
         res, a = play(rng, focal_know=kw.get("focal_know"), params=P)
@@ -142,6 +179,7 @@ def stats(n=40000, seed=7, **kw):
         for p, m in enumerate(P["_deal"]):
             tot[m] += 1; win[m] += p in res
         foc += 0 in res
+        fo[P.get('_focal_out', 0)] += 1
         why[P['_why']] += 1
         for e in P.get('_exits', []): ex[e] += 1
     return surv, acts, {m: round(win[m]/tot[m], 3) for m in tot}, foc/n
@@ -153,4 +191,5 @@ if __name__ == "__main__":
         print("herd", herd, "生還人数", {k: round(v/n,3) for k,v in sorted(surv.items())})
         print("   幕", {k: round(v/n,3) for k,v in sorted(acts.items())})
         print("   面", mr)
+        print("   一人が落ちた幕（0は落ちず）", {k: round(v/n,3) for k,v in sorted(fo.items())})
         print("   終わり方", {k: round(v/n,3) for k,v in why.items()}, "一幕の退場数", dict(sorted(ex.items())))

@@ -8,6 +8,7 @@ KOOMOTE_HALF = False  # True にすると「半分に数える」案
 # 第二版（第一回のあとの直し）。False で第一版
 V2 = True
 SHOW_RATE = 0.25   # 一幕に一人が見せ合いの相手を作る確率
+V3 = True  # 第三版：逆さ札は五人以上・零の並びは前の幕までの数で、天狗は自分の数を±1にもできる、野次は一度だけ±1
 RUNOFF = True      # 最多の並びは決選（並んだ者のほかが、並んだ者の中から一人を書く）。それでも並べば全員
 
 def tally(alive, votes, mask_of, extra):
@@ -38,6 +39,8 @@ def play(rng, focal_know=None, params=None):
         while '二人札' in odai[:2]:
             i = odai.index('二人札'); odai.append(odai.pop(i))
     got_katami = set()
+    hist = {p: 0 for p in players}
+    heckle_left = set()
     alive = players[:]
     known = set()  # 退場で明かされた面の持ち主（形見の行き先は伏せ）
     focal = 0
@@ -45,6 +48,8 @@ def play(rng, focal_know=None, params=None):
         if len(alive) <= 1:
             P['_why'] = 'one' if alive else 'zero'; return alive, act
         od = odai[act] if len(alive) > 2 else "平常"
+        if V3 and od == "逆さ札" and len(alive) < 5:
+            od = "平常"
         reverse = od == "逆さ札"
         votes, extra = {}, {}
         pact = {}
@@ -114,9 +119,24 @@ def play(rng, focal_know=None, params=None):
                     tengu_used[p] = True
                     extra[p] = rng.choice([q for q in alive if q not in (p, votes[p])] or [None])
             cnt = tally(alive, votes, mask_of, extra)
+            # 野次：客席の者が一度だけ、乱数の一人に ±1（逆さ札なら救う向き、平常なら落とす向き）
+            if V3:
+                for h in list(heckle_left):
+                    if rng.random() < 0.5:
+                        heckle_left.discard(h)
+                        t = rng.choice(alive)
+                        cnt[t] += 1 if reverse else 1
+            # 天狗の自分守り：逆さ札で、まだ使っていなければ自分に+1
+            if V3 and reverse:
+                for p in alive:
+                    if "天狗" in mask_of[p] and not tengu_used[p] and rng.random() < 0.75:
+                        tengu_used[p] = True; extra.pop(p, None); cnt[p] += 1
             if reverse:
                 m = min(cnt.values())
                 out = [p for p in alive if cnt[p] == m]
+                if V3 and len(out) >= 2:
+                    hm = min(hist[p] for p in out)
+                    out = [p for p in out if hist[p] == hm]
             else:
                 m = max(cnt.values())
                 out = [] if m == 0 else [p for p in alive if cnt[p] == m]
@@ -157,6 +177,8 @@ def play(rng, focal_know=None, params=None):
                 got_katami.add(r)
                 mask_of[r] |= mask_of[p] - {"素面"}
         if focal in out: P['_focal_out'] = act + 1
+        for p in alive: hist[p] += cnt.get(p, 0) if len(alive) > 2 else 0
+        heckle_left |= set(out)
         alive = survivors
         P.setdefault('_exits', []).append(len(out))
     if len(alive) >= 3:

@@ -1201,7 +1201,9 @@ def main():
         d = float(mag) * (1 / (1 + .5 * grip) if b["s"] * t < 0 else 1)
         b["s"] = clip(b["s"] + t * d, -1, 1)
         b["口"] = b["s"] if not bid in ("化け物", "隠す") else b["口"]
-        b["根"], b["元"], b["新"] = "経験", "出来事", True
+        if old == 0 or old * b["s"] < 0 or ROOT_GRIP["経験"] > ROOT_GRIP[b["根"]]:
+            b["根"], b["元"] = "経験", (a.文 or "出来事")
+        b["新"] = True
         log(f"経験：『{b['文']}』{r2(old)}→{r2(b['s'])}（今週のうちは、話でまだ動きやすい）")
     elif cmd == "行い":
         vals = parse_vals(a.args[0])

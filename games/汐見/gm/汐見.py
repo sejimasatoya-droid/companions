@@ -960,6 +960,9 @@ def dark_check(st, rng, log):
 def roll_event(st, rng):
     w = st["w"]
     age = agef(w)
+    extra = st.get("臨時の節目", {})
+    if str(w) in extra:
+        return ("節目",) + tuple(extra[str(w)])
     if w in SPINE:
         plant(st, EVENT_FUT.get(SPINE[w][0], []), .15)
         return ("節目",) + SPINE[w]
@@ -1356,7 +1359,7 @@ def main():
         t = 1 if sign == "+" else -1
         B = st["信念"]
         if bid not in B:
-            B[bid] = new_belief(bid, a.文, parse_vals(a.値) or None)
+            B[bid] = new_belief(bid, None if bid in LIB else a.文, parse_vals(a.値) or None)   # 辞書にある信念なら、--文 は出どころとしてだけ使う
         b = B[bid]
         old = b["s"]
         grip = ROOT_GRIP[b["根"]]

@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" font-family="'Yu Mincho','Hiragino Mincho ProN','Noto Serif JP',serif">
+  <defs>
+    <pattern id="wave" width="24" height="12" patternUnits="userSpaceOnUse">
+      <path d="M0 8 Q6 2 12 8 T24 8" fill="none" stroke="#6f8fa6" stroke-width="0.8" opacity="0.5"/>
+    </pattern>
+    <pattern id="field" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M0 10 L10 0" stroke="#9aa06a" stroke-width="0.6" opacity="0.6"/>
+    </pattern>
+  </defs>
+
+  <!-- 紙 -->
+  <rect width="1000" height="760" fill="#efe4c8"/>
+  <rect x="12" y="12" width="976" height="736" fill="none" stroke="#5b4630" stroke-width="2"/>
+
+  <!-- 海（北） -->
+  <path d="M12 12 H988 V150 Q930 160 905 190 Q880 150 850 205 Q760 240 640 225 Q560 215 500 222 Q430 232 360 245 Q260 262 160 240 Q80 225 12 250 Z" fill="#b9cdd6"/>
+  <path d="M12 12 H988 V150 Q930 160 905 190 Q880 150 850 205 Q760 240 640 225 Q560 215 500 222 Q430 232 360 245 Q260 262 160 240 Q80 225 12 250 Z" fill="url(#wave)"/>
+
+  <!-- 白嶺島（海峡の向こう） -->
+  <path d="M60 70 Q140 30 230 48 Q300 30 360 62 Q330 84 250 86 Q160 92 60 70 Z" fill="#d6dccf" stroke="#5b4630" stroke-width="1"/>
+  <path d="M190 56 L215 34 L240 56" fill="#fff" stroke="#5b4630" stroke-width="1"/>
+  <text x="210" y="106" font-size="15" fill="#3d3022" text-anchor="middle">北の島・白嶺島</text>
+  <text x="210" y="124" font-size="11" fill="#3d3022" text-anchor="middle">（北辰丸で半日）</text>
+
+  <!-- 鴎ヶ鼻と灯台 -->
+  <path d="M850 205 Q880 150 905 190 Q930 160 988 150 V250 Q930 240 880 230 Z" fill="#cdbf98" stroke="#5b4630" stroke-width="1"/>
+  <rect x="902" y="150" width="10" height="26" fill="#fff" stroke="#3d3022"/>
+  <path d="M899 150 L907 140 L915 150 Z" fill="#c94f3a"/>
+  <path d="M907 145 L960 120 M907 145 L960 168" stroke="#e8c45a" stroke-width="1.5" opacity="0.8"/>
+  <text x="930" y="210" font-size="14" fill="#3d3022" text-anchor="middle">鴎ヶ鼻</text>
+  <text x="930" y="226" font-size="11" fill="#3d3022" text-anchor="middle">灯台（風読みの爺）</text>
+
+  <!-- 山（南・東・西） -->
+  <path d="M12 560 Q90 500 170 545 Q240 480 330 560 Q380 600 440 640 L440 748 H12 Z" fill="#a7a27a" opacity="0.55"/>
+  <path d="M640 640 Q720 560 800 600 Q870 520 988 560 V748 H640 Z" fill="#a7a27a" opacity="0.55"/>
+  <g stroke="#5b4630" stroke-width="1" fill="none" opacity="0.7">
+    <path d="M60 600 l20 -26 l20 26"/><path d="M120 620 l18 -22 l18 22"/><path d="M820 640 l22 -28 l22 28"/><path d="M900 620 l18 -24 l18 24"/>
+  </g>
+
+  <!-- 田んぼ（汐川の上流） -->
+  <rect x="440" y="660" width="200" height="80" fill="url(#field)"/>
+  <text x="560" y="735" font-size="12" fill="#3d3022">田んぼ・蛍の小橋</text>
+
+  <!-- 汐川 -->
+  <path d="M520 748 Q500 690 515 640 Q535 580 505 520 Q480 460 495 400 Q510 330 480 280 Q465 250 470 230" fill="none" stroke="#7fa3b5" stroke-width="14"/>
+  <path d="M520 748 Q500 690 515 640 Q535 580 505 520 Q480 460 495 400 Q510 330 480 280 Q465 250 470 230" fill="none" stroke="#b9cdd6" stroke-width="8"/>
+  <text x="528" y="600" font-size="13" fill="#2f4a5a" transform="rotate(-80 528 600)">汐 川</text>
+  <!-- 橋 -->
+  <rect x="470" y="300" width="38" height="7" fill="#7a5a3a" transform="rotate(-10 489 303)"/>
+  <text x="512" y="300" font-size="10" fill="#3d3022">島町への橋</text>
+  <rect x="478" y="410" width="38" height="7" fill="#7a5a3a"/>
+  <text x="424" y="428" font-size="10" fill="#3d3022">寺町橋</text>
+
+  <!-- 島町（河口の埋め立て地） -->
+  <path d="M360 250 Q420 238 470 232 L475 300 Q420 310 365 300 Z" fill="#c8b48f" stroke="#5b4630" stroke-width="1" stroke-dasharray="3 2"/>
+  <g fill="#8a7458"><rect x="380" y="262" width="12" height="8"/><rect x="398" y="268" width="12" height="8"/><rect x="416" y="260" width="12" height="8"/><rect x="434" y="272" width="12" height="8"/><rect x="390" y="282" width="12" height="8"/><rect x="420" y="286" width="12" height="8"/></g>
+  <text x="418" y="252" font-size="15" fill="#3d3022" text-anchor="middle">島町</text>
+  <text x="418" y="318" font-size="10" fill="#3d3022" text-anchor="middle">イシ婆・佐吉</text>
+
+  <!-- 港と桟橋 -->
+  <rect x="535" y="198" width="8" height="34" fill="#7a5a3a"/>
+  <rect x="575" y="196" width="8" height="36" fill="#7a5a3a"/>
+  <path d="M548 186 l28 0 l-6 8 l-16 0 z" fill="#3d3022"/><rect x="558" y="176" width="3" height="10" fill="#3d3022"/>
+  <path d="M561 172 q8 -8 16 0" fill="none" stroke="#666" stroke-width="2"/>
+  <text x="560" y="250" font-size="12" fill="#3d3022" text-anchor="middle">桟橋（北辰丸）</text>
+
+  <!-- 浜町 -->
+  <path d="M620 228 Q740 240 850 210 L860 300 Q760 310 650 300 Z" fill="#e3d2a6" stroke="#5b4630" stroke-width="1"/>
+  <g fill="#7a5a3a"><rect x="700" y="240" width="14" height="9"/><rect x="722" y="238" width="14" height="9"/><rect x="744" y="236" width="14" height="9"/><rect x="766" y="234" width="14" height="9"/><rect x="788" y="230" width="14" height="9"/></g>
+  <text x="745" y="230" font-size="10" fill="#3d3022" text-anchor="middle">網小屋（三つ目）</text>
+  <g stroke="#5b4630" stroke-width="1"><line x1="700" y1="262" x2="820" y2="258"/><line x1="700" y1="270" x2="820" y2="266"/></g>
+  <text x="760" y="284" font-size="10" fill="#3d3022" text-anchor="middle">干場（おとめ）</text>
+  <text x="655" y="252" font-size="10" fill="#3d3022">魚市場</text>
+  <text x="800" y="306" font-size="10" fill="#3d3022">鬼頭の家</text>
+  <text x="760" y="324" font-size="16" fill="#3d3022" text-anchor="middle">浜町</text>
+
+  <!-- 番所と櫓下長屋 -->
+  <rect x="628" y="306" width="22" height="16" fill="#5e6e7a" stroke="#3d3022"/>
+  <line x1="639" y1="306" x2="639" y2="282" stroke="#3d3022" stroke-width="2"/><path d="M633 282 h12 l-6 -8 z" fill="#3d3022"/>
+  <text x="639" y="338" font-size="11" fill="#3d3022" text-anchor="middle">番所・火の見櫓</text>
+  <rect x="652" y="324" width="26" height="10" fill="#c94f3a" stroke="#3d3022"/>
+  <text x="700" y="356" font-size="11" fill="#9b2f22" text-anchor="middle">櫓下長屋（瀬島の家）</text>
+
+  <!-- 本町 -->
+  <path d="M505 330 Q560 320 620 330 L640 430 Q580 445 515 435 Z" fill="#e8dbb8" stroke="#5b4630" stroke-width="1"/>
+  <g fill="#fff" stroke="#5b4630" stroke-width="0.8"><rect x="528" y="340" width="16" height="12"/><rect x="550" y="340" width="16" height="12"/><rect x="572" y="342" width="16" height="12"/><rect x="594" y="344" width="16" height="12"/></g>
+  <text x="572" y="374" font-size="16" fill="#3d3022" text-anchor="middle">本町</text>
+  <text x="572" y="392" font-size="10" fill="#3d3022" text-anchor="middle">丸八・豆源（ちよ）・亀屋</text>
+  <text x="572" y="406" font-size="10" fill="#3d3022" text-anchor="middle">松葉堂・杵屋・掲示板</text>
+
+  <!-- 寺町 -->
+  <path d="M150 300 Q260 285 380 300 L400 470 Q280 490 160 470 Z" fill="#ddd2b0" stroke="#5b4630" stroke-width="1"/>
+  <path d="M215 395 l30 -18 l30 18 z" fill="#5b4630"/><rect x="223" y="395" width="44" height="18" fill="#a68a64" stroke="#3d3022"/>
+  <text x="245" y="430" font-size="13" fill="#3d3022" text-anchor="middle">浄光寺</text>
+  <text x="245" y="445" font-size="10" fill="#3d3022" text-anchor="middle">慈恵尼・孤児院・枝垂れ桜</text>
+  <circle cx="200" cy="380" r="9" fill="#e9b7c3" opacity="0.8"/>
+  <path d="M300 340 L340 370" stroke="#5b4630" stroke-width="1" stroke-dasharray="2 2"/>
+  <text x="300" y="336" font-size="10" fill="#3d3022">葛葉堂</text>
+  <text x="372" y="322" font-size="10" fill="#3d3022">いせや</text>
+  <text x="200" y="320" font-size="16" fill="#3d3022">寺町</text>
+  <text x="170" y="462" font-size="10" fill="#3d3022">寺の裏山（つくし・栗）</text>
+
+  <!-- 山手 -->
+  <path d="M520 470 Q620 455 720 480 L740 600 Q630 620 530 600 Z" fill="#d8ccaa" stroke="#5b4630" stroke-width="1"/>
+  <path d="M540 470 Q560 440 600 432" stroke="#5b4630" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+  <text x="610" y="452" font-size="10" fill="#3d3022">坂</text>
+  <rect x="548" y="500" width="22" height="14" fill="#fff" stroke="#3d3022"/><text x="559" y="528" font-size="10" fill="#3d3022" text-anchor="middle">学舎</text>
+  <rect x="590" y="498" width="20" height="14" fill="#fff" stroke="#3d3022"/><text x="600" y="526" font-size="10" fill="#3d3022" text-anchor="middle">町会所</text>
+  <rect x="630" y="500" width="22" height="14" fill="#3d3022"/><text x="641" y="528" font-size="10" fill="#3d3022" text-anchor="middle">妖改め方</text>
+  <rect x="672" y="520" width="34" height="20" fill="#fff" stroke="#3d3022"/><text x="689" y="554" font-size="10" fill="#3d3022" text-anchor="middle">高森屋敷（綾）</text>
+  <path d="M600 572 h16 M603 572 v12 M613 572 v12 M598 576 h20" stroke="#c94f3a" stroke-width="2"/>
+  <text x="608" y="598" font-size="10" fill="#3d3022" text-anchor="middle">汐見神社</text>
+  <text x="560" y="482" font-size="10" fill="#3d3022">薙刀の道場</text>
+  <text x="640" y="616" font-size="16" fill="#3d3022" text-anchor="middle">山手</text>
+
+  <!-- 方位と表題 -->
+  <g transform="translate(940 690)">
+    <circle r="26" fill="none" stroke="#5b4630"/>
+    <path d="M0 -22 L6 0 L0 22 L-6 0 Z" fill="#5b4630"/>
+    <text y="-30" font-size="13" fill="#3d3022" text-anchor="middle">北</text>
+  </g>
+  <text x="40" y="720" font-size="26" fill="#3d3022">汐見</text>
+  <text x="40" y="740" font-size="11" fill="#3d3022">瑞暦二十一年の町（瀬島の覚え）</text>
+</svg>

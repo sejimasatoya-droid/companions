@@ -498,6 +498,10 @@ def persuade(st, bid, t, g, r, v, q, p, who, rng, h=0, text=None, vals=None, mag
         d = .3 * (1 + .4 * q) * (.6 if same else 1) * mag
         if opp:
             d /= (1 + grip * abs(old))   # 深く根を張った逆の考えは、一晩では消えない
+        else:
+            d *= (1 - abs(old))          # もう同じ向きに信じていることは、言われても少ししか強まらない
+        if who != "瀬島" and not opp and abs(old) >= .7:
+            d = 0.0                      # 人に吹きこまれて強まるのは .7 まで。そこから先は、自分の経験で
         b["s"] = clip(b["s"] + t * d, -1, 1)
         if old == 0 or old * b["s"] < 0 or (not opp and ROOT_GRIP[root] >= ROOT_GRIP[b["根"]]):
             b["根"] = root
@@ -595,7 +599,7 @@ def week(st, rng, log, sim=False):
         for k, tv in npc["V"].items():
             V[k] = clip(V[k] + .003 * x * f * mult * (tv - V[k]))
         for bid, t in npc["push"]:
-            if rng.random() < .06 * x * f:
+            if rng.random() < .04 * x * f:
                 res = persuade(st, bid, t, npc["g"], npc["r"], npc["v"], npc["q"], npc["p"], n, rng)
                 if res["結果"] in ("受け入れた", "反発した"):
                     log(f"縁：{n}『{res['文']}』{'+' if t > 0 else '-'} → {res['結果']}（{res['受け入れ']}／{res['s']}）")

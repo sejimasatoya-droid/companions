@@ -687,7 +687,7 @@ def week(st, rng, log, sim=False):
         st["縁"][n] = r2(clip(f + .02 * x * (1 - f) - .004))
     st["縁"]["瀬島"] = r2(clip(.5 * H["安心"] + .5 * H["信用"]))
     for n, x in ex.items():
-        if n not in NPCS or age < NPCS[n]["min"] or x <= 0:
+        if n not in NPCS or age < NPCS[n]["min"] or x <= 0 or n in st.get("亡くなった", []):
             continue
         npc = NPCS[n]
         f = st["縁"][n]
@@ -826,7 +826,9 @@ def roll_home(st, rng):
     age = agef(st["w"])
     season = SEASON_OF(st["w"])
     recent = st.setdefault("最近の家", [])
-    pool = [h for h in HOME if h[2] <= age < h[3] + 1 and (h[4] == "*" or season in h[4].split("|")) and h[0] not in recent]
+    asked = st.setdefault("聞いた", [])
+    pool = [h for h in HOME if h[2] <= age < h[3] + 1 and (h[4] == "*" or season in h[4].split("|")) and h[0] not in recent
+            and not (h[0].startswith("問い") and h[0] in asked)]
     if not pool:
         return None
     tot = sum(h[5] for h in pool)
@@ -836,6 +838,8 @@ def roll_home(st, rng):
         if x <= 0:
             recent.append(h[0])
             del recent[:-8]
+            if h[0].startswith("問い"):
+                asked.append(h[0])   # すずの問いは、一度聞いたら繰り返さない
             return h[1]
     return None
 
@@ -979,6 +983,8 @@ def roll_event(st, rng):
             continue
         if ss != "*" and season not in ss.split("|"):
             continue
+        if any(d in nm for d in st.get("亡くなった", [])):
+            continue   # 亡くなった人の出てくる出来事は起こさない
         if en:
             who, _, th = en.partition(">")
             if st["縁"].get(who, 0) <= float(th):

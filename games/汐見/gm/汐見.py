@@ -672,6 +672,8 @@ def week(st, rng, log, sim=False):
         risk += .006 * (1 - st["自制力"])
     if "銭湯" in st["予定"]:
         risk += .02
+    if "学舎" in st["予定"]:
+        risk += .004 * (1.5 if (st["w"] % 52) // 13 == 1 else 1)   # 体操・着替え。夏は薄着
     if S["目覚め"]:
         risk += .01 * (1 - st["自制力"])
     u = rng.random()

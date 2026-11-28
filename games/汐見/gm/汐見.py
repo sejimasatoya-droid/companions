@@ -93,7 +93,7 @@ SELF_NEG = {"化け物": .25, "役に立つ": .12, "島の子": .08}   # 自己�
 SLOTS = {
     "学舎": dict(ab={"学力": 2, "話術": .5, "品格": .3}, npc={"柏木": 1, "ちよ": .7, "綾": .5}, 疲れ=.03, 費=.25, 好={"成功": .4, "自由": .2}),
     "奉公": dict(ab={"手わざ": 1, "話術": 1.2, "学力": .3}, npc={"お勝": 1}, 疲れ=.05, 費=-.5, 好={"成功": 1, "力": .3}),
-    "寺": dict(ab={"手わざ": .6, "品格": .8}, npc={"慈恵": 1}, 疲れ=.02, 費=0, 好={"思いやり": .8, "しきたり": .8}),
+    "寺": dict(ab={"手わざ": .6, "品格": .8, "学力": .8},   # 慈恵尼が字を教える npc={"慈恵": 1}, 疲れ=.02, 費=0, 好={"思いやり": .8, "しきたり": .8}),
     "三味線": dict(ab={"芸事": 2, "品格": .5}, npc={}, 疲れ=.03, 費=.3, 好={"成功": .3, "しきたり": .3}),
     "書": dict(ab={"芸事": 1, "学力": .5, "品格": 1}, npc={"慈恵": .3}, 疲れ=.02, 費=.2, 好={"しきたり": .6}),
     "薙刀": dict(ab={"体力": 2, "度胸": .8}, npc={}, 疲れ=.05, 費=.3, 好={"力": .6, "冒険": .4}),
@@ -820,7 +820,7 @@ def roll_event(st, rng):
             continue
         places = where.split("|")
         on = "*" in places or bool(slots & set(places))
-        if not on or eid in recent:
+        if not on or eid in recent or (think and eid in st.setdefault("考えた", [])):
             continue
         pool.append((eid, nm, heavy, wt, think))
     daily = [e for e in pool if not e[4]]
@@ -843,6 +843,9 @@ def roll_event(st, rng):
             if x <= 0:
                 out = ("日常", e[0], e[1], e[2])
                 break
+    if out and out[0] == "考えどころ":
+        st.setdefault("考えた", []).append(out[1])
+        del st["考えた"][:-12]   # 考えどころは半年ほど繰り返さない（季に1〜2なので12個でおよそ一年半）
     if out:
         plant(st, EVENT_FUT.get(out[1], []), HEAVY_AMT[out[3]])
         recent.append(out[1])
